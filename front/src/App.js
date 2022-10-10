@@ -5,7 +5,8 @@ import * as Api from "./api";
 import { loginReducer } from "./reducer";
 
 import Header from "./components/Header";
-import RegisterForm from "./components/user/RegisterForm";
+import Main from "./components/pages/Main";
+import RegisterForm from "./components/pages/RegisterForm";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -55,6 +56,7 @@ function App() {
         <Router>
           <Header />
           <Routes>
+            <Route path="/" element={<Main />} />
             <Route path="/register" element={<RegisterForm />} />
           </Routes>
         </Router>
