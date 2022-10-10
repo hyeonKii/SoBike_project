@@ -72,10 +72,10 @@ const Main = () => {
         </div>
 
         <div className="position">
-          {imagesRef.current.map((x, i) => (
+          {imagesRef.current.map((x, index) => (
             <div
-              key={i}
-              className={i === currentSlide ? "dot current" : "dot"}
+              key={index}
+              className={index === currentSlide ? "dot current" : "dot"}
             ></div>
           ))}
         </div>
