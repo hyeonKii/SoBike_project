@@ -44,16 +44,16 @@ const Main = () => {
 
   return (
     <>
-      <div className="carousel">
-        <div className="slide">
-          <div
-            className="btn"
+      <div className="carousel-container">
+        <div className="carousel-wrapper">
+          <button
+            className="left-arrow"
             onClick={() => {
               moveSlide(-1);
             }}
-          ></div>
-          <div className="window">
-            <div className="flexbox" style={style}>
+          ></button>
+          <div className="carousel-content-wrapper">
+            <div className="carousel-content" style={style}>
               {imagesRef.current.map((image, index) => (
                 <div
                   key={index}
@@ -63,12 +63,12 @@ const Main = () => {
               ))}
             </div>
           </div>
-          <div
-            className="btn"
+          <button
+            className="right-arrow"
             onClick={() => {
               moveSlide(1);
             }}
-          ></div>
+          ></button>
         </div>
 
         <div className="position">

@@ -5,49 +5,62 @@ body {
   user-select: none;
 }
 
-.carousel {
+.carousel-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
 }
 
-.slide {
-  /* display: flex; */
+.carousel-wrapper {
+  display: flex;
+  width: 100%;
   align-items: center;
+  position: relative;
 }
 
-.window {
-  background: coral;
+.carousel-content-wrapper {
+  background: green;
   width: 100vw;
   height: 250px;
 
-  
   overflow: hidden;
 }
 
-.flexbox {
+.carousel-content {
   display: flex;
+  transition: all 250ms linear;
 }
 
 .img {
   width: 100vw;
   height: 250px;
-  background-position: 50% 50%;
-  /* background-size: contain; */
+  background-position: 50% 50%; /* x축의 중간지점, y축의 중간지점 */
+  background-size: cover; /* 비율 유지하면서 배경채움 */
   background-repeat: no-repeat;
   flex: none;
 }
 
-.btn {
+.left-arrow, .right-arrow { /*좌우 버튼*/
+  position: absolute;
   display: flex;
   align-items: center;
   cursor: pointer;
   font-size: 3.3rem;
-  color: gray;
-  padding: 0 10px;
+  color: black;
+  padding: 10px 10px;
+  border-radius: 24px;
+}
+
+.left-arrow {
+  left: 24px;
+}
+
+.right-arrow {
+  right: 24px;
 }
   
-.position {
+.position { /*아래 점들*/
   margin-top: 15px;
   display: flex;
   justify-content: center;
