@@ -1,6 +1,5 @@
 // 모듈
 const userRouter = require("express").Router();
-const multer  = require('multer');
 const path = require("path");
 const fs = require("fs");
 
