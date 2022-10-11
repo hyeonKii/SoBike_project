@@ -5,7 +5,7 @@ import * as Api from "./api";
 import { loginReducer } from "./reducer";
 
 import Header from "./components/Header";
-import Main from "./components/pages/Main";
+import Main from "./components/pages/Carousel";
 import RegisterForm from "./components/pages/RegisterForm";
 
 export const UserStateContext = createContext(null);
