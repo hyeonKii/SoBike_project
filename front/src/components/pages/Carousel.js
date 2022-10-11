@@ -57,7 +57,7 @@ const Carousel = () => {
               {imagesRef.current.map((image, index) => (
                 <div
                   key={index}
-                  className="img"
+                  className="image"
                   style={{ backgroundImage: `url(${image.src})` }}
                 ></div>
               ))}

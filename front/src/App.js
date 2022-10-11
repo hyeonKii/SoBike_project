@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
 
+import './App.css'
+
 import Header from "./components/Header";
-import Main from "./components/pages/Carousel";
+import Main from "./components/pages/Main";
 import RegisterForm from "./components/pages/RegisterForm";
 
 export const UserStateContext = createContext(null);

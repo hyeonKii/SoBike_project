@@ -1,12 +1,19 @@
-import React from 'react'
-import Carousel from './Carousel'
+import React from "react";
+import Carousel from "./Carousel";
+import Sections from "./Sections";
 
 const Main = () => {
   return (
     <>
-      <Carousel/>
-    </>
-  )
-}
+      <section>
+        <Carousel />
+      </section>
 
-export default Main
+      <section>
+        <Sections />
+      </section>
+    </>
+  );
+};
+
+export default Main;
