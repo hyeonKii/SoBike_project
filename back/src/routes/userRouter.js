@@ -88,24 +88,14 @@ userRouter.get("/users", loginRequired, async (req, res, next) => {
 // 회원(내) 정보 가져오기
 userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
     try {
-        const userId = req.query.userId;
-        let currentUserInfo = await userService.getUserInfo(userId);
-        const currentUserImage = await userImageService.getUserImage(userId);
-
-        if(currentUserImage !== null) {
-            currentUserInfo.userImage = currentUserImage.userImage;
-        } else {
-            currentUserInfo.userImage = "lion.jpg";
-        }
+        const userId = req.params.userId;
+        const currentUserInfo = await userService.getUserInfo(userId);
         
         if(currentUserInfo.errorMessage) {
             throw new Error("회원 정보 불러오기 실패");
         }
         
-        // 이미지 출력 예시
-        // res.status(200).send("<img src='http://localhost:5001/public/images/lion.jpg' />");
-        res.status(200).send(`<img src=http://localhost:5001/public/images/${currentUserInfo.userImage} />`);
-        // res.status(200).send(currentUserInfo);
+        res.status(200).send(currentUserInfo);
     } catch(err) {
         next(err);
     }
@@ -114,7 +104,7 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
 // 회원 정보 수정 기능
 userRouter.put("/users/:userId", loginRequired, async (req, res, next) => {
     try {
-        const userId = req.query.userId;
+        const userId = req.params.userId;
         const password = req.body.password;
         const nickName = req.body.nickName;
         const toUpdate = {
@@ -136,7 +126,7 @@ userRouter.put("/users/:userId", loginRequired, async (req, res, next) => {
 // 회원 정보 삭제 기능
 userRouter.delete("/users/:userId", loginRequired, async (req, res, next) => {
     try {
-        const userId = req.query.userId;
+        const userId = req.params.userId;
         const deleteUser = await userService.delUser(userId);
 
         if (deleteUser.errorMessage) {
