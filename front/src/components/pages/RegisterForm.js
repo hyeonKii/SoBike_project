@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
-import * as Api from "../../api";
+import * as Api from "../../apiMock";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -16,6 +16,9 @@ function RegisterForm() {
   //useState로 name 상태를 생성함.
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+    //useState로 nickname 상태를 생성함.
+  const [nickname, setNickname] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -78,13 +81,13 @@ function RegisterForm() {
                 </Form.Text>
               )}
             </Form.Group>
-            <Form.Group controlId="registerName" className="mt-3">
+            <Form.Group controlId="registerNickname" className="mt-3">
                   <Form.Label>닉네임</Form.Label>
                   <Form.Control
                     type="text"
                     autoComplete="off"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
                   />
                   {!isLastNameValid && (
                     <Form.Text className="text-success">
@@ -94,7 +97,7 @@ function RegisterForm() {
                 </Form.Group>
             <Row>
               <Col>
-                <Form.Group controlId="registerName" className="mt-3">
+                <Form.Group controlId="registerLastName" className="mt-3">
                   <Form.Label>성</Form.Label>
                   <Form.Control
                     type="text"
@@ -110,7 +113,7 @@ function RegisterForm() {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="registerName" className="mt-3">
+                <Form.Group controlId="registerFirstName" className="mt-3">
                   <Form.Label>이름</Form.Label>
                   <Form.Control
                     type="text"
