@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {Container,Row,Form,ButtonGroup,Button,Col,Table} from "react-bootstrap";
 import {TbLayoutGrid,TbMenu2,TbTriangle,TbTriangleInverted} from "react-icons/tb";
-import * as Api from "../../apiMock";
+import * as Api from "../../api";
 import ReviewCard from "./ReviewCard";
 import { UserStateContext } from "../../App";
 import UserTable from "./ReviewTable";

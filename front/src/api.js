@@ -19,7 +19,7 @@ async function get(endpoint, params = "") {
 }
 
 async function post(endpoint, data) {
-
+  console.log(`데이터 위치는 api: `,data);
 
   const bodyData = JSON.stringify(data);
   console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");

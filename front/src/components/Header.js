@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Nav, Modal, Form, Button } from "react-bootstrap";
 import { UserStateContext, DispatchContext } from "../App";
 
-import * as Api from "../apiMock";
+import * as Api from "../api";
 
 function Header() {
   const navigate = useNavigate();
@@ -14,7 +14,12 @@ function Header() {
 
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setEmail("");
+    setPassword("");
+    setLoginFail(true);
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   //useState로 email 상태를 생성함.
@@ -41,12 +46,13 @@ function Header() {
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const isFormValid = isEmailValid && isPasswordValid;
 
+  //로그인 버튼 클릭시
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", {
+      const res = await Api.post("users/login", {
         email,
         password,
       });
@@ -61,10 +67,12 @@ function Header() {
         type: "LOGIN_SUCCESS",
         payload: user,
       });
+
       //input 정보 초기화
       setEmail("");
       setPassword("");
       handleClose();
+
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (err) {
@@ -143,7 +151,7 @@ function Header() {
                 type="email"
                 autoComplete="on"
                 value={email}
-                autoFocus 
+                autoFocus
                 onChange={(e) => setEmail(e.target.value)}
               />
               {!isEmailValid && (
@@ -176,11 +184,7 @@ function Header() {
               <Button variant="secondary" onClick={handleClose}>
                 닫기
               </Button>
-              <Button
-                type="submit"
-                variant="primary"
-                disabled={!isFormValid}
-              >
+              <Button type="submit" variant="primary" disabled={!isFormValid}>
                 로그인
               </Button>
             </Modal.Footer>

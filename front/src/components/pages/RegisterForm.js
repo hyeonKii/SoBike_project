@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
-import * as Api from "../../apiMock";
+import * as Api from '../../api'
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function RegisterForm() {
   const [lastName, setLastName] = useState("");
 
     //useState로 nickname 상태를 생성함.
-  const [nickname, setNickname] = useState("");
+  const [nickName, setNickName] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -48,11 +48,12 @@ function RegisterForm() {
 
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("user/register", {
+      await Api.post("users", {
         email,
         password,
         firstName,
         lastName,
+        nickName,
       });
 
       // 메인 페이지로 이동함.
@@ -86,8 +87,8 @@ function RegisterForm() {
                   <Form.Control
                     type="text"
                     autoComplete="off"
-                    value={nickname}
-                    onChange={(e) => setNickname(e.target.value)}
+                    value={nickName}
+                    onChange={(e) => setNickName(e.target.value)}
                   />
                   {!isLastNameValid && (
                     <Form.Text className="text-success">

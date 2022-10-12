@@ -2,9 +2,9 @@ import React from "react";
 
 import "./Sections.css";
 
-import girl from "../../images/girl.jpg";
-import oldwoman from "../../images/oldwoman.jpg";
-import people from "../../images/people.jpg";
+// import girl from "../../images/girl.jpg";
+// import oldwoman from "../../images/oldwoman.jpg";
+// import people from "../../images/people.jpg";
 
 const Sections = () => {
   return (

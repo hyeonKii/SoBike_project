@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {Form, Col, Row } from "react-bootstrap";
-import * as Api from "../../apiMock";
+import * as Api from "../../api";
 
 
 
