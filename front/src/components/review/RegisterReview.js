@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Button,Col,Form,Modal,Card} from 'react-bootstrap';
-import * as Api from "../../apiMock";
+import * as Api from "../../api";
 
 function RegisterReview() {
   const [show, setShow] = useState(false);
