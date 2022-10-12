@@ -1,0 +1,21 @@
+/*모든 컨텐츠의 마진, 패딩 0*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*컨텐츠 크기는 border을 포함, 
+브라우저에서 텍스트 선택 불가, 
+body 범위 확인용, 
+폰트 사이즈*/
+body {
+  box-sizing: border-box;
+  user-select: none;
+  color: #293845;
+  font-size: 16px;
+}
+
+/*스크롤은 하면서 스크롤바는 숨기기*/
+::-webkit-scrollbar { 
+  display: none;
+}
