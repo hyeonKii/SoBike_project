@@ -8,6 +8,7 @@ import './App.css'
 
 import Header from "./components/Header";
 import Main from "./components/pages/Main";
+import Introduce from "./components/introduce/Introduce";
 import Review from "./components/review/Review"
 import RegisterForm from "./components/pages/RegisterForm";
 
@@ -60,6 +61,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/introduce" element=
+                {<Introduce />}/>
             <Route path="/review" element={<Review />} />
             <Route path="/register" element={<RegisterForm />} />
           </Routes>
