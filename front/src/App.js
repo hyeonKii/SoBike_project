@@ -8,6 +8,7 @@ import './App.css'
 
 import Header from "./components/Header";
 import Main from "./components/pages/Main";
+import Review from "./components/review/Review"
 import RegisterForm from "./components/pages/RegisterForm";
 
 export const UserStateContext = createContext(null);
@@ -59,6 +60,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/review" element={<Review />} />
             <Route path="/register" element={<RegisterForm />} />
           </Routes>
         </Router>

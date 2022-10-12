@@ -1,0 +1,34 @@
+.search-name{
+    border-radius: 10px;
+    width: 250px;
+    padding-left: 10px;
+}
+.table-header{
+    background-color: #6da196;
+}
+.network-table{
+    text-align: center;
+}
+.triangle-btn-asc:hover{
+    cursor: pointer;
+    color: #bad9ed;
+}
+.triangle-btn-asc:focus{
+    border: 2px white;
+   
+}
+.triangle-btn-desc:hover{
+    cursor: pointer;
+    color: #bad9ed;
+}
+
+.Text{
+    width: 100%;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    color: #151618;
+    box-shadow: inset 0px -1px 0px #aaacaa;
+    padding: 12px 0;
+    margin-bottom: 12px;
+}
