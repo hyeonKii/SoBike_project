@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./models/User");
+const Review = require("./models/Review");
 
 const DB_URL = process.env.MONGODB_URL || "MongoDB 서버 주소가 설정되지 않았습니다.\n./db/index.js 파일을 확인해 주세요.";
 
@@ -18,5 +19,5 @@ db.on("error", (err) => {
     console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + err);
 });
 
-module.exports = { User };
+module.exports = { User, Review };
 
