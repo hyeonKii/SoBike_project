@@ -6,7 +6,7 @@ const path = require("path");
 
 // 라우터
 const userAuthRouter = require("./routes/userRouter");
-const reviewRouter = require("./routes/reviewouter");
+const reviewRouter = require("./routes/reviewRouter");
 
 
 // 미들웨어
@@ -16,7 +16,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 

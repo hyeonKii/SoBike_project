@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require('uuid');
 const jwt = require("jsonwebtoken");
 
-const { User } = require("../db");
+const { User, UserImage } = require("../db");
 
 const userService = {
     // 회원 가입
@@ -28,6 +28,16 @@ const userService = {
         createdNewUser.errorMessage = null;
     
         return createdNewUser;
+    },
+    // 회원(내) 이미지 생성
+    addUserImage: async (userId, fileName) => {
+        const userImage = await UserImage.create(userId, fileName);
+
+        if(!userImage) {
+            throw new Error("이미지 저장 에러");
+        }
+
+        return userImage;
     },
     // 로그인 (회원(내) 정보 찾기)
     getUser: async (email, password) => {
@@ -77,6 +87,12 @@ const userService = {
 
         return getUserInfo;
     },
+    // 회원(내) 이미지 불러오기
+    getUserImage: async (userId) => {        
+        const userImage = await UserImage.findById(userId);
+    
+        return userImage;
+    },
     // 회원(내) 정보 수정
     setUser: async (userId, toUpdate) => {
         let user = await User.findById(userId);
@@ -86,7 +102,7 @@ const userService = {
 
             return { errorMessage };
         }
-
+        
         if(user.nickName == toUpdate.nickName) {
             const errorMessage = "있는 닉네임입니다. 바꿔주세요";
 
@@ -110,11 +126,31 @@ const userService = {
         return user;
     },
     // 회원(내) 정보 삭제
+    setUserImage: async (userId, fileName) => {
+        let updateUserImage = await UserImage.findById(userId);
+
+        if(!updateUserImage) {
+            const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+
+            return { errorMessage };
+        }
+
+        if(fileName) {
+            const fieldToUpdate = "userImage";
+            const newValue = fileName;
+            
+            updateUserImage = await UserImage.update(userId, fieldToUpdate, newValue);
+        }
+        
+        return updateUserImage;
+    },
+    // 회원(내) 정보 삭제
     delUser: async (userId) => {
         const deleteUser = await User.delete(userId);
         
         return deleteUser;
-    }
+    },
+    
 }
 
 module.exports = userService;
