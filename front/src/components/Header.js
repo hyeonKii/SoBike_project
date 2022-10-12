@@ -61,6 +61,8 @@ function Header() {
         payload: user,
       });
 
+      setEmail("")
+      setPassword("")
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (err) {
@@ -165,7 +167,7 @@ function Header() {
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
-                <Button variant="primary" type="submit" disabled={!isFormValid}>
+                <Button variant="primary" type="submit" disabled={!isFormValid} onClick={handleClose}>
                   로그인
                 </Button>
               </Col>
@@ -173,22 +175,13 @@ function Header() {
 
             <Form.Group as={Row} className="mt-3 text-center">
               <Col sm={{ span: 20 }}>
-                <Button variant="light" onClick={() => navigate("/register")}>
-                  회원가입하기
+                <Button variant="secondary" onClick={handleClose}>
+                  닫기
                 </Button>
               </Col>
             </Form.Group>
           </Form>
         </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            닫기
-          </Button>
-          <Button variant="primary" disabled={!isFormValid}>
-            로그인
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
