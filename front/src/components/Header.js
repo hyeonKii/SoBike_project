@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Nav, Modal, Form, Button, Col, Row } from "react-bootstrap";
+import { Nav, Modal, Form, Button } from "react-bootstrap";
 import { UserStateContext, DispatchContext } from "../App";
 
 import * as Api from "../apiMock";
@@ -21,6 +21,8 @@ function Header() {
   const [email, setEmail] = useState("");
   //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
+  //로그인 실패 오류를 생성
+  const [loginFail, setLoginFail] = useState(true);
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -38,7 +40,6 @@ function Header() {
   //
   // 이메일과 비밀번호 조건이 동시에 만족되는지 확인함.
   const isFormValid = isEmailValid && isPasswordValid;
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,16 +61,17 @@ function Header() {
         type: "LOGIN_SUCCESS",
         payload: user,
       });
-
-      setEmail("")
-      setPassword("")
+      //input 정보 초기화
+      setEmail("");
+      setPassword("");
+      handleClose();
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
     } catch (err) {
       console.log("로그인에 실패하였습니다.\n", err);
+      setLoginFail(false);
     }
   };
-
 
   // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
   const isLogin = !!userState.user;
@@ -128,19 +130,20 @@ function Header() {
         )}
       </Nav>
 
-      <Modal show={show} onHide={handleClose} >
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>로그인</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-        <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="loginEmail">
               <Form.Label>이메일 주소</Form.Label>
               <Form.Control
                 type="email"
                 autoComplete="on"
                 value={email}
+                autoFocus 
                 onChange={(e) => setEmail(e.target.value)}
               />
               {!isEmailValid && (
@@ -149,7 +152,6 @@ function Header() {
                 </Form.Text>
               )}
             </Form.Group>
-
             <Form.Group controlId="loginPassword" className="mt-3">
               <Form.Label>비밀번호</Form.Label>
               <Form.Control
@@ -164,22 +166,24 @@ function Header() {
                 </Form.Text>
               )}
             </Form.Group>
-
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="primary" type="submit" disabled={!isFormValid} onClick={handleClose}>
-                  로그인
-                </Button>
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} className="mt-3 text-center">
-              <Col sm={{ span: 20 }}>
-                <Button variant="secondary" onClick={handleClose}>
-                  닫기
-                </Button>
-              </Col>
-            </Form.Group>
+            {!loginFail && (
+              <span>
+                아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시
+                확인해주세요.
+              </span>
+            )}
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                닫기
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={!isFormValid}
+              >
+                로그인
+              </Button>
+            </Modal.Footer>
           </Form>
         </Modal.Body>
       </Modal>
