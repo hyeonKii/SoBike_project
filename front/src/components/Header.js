@@ -14,12 +14,15 @@ function Header() {
 
   const [show, setShow] = useState(false);
 
+  //모달창 닫힘
   const handleClose = () => {
     setEmail("");
     setPassword("");
     setLoginFail(true);
     setShow(false);
   };
+  
+  //모달창 열림
   const handleShow = () => setShow(true);
 
   //useState로 email 상태를 생성함.
