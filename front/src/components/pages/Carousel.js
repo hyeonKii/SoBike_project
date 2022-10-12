@@ -39,6 +39,7 @@ const Carousel = () => {
   useEffect(() => {
     setStyle({
       marginLeft: `-${currentSlide}00%`,
+      transitionDuration: `${1}s`
     });
   }, [currentSlide]);
 

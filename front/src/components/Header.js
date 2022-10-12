@@ -3,7 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Nav, Modal, Form, Button, Col, Row } from "react-bootstrap";
 import { UserStateContext, DispatchContext } from "../App";
 
-import * as Api from "../apiMock";
+import * as Api from "../api";
+
+import Bike from "../images/Bike.jpeg";
 
 function Header() {
   const navigate = useNavigate();
@@ -45,7 +47,7 @@ function Header() {
 
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", {
+      const res = await Api.post("users/login", {
         email,
         password,
       });
@@ -82,13 +84,18 @@ function Header() {
     dispatch({ type: "LOGOUT" });
     // 기본 페이지로 돌아감.
     navigate("/");
+
+  
   };
 
   return (
     <>
       <Nav activeKey={location.pathname}>
         <Nav.Item className="me-auto mb-5">
-          <Nav.Link disabled>서비스 이름</Nav.Link>
+          <Nav.Link onClick={()=>navigate("/")}>
+            {/* 쏘바이크 */}
+            <a href=""><img className="logo" src={Bike} width="40px" height="40px"/></a>
+            </Nav.Link>
         </Nav.Item>
 
         <Nav.Item>
