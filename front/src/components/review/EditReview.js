@@ -2,15 +2,19 @@ import React, { useState, useContext } from "react";
 import { Button, Col, Form, Modal, Card } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
-function RegisterReview({ setReviews }) {
+function EditReview({ review, setIsEditing, setReviews }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const userState = useContext(UserStateContext);
+
+  //   const userState = useContext(UserStateContext);
   const [reviewForm, setReviewForm] = useState({
-    title: "",
-    contents: "",
-    locationName: "",
+    reviewId: review.reviewId,
+    title: review.title,
+    contents: review.contents,
+    locationName: review.locationName,
+    landAddress: "임시",
+    roadAddress: "임시2",
   });
   function handleOnchange(e) {
     const { name, value } = e.target;
@@ -22,23 +26,51 @@ function RegisterReview({ setReviews }) {
   const handleSubmit = async (e) => {
     // preventDefault 해주기
     e.preventDefault();
-    const userId = userState.user.userId; //로그인된 사용자 id
+    const userId = review.userId; //로그인된 사용자 id
     try {
-      const res = await Api.post("reviews", {
+      ///reviews/:reviewId
+      const review = {
+        userId: userId,
+        reviewId: reviewForm.reviewId,
+        title: reviewForm.title,
+        contents: reviewForm.contents,
+        locationName: reviewForm.locationName,
+      };
+      await Api.put(`reviews/${review.reviewId}`, {
         userId,
         ...reviewForm,
-        landAddress:"임시",
-        roadAddress:"임시2",
       });
-      setReviews((prev) => [...prev, res.data]);
+
+      setReviews((prev) => {
+        return prev.map((el) => {
+          if (el.reviewId === review.reviewId) return review;
+          else return el;
+        });
+      });
+    //   setIsEditing((prev) => !prev);
     } catch (err) {
-      console.log("등록에 실패하였습니다.", err);
+      console.log("편집에 실패하였습니다.", err);
     }
   };
-
+   
+  //삭제 기능
+  async function handleDelete() {
+    try {
+      await Api.delete(`reviews/${review.reviewId}`);
+      setReviews((arr) => {
+        const newArr = arr.filter((obj) => {
+          if (obj.reviewId === review.reviewId) return false;
+          else return true;
+        });
+        return newArr;
+      });
+    } catch (error) {
+      console.log("삭제에 실패했습니다.", error);
+    }
+  }
   return (
     <>
-      <button onClick={handleShow}>리뷰등록</button>
+      <button onClick={handleShow}>편집</button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
@@ -97,6 +129,9 @@ function RegisterReview({ setReviews }) {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
+              <Button variant="danger" onClick={handleDelete}>
+                Delete
+              </Button>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -105,4 +140,4 @@ function RegisterReview({ setReviews }) {
   );
 }
 
-export default RegisterReview;
+export default EditReview;
