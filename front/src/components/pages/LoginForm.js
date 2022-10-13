@@ -12,8 +12,6 @@ const LoginForm = () => {
   const dispatch = useContext(DispatchContext);
   const { show, setShow } = useContext(LoginContext);
 
-  console.log(`LoginForm.js`, show);
-
   //모달창 닫힘
   const handleClose = () => {
     setEmail("");

@@ -12,11 +12,10 @@ function Header() {
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
-  const { show, setShow } = useContext(LoginContext);
+  const { setShow } = useContext(LoginContext);
 
   //모달창 열림
   const handleShow = () => {
-    console.log(`Header.js handleShow`);
     setShow(true);
   };
 
@@ -59,14 +58,15 @@ function Header() {
           <Nav.Link onClick={() => navigate("/review")}>리뷰</Nav.Link>
         </Nav.Item>
 
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/mypage")}>내정보</Nav.Link>
-        </Nav.Item>
-
         {isLogin ? (
-          <Nav.Item>
-            <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-          </Nav.Item>
+          <>
+            <Nav.Item>
+              <Nav.Link onClick={() => navigate("/mypage")}>내정보</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+            </Nav.Item>
+          </>
         ) : (
           <>
             <Nav.Item>
