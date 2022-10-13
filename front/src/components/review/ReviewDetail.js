@@ -7,7 +7,7 @@ const cmnt1={
   comment : "좋아용!!",
   name : "지징"
 }
-function ReviewDetail({user}) {
+function ReviewDetail({review}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -20,9 +20,9 @@ function ReviewDetail({user}) {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        {user?.name}<br/>
-        {user?.email}<br/>
-        {user?.description}
+        {review?.title}<br/>
+        {review?.locationName}<br/>
+        {review?.contents}
         </Modal.Body>
         <Modal.Footer>
           {cmnt1.comment}
