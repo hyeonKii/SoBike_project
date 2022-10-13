@@ -14,9 +14,9 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
           />
         </Row>
-        <Card.Title>{user?.name}</Card.Title>
+        <Card.Title>{user?.nickName}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-        <Card.Text>{user?.description}</Card.Text>
+        
 
         {isEditable && (
           <Col>
@@ -43,6 +43,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
             포트폴리오
           </Card.Link>
         )}
+
       </Card.Body>
     </Card>
   );

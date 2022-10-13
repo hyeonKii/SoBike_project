@@ -3,10 +3,10 @@ import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
 function UserEditForm({ user, setIsEditing, setUser }) {
-  //useState로 name 상태를 생성함.
+  //useState로 nickName 상태를 생성함.
   const [nickName, setnickName] = useState(user.nickName);
   //useState로 email 상태를 생성함.
-  const [password, setpassword] = useState(user.password);
+  const [email, setEmail] = useState(user.email);
   //useState로 사진 업데이트.
   
   const handleSubmit = async (e) => {
@@ -15,13 +15,13 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     // "users/유저id" 엔드포인트로 PUT 요청함.
     const res = await Api.put(`users/${user.userId}`, {
       nickName,
-      password
+      email
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
     // 해당 유저 정보로 user을 세팅함.
     setUser(updatedUser);
-
+    console.log(res.data);
     // isEditing을 false로 세팅함.
     setIsEditing(false);
   };
@@ -43,8 +43,8 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             <Form.Control
               type="email"
               placeholder="이메일"
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
 
