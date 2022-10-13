@@ -17,7 +17,7 @@ userRouter.post("/users", async (req, res, next) => {
         const nickName = req.body.nickName;
         const firstName = req.body.firstName;
         const lastName = req.body.lastName;
-        const userInfo = {
+        const newUser = {
             userId,
             email,
             password,
@@ -25,9 +25,9 @@ userRouter.post("/users", async (req, res, next) => {
             firstName,
             lastName,
         }
-        const newUser = await userService.addUser(userInfo);
+        const userInfo = await userService.addUser(newUser);
 
-        if(newUser.errorMessage) {
+        if(userInfo.errorMessage) {
             throw new Error("회원가입 실패");
         }
 
@@ -70,21 +70,6 @@ userRouter.get("/users/current", loginRequired, async (req, res, next) => {
     }
 });
 
-// 회원들 정보 가져오기
-userRouter.get("/users", loginRequired, async (req, res, next) => {
-    try {
-        const getUser = await userService.getUsers();
-
-        if(getUser.errorMessage) {
-            throw new Error("회원 정보 불러오기 실패");
-        }
-
-        res.status(200).send(getUser);
-    } catch(err) {
-        next(err);
-    }
-});
-
 // 회원(내) 정보 가져오기
 userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
     try {
@@ -98,14 +83,12 @@ userRouter.get("/users/:userId", loginRequired, async (req, res, next) => {
         const currentUserImage = await userService.getUserImage(userId);
 
         if(currentUserImage !== null) {
-            currentUserInfo.userImage = "http://localhost:5001/public/images/" + currentUserImage.userImage;
+            currentUserInfo.userImage = "public/images/" + currentUserImage.userImage;
         } else {
-            currentUserInfo.userImage = "http://localhost:5001/public/images/lion.jpg";
+            currentUserInfo.userImage = "public/images/lion.jpg";
         }
         
-        // 이미지 출력 예시
-        res.status(200).send(`<img src=${currentUserInfo.userImage} />`);
-        // res.status(200).send(currentUserInfo);
+        res.status(200).send(currentUserInfo);
     } catch(err) {
         next(err);
     }
@@ -118,7 +101,6 @@ userRouter.put("/users/:userId", loginRequired, async (req, res, next) => {
         const form = new formidable.IncomingForm();
         let updateUser;
         
-
         form.parse(req, async (err, fields, files) => {
             let fileName = "";
             const password = fields.password;
@@ -138,6 +120,7 @@ userRouter.put("/users/:userId", loginRequired, async (req, res, next) => {
             
             if(originalFilename.split(".").length > 2) {
                 const name = originalFilename.split(".");
+
                 for(let i = 0; i < fileName.length-1; i++) {
                     fileName += name[i]
                 }
@@ -148,10 +131,9 @@ userRouter.put("/users/:userId", loginRequired, async (req, res, next) => {
             fileName = fileName + "-" + Date.now() + extension
 
             const oldPath = files.userFile.filepath;
-            const newPath = __dirname + "/../public/images/"+ 
-            fileName;
+            const newPath = __dirname + "/../public/images/" + fileName;
             const currentUserImage = await userService.getUserImage(userId);
-            console.log("currentUserImage : " + currentUserImage)
+
             if(currentUserImage) {
                 await userService.setUserImage(userId, fileName)
 
