@@ -10,7 +10,7 @@ import EditReview from "./EditReview";
 
 function ReviewCard({ review, isEditable,setReviews, isNetwork }) {
   const navigate = useNavigate();
-  console.log("isEditable",isEditable)
+  //console.log("isEditable",isEditable)
  
   return (
     <Card className="mb-2 ms-3 mr-5 profile-card" style={{ width: "18rem" }}>

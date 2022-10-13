@@ -52,7 +52,22 @@ function EditReview({ review, setIsEditing, setReviews }) {
       console.log("편집에 실패하였습니다.", err);
     }
   };
-
+   
+  //삭제 기능
+  async function handleDelete() {
+    try {
+      await Api.delete(`reviews/${review.reviewId}`);
+      setReviews((arr) => {
+        const newArr = arr.filter((obj) => {
+          if (obj.reviewId === review.reviewId) return false;
+          else return true;
+        });
+        return newArr;
+      });
+    } catch (error) {
+      console.log("삭제에 실패했습니다.", error);
+    }
+  }
   return (
     <>
       <button onClick={handleShow}>편집</button>
@@ -113,6 +128,9 @@ function EditReview({ review, setIsEditing, setReviews }) {
               </Button>
               <Button variant="secondary" onClick={handleClose}>
                 Close
+              </Button>
+              <Button variant="danger" onClick={handleDelete}>
+                Delete
               </Button>
             </Form.Group>
           </Form>
