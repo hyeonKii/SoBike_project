@@ -12,9 +12,11 @@ import Introduce from "./components/introduce/Introduce";
 import Review from "./components/review/Review";
 import RegisterForm from "./components/pages/RegisterForm";
 import MyPage from "./components/MyPage";
+import LoginForm from "./components/pages/LoginForm";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
+export const LoginContext = createContext(null);
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
@@ -58,17 +60,19 @@ function App() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/introduce" element=
-                {<Introduce />}/>
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/review" element={<Review />} />
-            <Route path="/register" element={<RegisterForm />} />
-          </Routes>
-        </Router>
+        <LoginContext.Provider value={{ show, setShow }}>
+          <Router>
+            <Header />
+            <LoginForm />
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/introduce" element={<Introduce />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/review" element={<Review />} />
+              <Route path="/register" element={<RegisterForm />} />
+            </Routes>
+          </Router>
+        </LoginContext.Provider>
       </UserStateContext.Provider>
     </DispatchContext.Provider>
   );
