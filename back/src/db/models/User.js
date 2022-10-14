@@ -3,7 +3,7 @@ const UserModel = require("../schemas/user");
 const User = {
     create: async (newUser) => {
         const createdNewUser = await UserModel.create(newUser);
-
+        
         return createdNewUser;
     },
     findAll: async () => {
@@ -14,12 +14,27 @@ const User = {
     findById: async (userId) => {
         const user = await UserModel.findOne({ userId });
 
-        return user;
+        const responseUserInfo = {
+            objectId: user._id,
+            userId: user.userId,
+            email: user.email,
+            nickName: user.nickName
+        }
+
+        return responseUserInfo;
     },
     findByEmail: async (email) => {
         const user = await UserModel.findOne({ email });
+        
+        if(!user) return user;
+        
+        const responseUserInfo = {
+            email: user.email,
+            password: user.password
+        };
 
-        return user;
+        return responseUserInfo;
+        
     },
     update: async (userId, fieldToUpdate, newValue) => {
         const filter = { userId };
