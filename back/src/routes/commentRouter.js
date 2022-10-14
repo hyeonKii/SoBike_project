@@ -10,7 +10,7 @@ commentRouter.post("/reviews/:reviewId/comment/:userId", async (req, res, next) 
     try {
         const reviewId = req.params.reviewId;
         const userId = req.params.userId;
-        const nickName = req.params.nickName;
+        const nickName = req.body.nickName;
         const contents = req.body.contents;
         const newComment = {
             reviewId,
