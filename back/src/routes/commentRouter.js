@@ -9,11 +9,13 @@ const commentService = require("../services/commentService")
 commentRouter.post("/reviews/:reviewId/comment/:userId", async (req, res, next) => {
     try {
         const reviewId = req.params.reviewId;
-        const userId = req.params.userId
+        const userId = req.params.userId;
+        const nickName = req.params.nickName;
         const contents = req.body.contents;
         const newComment = {
             reviewId,
             userId,
+            nickName,
             contents
         }
         const commentInfo = await commentService.addComment(newComment);

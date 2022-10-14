@@ -10,6 +10,10 @@ const CommentSchema = new Schema(
             type: String,
             required: true
         },
+        nickName: {
+            type: String,
+            required: true
+        },
         contents: {
             type: String,
             required: true
