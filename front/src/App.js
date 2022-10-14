@@ -13,6 +13,7 @@ import Review from "./components/review/Review";
 import RegisterForm from "./components/pages/RegisterForm";
 import MyPage from "./components/MyPage";
 import LoginForm from "./components/pages/LoginForm";
+import Search from "./components/search/Search";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -71,6 +72,7 @@ function App() {
               <Route path="/" element={<Main />} />
               <Route path="/introduce" element={<Introduce />} />
               <Route path="/mypage" element={<MyPage />} />
+              <Route path="/search" element={<Search />} />
               <Route path="/review" element={<Review />} />
               <Route path="/register" element={<RegisterForm />} />
             </Routes>
