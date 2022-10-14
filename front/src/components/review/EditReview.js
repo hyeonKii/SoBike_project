@@ -52,11 +52,12 @@ function EditReview({ review, setIsEditing, setReviews }) {
       console.log("편집에 실패하였습니다.", err);
     }
   };
-   
+  //console.log("review_id",review._id)
+  //console.log("review reviewId",review.reviewId)
   //삭제 기능
   async function handleDelete() {
     try {
-      await Api.delete(`reviews/${review.reviewId}`);
+      await Api.delete(`reviews/${review._id}`);  //왜 reviewId 말고 _id가 인식?
       setReviews((arr) => {
         const newArr = arr.filter((obj) => {
           if (obj.reviewId === review.reviewId) return false;
