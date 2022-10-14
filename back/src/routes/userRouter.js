@@ -109,6 +109,7 @@ userRouter.put("/users/:userId", loginRequired, async (req, res, next) => {
                 password,
                 nickName
             }
+
             updateUser = await userService.setUser(userId, toUpdate);
 
             if(updateUser.errorMessage) {

@@ -9,7 +9,17 @@ const Comment = {
     findAll: async (reviewId) => {
         const user = await CommentModel.find({ reviewId });
 
-        return user;
+        const responseUserInfo = user.map(data => {
+            return {
+                commentId: data._id,
+                reviewId: data.reviewId,
+                userId: data.userId,
+                nickName: data.nickName,
+                contents: data.contents
+            }
+        })
+
+        return responseUserInfo;
     },
     findById: async (commentId) => {
         const user = await CommentModel.find({ _id: commentId });

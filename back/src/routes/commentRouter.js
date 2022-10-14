@@ -34,7 +34,7 @@ commentRouter.post("/reviews/:reviewId/comment/:userId", async (req, res, next) 
 commentRouter.get("/reviews/:reviewId/comment", async (req, res, next) => {
     try {
         const reviewId = req.params.reviewId;
-
+  
         const reviewsInfo = await commentService.getComment(reviewId);
         
         if(reviewsInfo.errorMessage) {

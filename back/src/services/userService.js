@@ -9,7 +9,6 @@ const userService = {
     addUser: async (newUser) => {
         // 이메일 중복 확인
         const user = await User.findByEmail(newUser.email);
-
         if(user) {
             throw new Error("중복된 아이디입니다.");
         }
@@ -20,13 +19,11 @@ const userService = {
         // id 는 유니크 값 부여
         newUser.userId = uuidv4();
         newUser.password = hashedPassword;
-    
         // db에 저장
         const createdNewUser = await User.create(newUser);
-        
         // 문제가 없으면 에러메세지에 null을 넣어준다.
         createdNewUser.errorMessage = null;
-    
+        
         return createdNewUser;
     },
     // 회원(내) 이미지 생성
