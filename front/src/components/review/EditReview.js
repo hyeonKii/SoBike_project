@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Button, Col, Form, Modal, Card } from "react-bootstrap";
 import * as Api from "../../api";
-import { UserStateContext } from "../../App";
+
 function EditReview({ review, setIsEditing, setReviews }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -29,7 +29,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
     const userId = review.userId; //로그인된 사용자 id
     try {
       ///reviews/:reviewId
-      const review = {
+      const new_review = {
         userId: userId,
         reviewId: reviewForm.reviewId,
         title: reviewForm.title,
@@ -43,7 +43,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
 
       setReviews((prev) => {
         return prev.map((el) => {
-          if (el.reviewId === review.reviewId) return review;
+          if (el.reviewId === new_review.reviewId) return new_review;
           else return el;
         });
       });
