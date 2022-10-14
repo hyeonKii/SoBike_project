@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { UserStateContext, DispatchContext, LoginContext } from "../App";
 
 import { Nav } from "react-bootstrap";
+import classes from "./Header.css";
 
 import Bike from "../images/Bike.jpeg";
 
@@ -34,53 +35,62 @@ function Header() {
 
   return (
     <>
-      <Nav activeKey={location.pathname}>
-        <Nav.Item className="me-auto mb-5">
-          <Nav.Link onClick={() => navigate("/")}>
-            {/* 쏘바이크 */}
-            <a href="">
-              <img className="logo" src={Bike} width="40px" height="40px" />
-            </a>
-          </Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/introduce")}>
-            서비스 소개
-          </Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/search")}>대여소 검색</Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/review")}>리뷰</Nav.Link>
-        </Nav.Item>
-
-        {isLogin ? (
-          <>
-            <Nav.Item>
-              <Nav.Link onClick={() => navigate("/mypage")}>내정보</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-            </Nav.Item>
-          </>
-        ) : (
-          <>
-            <Nav.Item>
-              <Nav.Link onClick={handleShow}>로그인</Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link onClick={() => navigate("/register")}>
-                회원가입
-              </Nav.Link>
-            </Nav.Item>
-          </>
-        )}
-      </Nav>
+      <header className='header'>
+        <nav>
+          <ul>
+            <li>
+              <NavLink activeClassName={classes.active} to="/">
+                {/* 쏘바이크 */}
+                <a href="">
+                  <img className="logo" src={Bike} width="40px" height="40px" />
+                </a>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName={classes.active} to="/introduce">
+                서비스 소개
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName={classes.active} to="/introduce">
+                대여소 검색
+              </NavLink>
+            </li>
+            <li>
+              <NavLink activeClassName={classes.active} to="/review">
+                리뷰
+              </NavLink>
+            </li>
+            {isLogin ? (
+              <>
+                <li>
+                  <NavLink activeClassName={classes.active} to="/mypage">
+                    내정보
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeClassName={classes.active} onClick={logout}>
+                    로그아웃
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <NavLink activeClassName={classes.active} onClick={handleShow}>
+                    로그인
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink activeClassName={classes.active}  to="/register">
+                    회원가입
+                  </NavLink>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+      </header>
     </>
   );
 }

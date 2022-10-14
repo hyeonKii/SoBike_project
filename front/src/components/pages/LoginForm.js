@@ -92,7 +92,7 @@ const LoginForm = () => {
       });
 
       //아이디 저장 체크시 LS_KEY_ID에 email 저장
-      if (saveID) localStorage.setItem(LS_KEY_ID, email);
+      if (saveID) localStorage.setItem(LS_KEY_ID, JSON.stringify(email));
 
       //input 정보 초기화
       setEmail("");
