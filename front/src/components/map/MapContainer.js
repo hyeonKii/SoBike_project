@@ -81,7 +81,7 @@ const MapContainer = (props) => {
       };
     }
 
-    for (const i = 0; i < bikeData.length; i++) {
+    for (let i = 0; i < bikeData.length; i++) {
       // 마커가 표시될 위치입니다
       const markerPosition = new kakao.maps.LatLng(bikeData[i][0], bikeData[i][1]);
 
