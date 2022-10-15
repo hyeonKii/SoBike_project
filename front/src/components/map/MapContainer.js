@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+import * as Api from "../../api";
 
 const { kakao } = window; //스크립트로 심은 kakao maps api를 window전역 객체에서 뽑아 사용
 const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭하면 장소명을 표출할 인포윈도우
@@ -6,8 +8,12 @@ const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭
 // 지도를 표시할 div
 const MapContainer = (props) => {
   const myMap = useRef("");
+  const [loadedPlaces, setLoadedPlaces] = useState("");
 
   useEffect(() => {
+    Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
+    console.log(loadedPlaces)
+
     const container = myMap.current; //지도를 담을 영역의 DOM 레퍼런스
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
@@ -18,7 +24,7 @@ const MapContainer = (props) => {
 
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
     //--------------------------------------------------------------------------
-    
+
     // 마커 클러스터러를 생성합니다
     const clusterer = new kakao.maps.MarkerClusterer({
       map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
@@ -68,7 +74,11 @@ const MapContainer = (props) => {
     //--------------------------------------------------------------------------------
     const markers = [];
     const locationData = [
-      [37.53439, 126.869598, '<div style="padding:5px">목동3단지 시내버스정류장</div>'],
+      [
+        37.53439,
+        126.869598,
+        '<div style="padding:5px">목동3단지 시내버스정류장</div>',
+      ],
     ];
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
     function makeOverListener(map, marker, infowindow) {
@@ -85,7 +95,10 @@ const MapContainer = (props) => {
 
     for (let i = 0; i < locationData.length; i++) {
       // 마커가 표시될 위치입니다
-      const markerPosition = new kakao.maps.LatLng(locationData[i][0], locationData[i][1]);
+      const markerPosition = new kakao.maps.LatLng(
+        locationData[i][0],
+        locationData[i][1]
+      );
 
       // 마커를 생성합니다
       const marker = new kakao.maps.Marker({

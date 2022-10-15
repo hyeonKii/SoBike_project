@@ -6,23 +6,23 @@ const { User, UserImage } = require("../db");
 
 const userService = {
     // 회원 가입
-    addUser: async (newUser) => {
+    addUser: async (userInfo) => {
         // 이메일 중복 확인
-        const user = await User.findByEmail(newUser.email);
+        const user = await User.findByEmail(userInfo.email);
 
         if(user) {
             throw new Error("중복된 아이디입니다.");
         }
         
         // 비밀번호 해쉬화
-        const hashedPassword = await bcrypt.hash(newUser.password, 10);
+        const hashedPassword = await bcrypt.hash(userInfo.password, 10);
     
         // id 는 유니크 값 부여
-        newUser.userId = uuidv4();
-        newUser.password = hashedPassword;
+        userInfo.userId = uuidv4();
+        userInfo.password = hashedPassword;
     
         // db에 저장
-        const createdNewUser = await User.create(newUser);
+        const createdNewUser = await User.create(userInfo);
         
         // 문제가 없으면 에러메세지에 null을 넣어준다.
         createdNewUser.errorMessage = null;
