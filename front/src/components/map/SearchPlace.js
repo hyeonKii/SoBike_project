@@ -16,7 +16,7 @@ const SearchPlace = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await Api.get("bicycles/location").then((res) => setPlace(res.data));
+    // await Api.get("bicycles/location").then((res) => setPlace(res.data));
 
     //place의 값을 입력값으로
     setPlace(inputText);
