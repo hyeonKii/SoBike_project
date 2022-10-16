@@ -1,0 +1,23 @@
+
+.Container {
+    display: flex;
+    width: 1000px;
+  }
+  
+  .text1 {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1.4;
+  }
+  .text2 {
+    width: 600px;
+    font-size: 18px;
+    margin-top: 24px;
+    line-height: 1.7;
+  }
+  
+  .chartDeliver {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 100px;
+  }
