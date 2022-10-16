@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
+import "./RegisterForm.css";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function RegisterForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-    //useState로 nickname 상태를 생성함.
+  //useState로 nickname 상태를 생성함.
   const [nickName, setNickName] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
@@ -41,7 +42,11 @@ function RegisterForm() {
 
   // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
   const isFormValid =
-    isEmailValid && isPasswordValid && isPasswordSame && isFirstNameValid && isLastNameValid;
+    isEmailValid &&
+    isPasswordValid &&
+    isPasswordSame &&
+    isFirstNameValid &&
+    isLastNameValid;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +70,8 @@ function RegisterForm() {
   };
 
   return (
-    <Container>
+    <Container fluid className="p-0">
+      <div className="register-div"></div>
       <Row className="justify-content-md-center mt-5">
         <Col lg={8}>
           <Form onSubmit={handleSubmit}>
@@ -84,19 +90,19 @@ function RegisterForm() {
               )}
             </Form.Group>
             <Form.Group controlId="registerNickname" className="mt-3">
-                  <Form.Label>닉네임</Form.Label>
-                  <Form.Control
-                    type="text"
-                    autoComplete="off"
-                    value={nickName}
-                    onChange={(e) => setNickName(e.target.value)}
-                  />
-                  {!isLastNameValid && (
-                    <Form.Text className="text-success">
-                      닉네임은 1글자 이상으로 설정해 주세요.
-                    </Form.Text>
-                  )}
-                </Form.Group>
+              <Form.Label>닉네임</Form.Label>
+              <Form.Control
+                type="text"
+                autoComplete="off"
+                value={nickName}
+                onChange={(e) => setNickName(e.target.value)}
+              />
+              {!isLastNameValid && (
+                <Form.Text className="text-success">
+                  닉네임은 1글자 이상으로 설정해 주세요.
+                </Form.Text>
+              )}
+            </Form.Group>
             <Row>
               <Col>
                 <Form.Group controlId="registerLastName" className="mt-3">

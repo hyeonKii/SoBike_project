@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 import { UserStateContext, DispatchContext, LoginContext } from "../App";
 
-import { Nav } from "react-bootstrap";
+import { throttle } from "lodash";
 
-import Bike from "../images/Bike.jpeg";
+import classes from "./Header.css";
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -31,57 +30,104 @@ function Header() {
     // 기본 페이지로 돌아감.
     navigate("/");
   };
-
+  //-----------------------------------------------------
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", throttle(updateScroll, 300));
+    return () => {
+      window.removeEventListener("scroll", throttle(updateScroll, 300));
+    };
+  }, []);
+  //--------------------------------------------
   return (
-    <>
-      <Nav activeKey={location.pathname}>
-        <Nav.Item className="me-auto mb-5">
-          <Nav.Link onClick={() => navigate("/")}>
-            {/* 쏘바이크 */}
-            <a href="">
-              <img className="logo" src={Bike} width="40px" height="40px" />
-            </a>
-          </Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/introduce")}>
-            서비스 소개
-          </Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/search")}>대여소 검색</Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link onClick={() => navigate("/review")}>리뷰</Nav.Link>
-        </Nav.Item>
-
-        {isLogin ? (
-          <>
-            <Nav.Item>
-              <Nav.Link onClick={() => navigate("/mypage")}>내정보</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-            </Nav.Item>
-          </>
-        ) : (
-          <>
-            <Nav.Item>
-              <Nav.Link onClick={handleShow}>로그인</Nav.Link>
-            </Nav.Item>
-
-            <Nav.Item>
-              <Nav.Link onClick={() => navigate("/register")}>
-                회원가입
-              </Nav.Link>
-            </Nav.Item>
-          </>
-        )}
-      </Nav>
-    </>
+    <header className={scrollPosition < 60 ? "header" : "header-opacity"}>
+      <div className="logo">
+        <NavLink
+          className={(navData) => (navData.isActive ? classes.active : "")}
+          to="/"
+        >
+          So Bike
+        </NavLink>
+      </div>
+      <nav className="nav">
+        <ul>
+          <li>
+            <NavLink
+              className={(navData) => (navData.isActive ? classes.active : "")}
+              to="/introduce"
+            >
+              서비스 소개
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={(navData) => (navData.isActive ? classes.active : "")}
+              to="/search"
+            >
+              대여소 검색
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={(navData) => (navData.isActive ? classes.active : "")}
+              to="/review"
+            >
+              리뷰
+            </NavLink>
+          </li>
+          {isLogin ? (
+            <>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  to="/mypage"
+                >
+                  내정보
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  onClick={logout}
+                >
+                  로그아웃
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  onClick={handleShow}
+                >
+                  로그인
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive ? classes.active : ""
+                  }
+                  to="/register"
+                >
+                  회원가입
+                </NavLink>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
+    </header>
   );
 }
 
