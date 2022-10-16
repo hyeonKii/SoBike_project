@@ -26,7 +26,7 @@ userAuthRouter.post("/", async (req, res, next) => {
 userAuthRouter.post("/login", async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const userLoginInfo = await userAuthService.getUser({email, password});
+        const userLoginInfo = await userAuthService.getUser(email, password);
 
         if(userLoginInfo.errorMessage) {
             throw new Error("로그인실패");

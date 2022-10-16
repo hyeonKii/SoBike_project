@@ -29,16 +29,16 @@ const userAuthService = {
         return createdNewUser;
     },
     // 로그인 (회원(내) 정보 찾기)
-    getUser: async (user) => {
+    getUser: async (email, password) => {
         // 이메일 존재 확인
-        const userInfo = await User.findByEmail(user.email);
+        const userInfo = await User.findByEmail(email);
 
         if(!userInfo) {
             throw new Error("중복된 아이디입니다.");
         }
 
         const currentPasswordHash = userInfo.password;
-        const isPasswordcurrent = await bcrypt.compare(user.password, currentPasswordHash);
+        const isPasswordcurrent = await bcrypt.compare(password, currentPasswordHash);
         
         if(!isPasswordcurrent) {
             const errorMessage = "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
