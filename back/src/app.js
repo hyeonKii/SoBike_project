@@ -6,7 +6,6 @@ import { errorMiddleware } from "./middlewares/errorMiddleware";
 
 import { userAuthRouter } from "./routes/userRouter";
 import { reviewRouter } from "./routes/reviewRouter";
-import { commentRouter } from "./routes/commentRouter";
 
 const app = express();
 
@@ -17,8 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use("/users", userAuthRouter);
-app.use("/", reviewRouter);
-app.use("/", commentRouter);
+app.use("/reviews", reviewRouter);
 
 app.get("/", (req, res) => {
     res.send("기본적인 페이지 접속을 하셨습니다. 파이팅!");

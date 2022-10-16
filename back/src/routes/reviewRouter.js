@@ -1,11 +1,11 @@
 import { Router } from "express";
 
 import { loginRequired } from "../middlewares/loginRequired";
-import reviewService from "../services/reviewService";
+import { reviewService } from "../services/reviewService";
 
 const reviewRouter = Router();
 
-reviewRouter.post("/reviews",  async (req, res, next) => {
+reviewRouter.post("/", loginRequired, async (req, res, next) => {
     try{
         const userId = req.body.userId??null;
         const title = req.body.title ?? null;
@@ -13,7 +13,6 @@ reviewRouter.post("/reviews",  async (req, res, next) => {
         const locationName = req.body.locationName??null;
         const landAddress = req.body.landAddress??null;
         const roadAddress = req.body.roadAddress??null;
-
         const newReview = await reviewService.addReview({
             userId,
             title,
@@ -27,13 +26,13 @@ reviewRouter.post("/reviews",  async (req, res, next) => {
             throw new Error(newReview.errorMessage);
         }
 
-    res.status(200).json(newReview);
+    res.status(201).json(newReview);
     }catch (error) {
         next(error);
     }
 });
 
-reviewRouter.get("/reviews", async (req, res, next)=> {
+reviewRouter.get("/", async (req, res, next)=> {
     try{
         // console.log("ㅇㄴㅁㄹㄴㅇ")
         const reviews = await reviewService.getReviews();
@@ -44,7 +43,7 @@ reviewRouter.get("/reviews", async (req, res, next)=> {
     }
 });
 
-reviewRouter.get("/reviews/:reviewId", async (req, res, next) => {
+reviewRouter.get("/:reviewId", async (req, res, next) => {
     try{
 
         const reviewId = req.params.reviewId;
@@ -61,7 +60,7 @@ reviewRouter.get("/reviews/:reviewId", async (req, res, next) => {
 
 })
 
-reviewRouter.put("/reviews/:reviewId", async (req, res, next)=> {
+reviewRouter.put("/:reviewId", async (req, res, next)=> {
     try {
         const reviewId = req.params.reviewId;
         const title = req.body.title?? null;
@@ -81,7 +80,7 @@ reviewRouter.put("/reviews/:reviewId", async (req, res, next)=> {
     }
 });
 
-reviewRouter.delete("/reviews/:reviewId",  async(req, res, next) => {
+reviewRouter.delete("/:reviewId",  async(req, res, next) => {
     try{
         const reviewId = req.params.reviewId;
         // console.log("reviewId: ", reviewId)

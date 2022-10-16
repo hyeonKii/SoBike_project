@@ -1,7 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
 const ReviewSchema = new Schema(
     {
+        _id: {
+            type: String,
+            default: () => String(new Types.ObjectId())
+        },
         userId: {
             type: String,
             required: true
