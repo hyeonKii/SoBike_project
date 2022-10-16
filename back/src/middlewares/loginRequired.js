@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const loginRequired = (req, res, next) => {
     const userToken = req.headers["authorization"]?.split(" ")[1] ?? "null";
@@ -24,4 +24,4 @@ const loginRequired = (req, res, next) => {
     }
 };
 
-module.exports = { loginRequired };
+export { loginRequired };

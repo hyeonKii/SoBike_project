@@ -1,4 +1,4 @@
-const ReviewModel = require( "../schemas/review");
+import { ReviewModel } from "../schemas/review";
 
 const Review =  {
     create : async ({newReview}) => {
@@ -60,4 +60,4 @@ const Review =  {
 
 };
 
-module.exports =  Review;
+export { Review };

@@ -1,4 +1,4 @@
-const CommentModel = require("../schemas/comment");
+import { CommentModel } from "../schemas/comment";
 
 const Comment = {
     create: async (newComment) => {
@@ -45,4 +45,4 @@ const Comment = {
     }
 };
 
-module.exports = Comment;
+export { Comment };

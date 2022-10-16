@@ -1,9 +1,9 @@
-// 모듈
-const commentRouter = require("express").Router();
+import { Router } from "express";
 
-const { loginRequired } = require("../middlewares/loginRequired");
-const commentService = require("../services/commentService")
+import { loginRequired } from "../middlewares/loginRequired";
+import { commentService } from "../services/commentService";
 
+const commentRouter = Router();
 
 // 댓글 등록
 commentRouter.post("/reviews/:reviewId/comment/:userId", async (req, res, next) => {
@@ -80,4 +80,4 @@ commentRouter.delete("/reviews/comment/:commentId", async (req, res, next) => {
     }
 });
 
-module.exports = commentRouter;
+export { commentRouter };

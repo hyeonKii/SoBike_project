@@ -1,17 +1,12 @@
-// 모듈
-const cors = require("cors");
-const express = require("express");
-const static = require("serve-static");
-const path = require("path");
+import cors from "cors";
+import express from "express";
+import path from "path";
 
-// 라우터
-const userAuthRouter = require("./routes/userRouter");
-const reviewRouter = require("./routes/reviewRouter");
-const commentRouter = require("./routes/commentRouter");
+import { errorMiddleware } from "./middlewares/errorMiddleware";
 
-
-// 미들웨어
-const errorMiddleware = require("./middlewares/errorMiddleware");
+import { userAuthRouter } from "./routes/userRouter";
+import { reviewRouter } from "./routes/reviewRouter";
+import { commentRouter } from "./routes/commentRouter";
 
 const app = express();
 
@@ -21,17 +16,14 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-app.use("/", userAuthRouter);
+app.use("/users", userAuthRouter);
 app.use("/", reviewRouter);
 app.use("/", commentRouter);
 
-// 기본 페이지
 app.get("/", (req, res) => {
-    // throw new Error("강제 에러 한 번 해봤습니다.");
     res.send("기본적인 페이지 접속을 하셨습니다. 파이팅!");
 });
 
-// 에러났을 경우 실행.
 app.use(errorMiddleware);
 
-module.exports = app;
+export { app };

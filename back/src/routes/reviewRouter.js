@@ -1,9 +1,9 @@
-const express = require("express");
-// const reviewRouter = require("express").Router();
-// const { login_required } = require( "../middlewares/login_required");
-const reviewService = require("../services/reviewService");
+import { Router } from "express";
 
-const reviewRouter = express.Router();
+import { loginRequired } from "../middlewares/loginRequired";
+import reviewService from "../services/reviewService";
+
+const reviewRouter = Router();
 
 reviewRouter.post("/reviews",  async (req, res, next) => {
     try{
@@ -96,4 +96,4 @@ reviewRouter.delete("/reviews/:reviewId",  async(req, res, next) => {
     }
 });
 
-module.exports = reviewRouter;
+export { reviewRouter };
