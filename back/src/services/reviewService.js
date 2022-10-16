@@ -1,4 +1,4 @@
-const { Review } = require("../db")
+import { Review } from "../db";
 
 const reviewService = {
      addReview: async ({userId, title, contents, locationName, landAddress, roadAddress}) => {
@@ -54,4 +54,4 @@ const reviewService = {
     }
 };
 
-module.exports = reviewService;
+export { reviewService };

@@ -1,58 +1,64 @@
-const UserModel = require("../schemas/user");
+import { UserModel } from "../schemas/user";
 
 const User = {
-    create: async (newUser) => {
-        const createdNewUser = await UserModel.create(newUser);
+    create: async (newUserInfo) => {
+        const createdNewUserInfo = await UserModel.create(newUserInfo);
         
-        return createdNewUser;
-    },
-    findAll: async () => {
-        const user = await UserModel.find();
-
-        return user;
+        return createdNewUserInfo;
     },
     findById: async (userId) => {
-        const user = await UserModel.findOne({ userId });
+        let userInfo = await UserModel.findById({ _id: userId });
 
-        const responseUserInfo = {
-            objectId: user._id,
-            userId: user.userId,
-            email: user.email,
-            nickName: user.nickName
+        if(userInfo) {
+            userInfo = {
+                userId: userInfo._id,
+                email: userInfo.email,
+                nickName: userInfo.nickName
+            }
         }
 
-        return responseUserInfo;
+        return userInfo;
     },
     findByEmail: async (email) => {
-        const user = await UserModel.findOne({ email });
-        
-        if(!user) return user;
-        
-        const responseUserInfo = {
-            email: user.email,
-            password: user.password
-        };
+        let userInfo = await UserModel.findOne({ email });
 
-        return responseUserInfo;
+        if(userInfo) {
+            userInfo = {
+                userId: userInfo._id,
+                email: userInfo.email,
+                password: userInfo.password,
+                nickName: userInfo.nickName
+            }
+        }
+        
+        return userInfo;
         
     },
     update: async (userId, fieldToUpdate, newValue) => {
-        const filter = { userId };
-        const update = { [fieldToUpdate] : newValue };
+        const filter = { _id: userId };
+        const update = { [fieldToUpdate]: newValue };
         const option = { returnOriginal: false };
-        const user = await UserModel.findOneAndUpdate(
+        let userInfo = await UserModel.findOneAndUpdate(
             filter,
             update,
             option
         );
 
-        return user;
+        if(userInfo) {
+            userInfo = {
+                userId: userInfo._id,
+                email: userInfo.email,
+                nickName: userInfo.nickName
+            }
+        }
+        
+        return userInfo;
     },
     delete: async (userId) => {
-        const user = await UserModel.deleteOne({ userId });
-
-        return user;
+        const deletedUserInfo = await UserModel.findOneAndDelete({ _id: userId });
+        
+        return deletedUserInfo;
     }
 }
 
-module.exports = User;
+export { User };

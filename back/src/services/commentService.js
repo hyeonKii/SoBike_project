@@ -1,4 +1,4 @@
-const { Comment }  = require("../db");
+import { Comment } from "../db";
 
 const commentService = {
     addComment: async (newComment) => {
@@ -42,4 +42,4 @@ const commentService = {
     },
 }
 
-module.exports = commentService;
+export { commentService };

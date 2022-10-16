@@ -1,12 +1,12 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const ImageSchema = new Schema(
+const UserImageSchema = new Schema(
     {
         userId: {
             type: String,
             required: true
         },
-        userImage: {
+        image: {
             type: String,
             required: true
         },
@@ -16,6 +16,6 @@ const ImageSchema = new Schema(
     }
 );
 
-const ImageModel = model("UserImage", ImageSchema);
+const UserImageModel = model("UserImage", UserImageSchema);
 
-module.exports = ImageModel;
+export { UserImageModel }
