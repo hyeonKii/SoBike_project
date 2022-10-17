@@ -1,4 +1,4 @@
-import { ReviewModel } from "../schemas/review";
+const ReviewModel = require( "../schemas/review");
 
 const Review =  {
     create : async ({newReview}) => {
@@ -12,6 +12,7 @@ const Review =  {
         const review = await ReviewModel.findOne({_id: reviewId});
         
         return {reviewId: review._id,
+            email: review.email,
             userId: review.userId,
             title: review.title,
             contents: review.contents,
@@ -31,7 +32,7 @@ const Review =  {
             update,
             option
         );
-        // console.log(updatedReview)
+        console.log(updatedReview)
         return updatedReview;
     },
 
@@ -41,6 +42,7 @@ const Review =  {
 
         const reviewList = reviews.map((review)=>{
             return {reviewId: review._id,
+                email: review.email,
                 userId: review.userId,
                 title: review.title,
                 contents: review.contents,
@@ -60,4 +62,4 @@ const Review =  {
 
 };
 
-export { Review };
+module.exports =  Review;
