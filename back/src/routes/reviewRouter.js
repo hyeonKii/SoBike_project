@@ -79,7 +79,7 @@ reviewRouter.put("/:reviewId",  async (req, res, next)=> {
             throw new Error(updatedReview.errorMessage);
         }
 
-        res.status(200).json(updatedReview);
+        res.status(201).json(updatedReview);
     }catch(err){
         next(err);
     }
@@ -114,7 +114,7 @@ reviewRouter.post("/:reviewId/comments", loginRequired, async (req, res, next) =
             throw new Error("댓글 등록에 실패하였습니다.")
         }
 
-        res.status(200).json(commentInfo);
+        res.status(201).json(commentInfo);
     } catch(err) {
         next(err);
     }
@@ -148,7 +148,7 @@ reviewRouter.put("/:reviewId/comments/:commentId", loginRequired, async (req, re
             throw new Error("댓글 수정을 실패하였습니다.")
         }
 
-        res.status(200).json(commentInfo);
+        res.status(201).json(commentInfo);
     } catch(err) {
         next(err);
     }
