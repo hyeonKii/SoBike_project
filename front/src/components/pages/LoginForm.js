@@ -109,7 +109,12 @@ const LoginForm = () => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} onSubmit={handleSubmit}>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        onSubmit={handleSubmit}
+        style={{ zIndex: 99999 }}
+      >
         <Modal.Header closeButton>
           <Modal.Title>로그인</Modal.Title>
         </Modal.Header>
