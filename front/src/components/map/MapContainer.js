@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import * as Api from "../../api";
+import bikeDatas from './bikeDatas.json'
 
 const { kakao } = window; //스크립트로 심은 kakao maps api를 window전역 객체에서 뽑아 사용
 const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭하면 장소명을 표출할 인포윈도우
@@ -18,11 +19,18 @@ const MapContainer = (props) => {
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(37.566535, 126.9779692), //지도의 중심좌표.
-      level: 3, //지도의 레벨(확대, 축소 정도)
+      level: 5, //지도의 레벨(확대, 축소 정도)
       mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
     };
 
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+    const getInfo = () => {
+      // 지도의 현재 중심좌표를 얻어옵니다 
+      const center = map.getCenter();
+      console.log('현재 중심좌표', center);
+    };
+    getInfo()
     //--------------------------------------------------------------------------
 
     // 마커 클러스터러를 생성합니다
@@ -32,55 +40,55 @@ const MapContainer = (props) => {
       minLevel: 10, // 클러스터 할 최소 지도 레벨
     });
 
-    // HTML5의 geolocation으로 사용할 수 있는지 확인
-    if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치 확인
-      navigator.geolocation.getCurrentPosition(function (position) {
-        const lat = position.coords.latitude, // 위도
-          lon = position.coords.longitude; // 경도
+    // // HTML5의 geolocation으로 사용할 수 있는지 확인
+    // if (navigator.geolocation) {
+    //   // GeoLocation을 이용해서 접속 위치 확인
+    //   navigator.geolocation.getCurrentPosition(function (position) {
+    //     const lat = position.coords.latitude, // 위도
+    //       lon = position.coords.longitude; // 경도
 
-        console.log(`확인용: `, lat, lon);
-        const locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성, 변경
-          message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용
+    //     // 현재 위치 표시입니다.
+    //     const locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성, 변경
+    //       message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용
 
-        // 마커와 인포윈도우를 표시합니다
-        displayMarker(locPosition, message);
-      });
+    //     // 마커와 인포윈도우를 표시합니다
+    //     displayMarker(locPosition, message);
+    //   });
 
-      // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-      function displayMarker(locPosition, message) {
-        // 마커를 생성합니다
-        const marker_present = new kakao.maps.Marker({
-          map: map,
-          position: locPosition,
-        });
+    //   // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+    //   function displayMarker(locPosition, message) {
+    //     // 마커를 생성합니다
+    //     const marker_present = new kakao.maps.Marker({
+    //       map: map,
+    //       position: locPosition,
+    //     });
 
-        const iwContent = message, // 인포윈도우에 표시할 내용
-          iwRemoveable = true;
+    //     const iwContent = message, // 인포윈도우에 표시할 내용
+    //       iwRemoveable = true;
 
-        // 인포윈도우를 생성합니다
-        const infowindow = new kakao.maps.InfoWindow({
-          content: iwContent,
-          removable: iwRemoveable,
-        });
+    //     // 인포윈도우를 생성합니다
+    //     const infowindow = new kakao.maps.InfoWindow({
+    //       content: iwContent,
+    //       removable: iwRemoveable,
+    //     });
 
-        // 인포윈도우를 마커위에 표시합니다
-        infowindow.open(map, marker_present);
+    //     // 인포윈도우를 마커위에 표시합니다
+    //     infowindow.open(map, marker_present);
 
-        // 지도 중심좌표를 접속위치로 변경합니다
-        map.setCenter(locPosition);
-      }
-    }
+    //     // 지도 중심좌표를 접속위치로 변경합니다
+    //     map.setCenter(locPosition);
+    //   }
+    // }
     //--------------------------------------------------------------------------------
+    // json 파일 테이터입니다
+    const bikeData = bikeDatas.map((data, index) => {
+      return [data.latitude, data.longitude, `<div style="padding:5px">${data.address2}</div>`]
+    })
+
     const markers = [];
-    const locationData = [
-      [
-        37.53439,
-        126.869598,
-        '<div style="padding:5px">목동3단지 시내버스정류장</div>',
-      ],
-      [37.610367, 127.096873, `<div style="padding:5px">신내로 128</div>`],
-    ];
+    // json 파일 데이터를 마커에 표시합니다.
+    const locationData = bikeData;
+
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
     function makeOverListener(map, marker, infowindow) {
       return function () {
