@@ -57,7 +57,7 @@ userAuthRouter.get("/current", loginRequired, async (req, res, next) => {
 // 회원(내) 정보 가져오기
 userAuthRouter.get("/:userId", loginRequired, async (req, res, next) => {
     try {
-        const userId = req.params.userId;
+        const { userId } = req.params;
         const currentUserInfo = await userAuthService.getUserInfo(userId);
 
         if(currentUserInfo.errorMessage) {

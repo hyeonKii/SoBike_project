@@ -66,15 +66,17 @@ const userAuthService = {
         }
         
         if(getUserImage) {
-            getUserInfo.image = "public/images/" + getUserImage.image;
+            getUserInfo.image = "http://localhost:5001/public/images/" + getUserImage.image;
         } else {
-            getUserInfo.image = "public/images/lion.jpg";
+            getUserInfo.image = "http://localhost:5001/public/images/lion.jpg";
         }
         
         return getUserInfo;
     },
     // 회원(내) 정보 수정
     setUser: async (userId, fields, files) => {
+        console.log(fields)
+        console.log(files)
         // 유저 정보 수정
         const { password, nickName } = fields;
         const SALT_ROUND = 10;
@@ -163,11 +165,11 @@ const userAuthService = {
         const deletedUser = await User.delete(userId);
         const deletedUserImage = await UserImage.delete(userId);
         
-        fs.unlink(`src/public/images/${deletedUserImage}`, (err) => {
+        fs.unlink(`src/public/images/${deletedUserImage.image}`, (err) => {
             if(err) throw new Error("이미지 삭제 실패");
         })
 
-        return { ...deletedUser, deletedUserImage};
+        return { ...deletedUser, ...deletedUserImage};
     }
 }
 

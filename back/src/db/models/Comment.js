@@ -40,8 +40,8 @@ const Comment = {
 
         return comment;
     },
-    update: async (commentId, fieldToUpdate, newValue) => {
-        const filter = { _id: commentId };
+    update: async (reviewId, commentId, fieldToUpdate, newValue) => {
+        const filter = { _id: commentId, reviewId };
         const update = { [fieldToUpdate] : newValue };
         const option = { returnOriginal: false };
         const updatedComment = await CommentModel.findOneAndUpdate(
