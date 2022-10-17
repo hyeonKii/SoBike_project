@@ -7,22 +7,24 @@ import { commentService } from "../services/commentService";
 
 const reviewRouter = Router();
 
-reviewRouter.post("/", loginRequired, async (req, res, next) => {
+reviewRouter.post("/",  async (req, res, next) => {
     try{
+        console.log("ReviewBefore")
         const userId = req.body.userId??null;
+        const email = req.body.email??null;
         const title = req.body.title ?? null;
         const contents = req.body.contents??null;
         const locationName = req.body.locationName??null;
-        const landAddress = req.body.landAddress??null;
         const roadAddress = req.body.roadAddress??null;
         const newReview = await reviewService.addReview({
             userId,
+            email,
             title,
             contents,
             locationName,
-            landAddress,
             roadAddress
         });
+        console.log("ReviewAfter")
 
         if(newReview.errorMessage){
             throw new Error(newReview.errorMessage);
@@ -34,7 +36,7 @@ reviewRouter.post("/", loginRequired, async (req, res, next) => {
     }
 });
 
-reviewRouter.get("/", loginRequired, async (req, res, next)=> {
+reviewRouter.get("/",  async (req, res, next)=> {
     try{
         // console.log("ㅇㄴㅁㄹㄴㅇ")
         const reviews = await reviewService.getReviews();
@@ -45,7 +47,7 @@ reviewRouter.get("/", loginRequired, async (req, res, next)=> {
     }
 });
 
-reviewRouter.get("/:reviewId", loginRequired, async (req, res, next) => {
+reviewRouter.get("/:reviewId", async (req, res, next) => {
     try{
 
         const reviewId = req.params.reviewId;
@@ -62,13 +64,14 @@ reviewRouter.get("/:reviewId", loginRequired, async (req, res, next) => {
 
 })
 
-reviewRouter.put("/:reviewId", loginRequired, async (req, res, next)=> {
+reviewRouter.put("/:reviewId",  async (req, res, next)=> {
     try {
         const reviewId = req.params.reviewId;
         const title = req.body.title?? null;
         const contents = req.body.contents??null;
+        const locationName = req.body.locationName??null;
 
-        const toUpdate = {title, contents};
+        const toUpdate = {title, contents, locationName};
         // console.log(toUpdate)
         const updatedReview = await reviewService.setReview({reviewId, toUpdate});
 
@@ -82,7 +85,7 @@ reviewRouter.put("/:reviewId", loginRequired, async (req, res, next)=> {
     }
 });
 
-reviewRouter.delete("/:reviewId", loginRequired, async(req, res, next) => {
+reviewRouter.delete("/:reviewId",  async(req, res, next) => {
     try{
         const reviewId = req.params.reviewId;
         // console.log("reviewId: ", reviewId)
