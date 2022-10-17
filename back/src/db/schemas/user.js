@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+import { Schema, model, Types } from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
     {
-        userId: {
+        _id: {
             type: String,
-            required: true,
+            default: () => String(new Types.ObjectId())
         },
         email: {
             type: String,
@@ -32,6 +32,6 @@ const UserSchema = new mongoose.Schema(
     }
 );
 
-const UserModel = mongoose.model("User", UserSchema);
+const UserModel = model("User", UserSchema);
 
-module.exports = UserModel;
+export { UserModel };

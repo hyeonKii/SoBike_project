@@ -1,4 +1,4 @@
-const { bicycleLocation} = require("../db")
+import { bicycleLocation } from "../db";
 
 const bicycleLocationService = {
 
@@ -11,6 +11,12 @@ const bicycleLocationService = {
     getByLocationName: async ({locationName})=> {
         console.log("1sdfasdf")
         const locations = await bicycleLocation.findByLocationName({locationName});
+        console.log("service:" ,locations)
+        return locations;
+    },
+    getAddressByLocationName: async ({locationName})=> {
+        console.log("1sdfasdf")
+        const locations = await bicycleLocation.findAddressByLocationName({locationName});
         console.log("service:" ,locations)
         return locations;
     },
@@ -29,4 +35,4 @@ const bicycleLocationService = {
 }
 
 
-module.exports = bicycleLocationService;
+export { bicycleLocationService };

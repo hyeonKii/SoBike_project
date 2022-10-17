@@ -14,6 +14,7 @@ const MapContainer = (props) => {
   const [longitude, setLongitude] = useState(126.9779692);
   const [latlng, setLatlng] = useState("");
 
+  console.log('콘솔로그',latitude, longitude)
   useEffect(() => {
     // Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
     const container = myMap.current; //지도를 담을 영역의 DOM 레퍼런스
@@ -26,7 +27,7 @@ const MapContainer = (props) => {
 
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-    //--------------------------------------------------------------------------
+    //-------------------------------------------------------------------------- 클러스터(모음)
 
     // 마커 클러스터러를 생성합니다
     const clusterer = new kakao.maps.MarkerClusterer({
@@ -34,16 +35,18 @@ const MapContainer = (props) => {
       averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
       minLevel: 10, // 클러스터 할 최소 지도 레벨
     });
-
+    //--------------------------------------------------------------------------- 현재위치
     // HTML5의 geolocation으로 사용할 수 있는지 확인
     if (navigator.geolocation) {
       // GeoLocation을 이용해서 접속 위치 확인
       navigator.geolocation.getCurrentPosition(function (position) {
         const lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
+          setLatitude(lat)
+          setLongitude(lon)
         console.log('현재 위치의 위도, 경도', lat, lon)
 
-        Api.get("datas/bicycle/locationsByCurrentLocation", {lon, lat}).then((res) => console.log(res));
+        Api.get("datas/bicycle/locationsByCurrentLocation", {lon, lat}).then((res) => console.log("data 확인용",res));
           
         // 현재 위치 표시입니다.
         const locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성, 변경
@@ -77,7 +80,7 @@ const MapContainer = (props) => {
         map.setCenter(locPosition);
       }
     }
-    //--------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------json 데이터
     // json 파일 테이터입니다
     const bikeData = bikeDatas.map((data, index) => {
       return [
@@ -129,7 +132,7 @@ const MapContainer = (props) => {
 
       markers.push(marker);
 
-      kakao.maps.event.addListener(
+      kakao.maps.event.addListener( // 마커에 마우스 올리고 내렸을 때
         marker,
         "mouseover",
         makeOverListener(map, marker, infowindow)
@@ -143,15 +146,15 @@ const MapContainer = (props) => {
     // 클러스터러에 마커들을 추가합니다
     clusterer.addMarkers(markers);
 
-    //-------------------------------------------------------------
-    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-      // 클릭한 위도, 경도 정보를 가져옵니다
-      const latlng = mouseEvent.latLng;
-      setLatlng(latlng);
-      console.log("클릭한 위도와 경도", latlng.getLat(), latlng.getLng());
-    });
+    //---------------------------------------------------------------------- 클릭시 위도, 경도
+    // kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+    //   // 클릭한 위도, 경도 정보를 가져옵니다
+    //   const latlng = mouseEvent.latLng;
+    //   setLatlng(latlng);
+    //   console.log("클릭한 위도와 경도", latlng.getLat(), latlng.getLng());
+    // });
 
-    //----------------------------------------------------------------------------
+    //---------------------------------------------------------------------------- 검색 기능
     const places = new kakao.maps.services.Places(); //장소 검색 객체 생성
 
     places.keywordSearch(props.searchPlace, placesSearchCB); //키워드로 장소 검색 ()

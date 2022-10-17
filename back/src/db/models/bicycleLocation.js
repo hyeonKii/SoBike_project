@@ -31,11 +31,27 @@ const bicycleLocation =  {
         console.log("after: ", bicycleLocation)
         return bicycleLocation},
 
+    findAddressByLocationName: async ({locationName}) => {
+        // console.log(locationName)
+        // console.log(userId)
+
+        // const bicycleLocation = await bicycleLocationModel.find({"bicycleLocationName": /.*bicycleLocationName.*/});
+        const bicycleLocation = await bicycleLocationModel.find({locationName: locationName});
+    
+        // console.log("Model: ", bicycleLocation)
+        // console.log("Model LocationName: ", bicycleLocation[0].locationName)
+        // console.log("Model RoadAddress: ", bicycleLocation[0].roadAddress)
+
+
+        return {locationName: bicycleLocation[0].locationName,
+                roadAdress: bicycleLocation[0].roadAddress
+                }},
+
     findByCurrentLocations: async ({longitude, latitude}) => {
         // console.log(locationId)
         // console.log(userId)
         console.log("a")
-        const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.02, $lt:longitude+0.002}, "latitude":{$gt: latitude-0.002, $lt:latitude +0.002}});
+        const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.0015, $lt:longitude+0.0015}, "latitude":{$gt: latitude-0.0015, $lt:latitude +0.0015}});
         
         return bicycleLocation},
 

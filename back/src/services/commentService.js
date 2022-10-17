@@ -1,4 +1,4 @@
-const { Comment }  = require("../db");
+import { Comment } from "../db";
 
 const commentService = {
     addComment: async (newComment) => {
@@ -11,8 +11,8 @@ const commentService = {
 
         return getComment;
     },
-    setComment: async (commentId, contents) => {
-        const getComment = await Comment.findById(commentId);
+    setComment: async (reviewId, commentId, contents) => {
+        const getComment = await Comment.findById(reviewId, commentId);
         let setComment;
 
         if(!getComment) {
@@ -22,7 +22,7 @@ const commentService = {
         if(contents) {
             const fieldToUpdate = "contents";
             const newValue = contents;
-            setComment = await Comment.update(commentId, fieldToUpdate, newValue);
+            setComment = await Comment.update(reviewId, commentId, fieldToUpdate, newValue);
 
             if(!setComment) {
                 throw new Error("댓글 수정 실패")
@@ -31,8 +31,8 @@ const commentService = {
         
         return setComment;
     },
-    delComment: async (commentId) => {
-        const delComment = await Comment.delete(commentId);
+    delComment: async (reviewId, commentId) => {
+        const delComment = await Comment.delete(reviewId, commentId);
 
         if(!delComment) {
             throw new Error("댓글 삭제 실패")
@@ -42,4 +42,4 @@ const commentService = {
     },
 }
 
-module.exports = commentService;
+export { commentService };

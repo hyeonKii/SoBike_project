@@ -1,8 +1,8 @@
-const { Review } = require("../db")
+import { Review } from "../db";
 
 const reviewService = {
-     addReview: async ({userId, title, contents, locationName, landAddress, roadAddress}) => {
-        const newReview = {userId, title, contents, locationName, landAddress, roadAddress}
+     addReview: async ({userId, email, title, contents, locationName, roadAddress}) => {
+        const newReview = {userId, email,title, contents, locationName, roadAddress}
         const createdNewReview = await Review.create({newReview});
         // console.log(createdNewReview)
         return createdNewReview;
@@ -11,7 +11,7 @@ const reviewService = {
     getReviews: async ()=> {
         // console.log("1sdfasdf")
         const reviews = await Review.findAll();
-        // console.log("service:" ,reviews)
+        console.log("service:" ,reviews)
         return reviews;
     },
 
@@ -42,6 +42,13 @@ const reviewService = {
             review = await Review.update({ reviewId, fieldToUpdate, newValue });
         }
 
+        if (toUpdate.locationName) {
+            const fieldToUpdate = "locationName";
+            const newValue = toUpdate.locationName;
+            // console.log(newValue)
+            review = await Review.update({ reviewId, fieldToUpdate, newValue });
+        }
+
 
         return review;
     },
@@ -54,4 +61,4 @@ const reviewService = {
     }
 };
 
-module.exports = reviewService;
+export { reviewService };

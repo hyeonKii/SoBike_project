@@ -1,28 +1,32 @@
-const ImageModel = require("../schemas/userImage");
+import { UserImageModel } from "../schemas/UserImage";
 
 const UserImage = {
     create: async (userId, fileName) => {
-        const user = await ImageModel.create({userId, userImage: fileName});
+        const userImage = await UserImageModel.create({userId, image: fileName});
         
-        return user;
+        return userImage;
     },
     findById: async (userId) => {
-        const getUserImage = await ImageModel.findOne({ userId });
+        const getUserImage = await UserImageModel.findOne({ userId });
 
         return getUserImage;
     },
     update: async (userId, fieldToUpdate, newValue) => {
-        console.log("userId : " + userId)
         const filter = { userId };
         const update = { [fieldToUpdate]: newValue};
         const option = { returnOriginal: false };
-        const setUserImage = await ImageModel.findOneAndUpdate(
+        const setUserImage = await UserImageModel.findOneAndUpdate(
             filter,
             update,
             option
         );
         return setUserImage;
+    },
+    delete: async (userId) => {
+        const deletedUserInfo = await UserImageModel.findOneAndDelete({ userId });
+
+        return deletedUserInfo;
     }
 }
 
-module.exports = UserImage;
+export { UserImage };

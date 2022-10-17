@@ -1,12 +1,20 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model, Types } from "mongoose";
 
 const CommentSchema = new Schema(
     {
+        _id: {
+            type: String,
+            default: () => String(new Types.ObjectId())
+        },
         reviewId: {
             type: String,
             required: true
         },
         userId: {
+            type: String,
+            required: true
+        },
+        nickName: {
             type: String,
             required: true
         },
@@ -22,4 +30,4 @@ const CommentSchema = new Schema(
 
 const CommentModel = model("Comment", CommentSchema);
 
-module.exports = CommentModel;
+export { CommentModel };
