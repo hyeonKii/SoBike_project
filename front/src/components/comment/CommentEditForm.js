@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import {Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
-function CommentEditForm({ Currentcomment, setComments, setIsEditing }) {
+function CommentEditForm({ Currentcomment, setComments, editComments }) {
   const [commentForm, setCommentForm] = useState({
     reviewId: Currentcomment.reviewId,
     userId: Currentcomment.userId,
     contents: Currentcomment.contents,
     nickName: Currentcomment.nickName,
   });
-  
+  console.log(Currentcomment);
   function handleOnchange(e) {
     const { name, value } = e.target;
     setCommentForm((prev) => ({
@@ -21,13 +21,14 @@ function CommentEditForm({ Currentcomment, setComments, setIsEditing }) {
     e.preventDefault();
     try {
       ///reviews/comment/:commentId
-      const id = Currentcomment._id
-      await Api.put(`reviews/comment/${id}`, {
+      const id = Currentcomment.commentId
+      const rId =Currentcomment.reviewId
+      await Api.put(`reviews/${rId}/comments/${id}`, {
         id,
         ...commentForm,
       });
       const comment = {
-        _id: id,
+        commentId: id,
         reviewId : commentForm.reviewId,
         userId : commentForm.userId,
         contents: commentForm.contents,
@@ -35,11 +36,11 @@ function CommentEditForm({ Currentcomment, setComments, setIsEditing }) {
      };
       setComments((prev) => {
         return prev.map((el) => {
-          if (el._id === comment._id) return comment;
+          if (el.commentId === comment.commentId) return comment;
           else return el;
         });
       });
-      setIsEditing((prev) => !prev);
+      editComments((prev) => !prev);
     } catch (error) {
       console.log("comment편집에 실패하였습니다.", error);
     }
@@ -64,7 +65,7 @@ function CommentEditForm({ Currentcomment, setComments, setIsEditing }) {
           </button>
           <button
                 className="edit-cancel-btn"
-            onClick={() => setIsEditing((prev) => !prev)}
+            onClick={() => editComments((prev) => !prev)}
           >
             취소
           </button>

@@ -2,6 +2,18 @@ import React, { useState, useContext } from "react";
 import { Button, Col, Form, Modal, Card } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
+import styled from "styled-components"
+
+const RegisterReviewBtn=styled.button`
+    margin-top:5px;
+    text-align: center;
+    border :0 ;
+    background-color:transparent;
+    &:hover{  
+      background-color : rgb(199, 208, 210);
+    } 
+`
+
 function RegisterReview({ setReviews }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -32,13 +44,13 @@ function RegisterReview({ setReviews }) {
       });
       setReviews((prev) => [...prev, res.data]);
     } catch (err) {
-      console.log("등록에 실패하였습니다.", err);
+      console.log("review 등록에 실패하였습니다.", err);
     }
   };
 
   return (
     <>
-      <button onClick={handleShow}>리뷰등록</button>
+      <RegisterReviewBtn onClick={handleShow}>리뷰등록</RegisterReviewBtn>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

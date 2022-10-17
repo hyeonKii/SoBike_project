@@ -8,10 +8,10 @@ import EditReview from "./EditReview";
 
 //test
 
-function ReviewCard({ review, isEditable,setReviews, isNetwork }) {
+function ReviewCard({ review, isEditable, setReviews, isNetwork }) {
   const navigate = useNavigate();
   //console.log("isEditable",isEditable)
- 
+
   return (
     <Card className="mb-2 ms-3 mr-5 profile-card" style={{ width: "18rem" }}>
       <Card.Body>
@@ -24,25 +24,20 @@ function ReviewCard({ review, isEditable,setReviews, isNetwork }) {
           />
         </Row>
         <Card.Title>{review?.title}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{review?.locationName}</Card.Subtitle>
+        <Card.Subtitle className="mb-2 text-muted">
+          {review?.locationName}
+        </Card.Subtitle>
         {/* <Card.Text>{user?.description}</Card.Text> */}
-
-        {isEditable && (
-          <Col>
-            <Row className="mt-3 text-center text-info">
-              <Col sm={{ span: 20 }}>
-                <EditReview
-                   review={review}
-                   setReviews={setReviews}
-                />
-              </Col>
-            </Row>
-          </Col>
-        )}
-
-        {isNetwork && (
-          <ReviewDetail key={review.id} review={review}/>
-        )}
+        <div>
+          <div>
+            {isNetwork && <ReviewDetail key={review.id} review={review} />}
+          </div>
+          <div>
+            {isEditable && (
+              <EditReview review={review} setReviews={setReviews} />
+            )}
+          </div>
+        </div>
       </Card.Body>
     </Card>
   );

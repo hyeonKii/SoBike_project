@@ -1,6 +1,14 @@
 import React, { useState, useContext } from "react";
 import { Button, Col, Form, Modal, Card } from "react-bootstrap";
 import * as Api from "../../api";
+import styled from "styled-components";
+
+const EditButton =styled.button`
+    font-size: 8px;
+    border: dotted 0.5px;
+    background-color:transparent;
+    cursor:pointer;
+`
 
 function EditReview({ review, setIsEditing, setReviews }) {
   const [show, setShow] = useState(false);
@@ -23,6 +31,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
       [name]: value,
     }));
   }
+  //console.log(review)
   const handleSubmit = async (e) => {
     // preventDefault 해주기
     e.preventDefault();
@@ -49,7 +58,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
       });
     //   setIsEditing((prev) => !prev);
     } catch (err) {
-      console.log("편집에 실패하였습니다.", err);
+      console.log("review 편집에 실패하였습니다.", err);
     }
   };
   //console.log("review_id",review._id)
@@ -57,7 +66,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
   //삭제 기능
   async function handleDelete() {
     try {
-      await Api.delete(`reviews/${review._id}`);  //왜 reviewId 말고 _id가 인식?
+      await Api.delete(`reviews/${review.reviewId}`);  //왜 reviewId 말고 _id가 인식?
       setReviews((arr) => {
         const newArr = arr.filter((obj) => {
           if (obj.reviewId === review.reviewId) return false;
@@ -66,12 +75,12 @@ function EditReview({ review, setIsEditing, setReviews }) {
         return newArr;
       });
     } catch (error) {
-      console.log("삭제에 실패했습니다.", error);
+      console.log("review삭제에 실패했습니다.", error);
     }
   }
   return (
     <>
-      <button onClick={handleShow}>편집</button>
+      <EditButton onClick={handleShow}>편집</EditButton>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

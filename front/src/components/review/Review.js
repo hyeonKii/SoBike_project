@@ -1,26 +1,22 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Form,
-  ButtonGroup,
-  Button,
-  Col,
-  Table,
-} from "react-bootstrap";
-import {
-  TbLayoutGrid,
-  TbMenu2,
-  TbTriangle,
-  TbTriangleInverted,
-} from "react-icons/tb";
+import {Container,Row,Form,ButtonGroup,Button,Col,Table} from "react-bootstrap";
+import {TbLayoutGrid,TbMenu2,TbTriangle,TbTriangleInverted} from "react-icons/tb";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
 import ReviewCard from "./ReviewCard";
 import ReviewTable from "./ReviewTable";
 import "./Network.css";
 import RegisterReview from "./RegisterReview";
+import styled from "styled-components";
+
+const RegisterDiv=styled.div `
+  background-color: rgba(1, 1, 1, 0.5);
+  width: 100%;
+  height: 80px;
+  z-index:-1;
+  `
+
 function Review() {
   //const navigate = useNavigate();
   const userState = useContext(UserStateContext);
@@ -60,13 +56,14 @@ function Review() {
       setReviews(res.data);
     });
   }, []);
-  //console.log("reviews.userId",reviews)
+  console.log("reviews.userId",reviews)
   //console.log(userState.user.userId)
   return (
     <>
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col md={{ span: 1, offset: 5 }}>
+      <Container fluid className="p-0">
+      <RegisterDiv></RegisterDiv>
+        <Row className="justify-content-md-center mt-5">
+          <Col md={{ span: 1, offset: 4 }}>
             <Form className="mb-3">
               <input
                 className="search-name"
@@ -74,10 +71,11 @@ function Review() {
                 value={search}
                 placeholder="검색"
                 onChange={(e) => setSearch(e.target.value)}
+                style={{width : "200px"}}
               />
             </Form>
           </Col>
-          <Col md={{ span: 1, offset: 5 }}>
+          <Col md={{ span: 1, offset: 4 }}>
             <ButtonGroup aria-label="Basic example">
               <Button
                 variant="secondary"
@@ -106,7 +104,9 @@ function Review() {
                 />
               </Button>
             </ButtonGroup>
+            <div>
             {isAdding && <RegisterReview setReviews={setReviews} />}
+            </div>
           </Col>
         </Row>
       </Container>
