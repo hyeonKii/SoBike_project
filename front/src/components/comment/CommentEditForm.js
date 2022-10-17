@@ -8,6 +8,7 @@ function CommentEditForm({ Currentcomment, setComments, editComments }) {
     userId: Currentcomment.userId,
     contents: Currentcomment.contents,
     nickName: Currentcomment.nickName,
+    createdAt: Currentcomment.createdAt,
   });
   console.log(Currentcomment);
   function handleOnchange(e) {
@@ -21,18 +22,19 @@ function CommentEditForm({ Currentcomment, setComments, editComments }) {
     e.preventDefault();
     try {
       ///reviews/comment/:commentId
-      const id = Currentcomment.commentId
+      const cId = Currentcomment.commentId
       const rId =Currentcomment.reviewId
-      await Api.put(`reviews/${rId}/comments/${id}`, {
-        id,
+      await Api.put(`reviews/${rId}/comments/${cId}`, {
+        cId,
         ...commentForm,
       });
       const comment = {
-        commentId: id,
+        commentId: cId,
         reviewId : commentForm.reviewId,
         userId : commentForm.userId,
         contents: commentForm.contents,
         nickName: commentForm.nickName,
+        createdAt : commentForm.createdAt,
      };
       setComments((prev) => {
         return prev.map((el) => {

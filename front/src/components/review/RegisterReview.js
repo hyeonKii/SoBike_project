@@ -1,18 +1,18 @@
 import React, { useState, useContext } from "react";
-import { Button, Col, Form, Modal, Card } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
-import styled from "styled-components"
+import styled from "styled-components";
 
-const RegisterReviewBtn=styled.button`
-    margin-top:5px;
-    text-align: center;
-    border :0 ;
-    background-color:transparent;
-    &:hover{  
-      background-color : rgb(199, 208, 210);
-    } 
-`
+const RegisterReviewBtn = styled.button`
+  margin-top: 5px;
+  text-align: center;
+  border: 0;
+  background-color: transparent;
+  &:hover {
+    background-color: rgb(199, 208, 210);
+  }
+`;
 
 function RegisterReview({ setReviews }) {
   const [show, setShow] = useState(false);
@@ -20,6 +20,7 @@ function RegisterReview({ setReviews }) {
   const handleShow = () => setShow(true);
   const userState = useContext(UserStateContext);
   const [reviewForm, setReviewForm] = useState({
+    email: userState.user.email,
     title: "",
     contents: "",
     locationName: "",
@@ -39,8 +40,8 @@ function RegisterReview({ setReviews }) {
       const res = await Api.post("reviews", {
         userId,
         ...reviewForm,
-        landAddress:"임시",
-        roadAddress:"임시2",
+        //landAddress:"임시",
+        roadAddress: "임시2",
       });
       setReviews((prev) => [...prev, res.data]);
     } catch (err) {
@@ -65,7 +66,6 @@ function RegisterReview({ setReviews }) {
               // onChange={(e) => upload(e)}
             />
           </Form.Group>
-
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>title</Form.Label>
@@ -76,6 +76,17 @@ function RegisterReview({ setReviews }) {
                 value={reviewForm.title}
                 onChange={handleOnchange}
               />
+            </Form.Group>
+            <Row className="mb-3">
+              <fieldset disabled>
+                <Form.Group as={Col} controlId="formGridState">
+                  <Form.Label>email</Form.Label>
+                  <Form.Control
+                    value={reviewForm.email}
+                    onChange={handleOnchange}
+                  />
+                </Form.Group>
+              </fieldset>
               <Form.Group as={Col} controlId="formGridState">
                 <Form.Label>locationName</Form.Label>
                 <Form.Control
@@ -86,7 +97,7 @@ function RegisterReview({ setReviews }) {
                   onChange={handleOnchange}
                 />
               </Form.Group>
-            </Form.Group>
+            </Row>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"

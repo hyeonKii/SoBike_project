@@ -29,6 +29,7 @@ function ReviewDetail({ review }) {
         <Modal.Body>
           {review?.title}
           <br />
+          {review?.email}
           {review?.locationName}
           <br />
           {review?.contents}
@@ -38,7 +39,7 @@ function ReviewDetail({ review }) {
             <Row>
               <Col>
                 <Comments
-                  reviewId={review?._id}
+                  reviewId={review?.reviewId}
                   userId={userState.user?.userId}
                   nickName={userState.user?.nickName}
                   isUser={userState.user}

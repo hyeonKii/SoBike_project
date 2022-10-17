@@ -18,10 +18,10 @@ function EditReview({ review, setIsEditing, setReviews }) {
   //   const userState = useContext(UserStateContext);
   const [reviewForm, setReviewForm] = useState({
     reviewId: review.reviewId,
+    email:review.email,
     title: review.title,
     contents: review.contents,
     locationName: review.locationName,
-    landAddress: "임시",
     roadAddress: "임시2",
   });
   function handleOnchange(e) {
@@ -41,6 +41,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
       const new_review = {
         userId: userId,
         reviewId: reviewForm.reviewId,
+        email: reviewForm.email,
         title: reviewForm.title,
         contents: reviewForm.contents,
         locationName: reviewForm.locationName,
