@@ -1,3 +1,4 @@
+import { joinPaths } from "@remix-run/router";
 import React, { useEffect, useRef, useState } from "react";
 
 import * as Api from "../../api";
@@ -9,29 +10,22 @@ const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭
 // 지도를 표시할 div
 const MapContainer = (props) => {
   const myMap = useRef("");
-  const [loadedPlaces, setLoadedPlaces] = useState("");
+  const [latitude, setLatitude] = useState(37.566535);
+  const [longitude, setLongitude] = useState(126.9779692);
   const [latlng, setLatlng] = useState("");
 
   useEffect(() => {
-    Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
-    console.log(loadedPlaces);
-
+    // Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
     const container = myMap.current; //지도를 담을 영역의 DOM 레퍼런스
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(37.566535, 126.9779692), //지도의 중심좌표.
-      level: 5, //지도의 레벨(확대, 축소 정도)
+      center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
+      level: 3, //지도의 레벨(확대, 축소 정도)
       mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
     };
 
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-    const getInfo = () => {
-      // 지도의 현재 중심좌표를 얻어옵니다
-      const center = map.getCenter();
-      console.log("현재 중심좌표", center);
-    };
-    getInfo();
     //--------------------------------------------------------------------------
 
     // 마커 클러스터러를 생성합니다
@@ -41,45 +35,48 @@ const MapContainer = (props) => {
       minLevel: 10, // 클러스터 할 최소 지도 레벨
     });
 
-    // // HTML5의 geolocation으로 사용할 수 있는지 확인
-    // if (navigator.geolocation) {
-    //   // GeoLocation을 이용해서 접속 위치 확인
-    //   navigator.geolocation.getCurrentPosition(function (position) {
-    //     const lat = position.coords.latitude, // 위도
-    //       lon = position.coords.longitude; // 경도
+    // HTML5의 geolocation으로 사용할 수 있는지 확인
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치 확인
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const lat = position.coords.latitude, // 위도
+          lon = position.coords.longitude; // 경도
+        console.log('현재 위치의 위도, 경도', lat, lon)
 
-    //     // 현재 위치 표시입니다.
-    //     const locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성, 변경
-    //       message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용
+        Api.get("datas/bicycle/locationsByCurrentLocation", {lon, lat}).then((res) => console.log(res));
+          
+        // 현재 위치 표시입니다.
+        const locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성, 변경
+          message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용
 
-    //     // 마커와 인포윈도우를 표시합니다
-    //     displayMarker(locPosition, message);
-    //   });
+        // 마커와 인포윈도우를 표시합니다
+        displayMarker(locPosition, message);
+      });
 
-    //   // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-    //   function displayMarker(locPosition, message) {
-    //     // 마커를 생성합니다
-    //     const marker_present = new kakao.maps.Marker({
-    //       map: map,
-    //       position: locPosition,
-    //     });
+      // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+      function displayMarker(locPosition, message) {
+        // 마커를 생성합니다
+        const marker_present = new kakao.maps.Marker({
+          map: map,
+          position: locPosition,
+        });
 
-    //     const iwContent = message, // 인포윈도우에 표시할 내용
-    //       iwRemoveable = true;
+        const iwContent = message, // 인포윈도우에 표시할 내용
+          iwRemoveable = true;
 
-    //     // 인포윈도우를 생성합니다
-    //     const infowindow = new kakao.maps.InfoWindow({
-    //       content: iwContent,
-    //       removable: iwRemoveable,
-    //     });
+        // 인포윈도우를 생성합니다
+        const infowindow = new kakao.maps.InfoWindow({
+          content: iwContent,
+          removable: iwRemoveable,
+        });
 
-    //     // 인포윈도우를 마커위에 표시합니다
-    //     infowindow.open(map, marker_present);
+        // 인포윈도우를 마커위에 표시합니다
+        infowindow.open(map, marker_present);
 
-    //     // 지도 중심좌표를 접속위치로 변경합니다
-    //     map.setCenter(locPosition);
-    //   }
-    // }
+        // 지도 중심좌표를 접속위치로 변경합니다
+        map.setCenter(locPosition);
+      }
+    }
     //--------------------------------------------------------------------------------
     // json 파일 테이터입니다
     const bikeData = bikeDatas.map((data, index) => {
@@ -151,8 +148,7 @@ const MapContainer = (props) => {
       // 클릭한 위도, 경도 정보를 가져옵니다
       const latlng = mouseEvent.latLng;
       setLatlng(latlng);
-      console.log("클릭한 위도", latlng.getLat())
-      console.log("클릭한 경도", latlng.getLng())
+      console.log("클릭한 위도와 경도", latlng.getLat(), latlng.getLng());
     });
 
     //----------------------------------------------------------------------------
@@ -182,21 +178,12 @@ const MapContainer = (props) => {
             map: map,
             position: new kakao.maps.LatLng(place.y, place.x),
           });
-
-          // // 마커에 클릭이벤트를 등록합니다
-          // kakao.maps.event.addListener(marker, "click", function () {
-          //   // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-          //   infowindow.setContent(
-          //     '<div style="padding:5px;font-size:12px;">' +
-          //       place.place_name +
-          //       "</div>"
-          //   );
-          //   infowindow.open(map, marker);
-          // });
+          setLatitude(place.y);
+          setLongitude(place.x);
         }
       }
     }
-  }, [props.searchPlace, latlng]); //검색시 새로고침
+  }, [props.searchPlace]); //검색시 새로고침
 
   return (
     <div

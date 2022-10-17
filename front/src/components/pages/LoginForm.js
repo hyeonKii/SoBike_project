@@ -44,7 +44,6 @@ const LoginForm = () => {
     //저장된 아이디 값을 email 값으로 설정
     let data = localStorage.getItem(LS_KEY_ID);
     if (data !== null) setEmail(data);
-    console.log(`email 확인:`, email);
   }, []);
 
   //아이디 저장 체크시
