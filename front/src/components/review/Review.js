@@ -32,14 +32,14 @@ function Review() {
   function sortByNameAsc() {
     let newUserNameArray = [...reviews];
     newUserNameArray = newUserNameArray.sort(
-      (a, b) => -a.name.localeCompare(b.name)
+      (a, b) => -a.email.localeCompare(b.email)
     );
     setReviews(newUserNameArray);
   }
   function sortByNameDesc() {
     let newUserNameArray = [...reviews];
     newUserNameArray = newUserNameArray.sort((a, b) =>
-      a.name.localeCompare(b.name)
+      a.email.localeCompare(b.email)
     );
     setReviews(newUserNameArray);
   }
@@ -155,7 +155,7 @@ function Review() {
             <thead className="table-header">
               <tr>
                 <th>
-                  Name
+                  Email
                   <span style={{ marginLeft: "10px" }}>
                     <TbTriangle
                       className="triangle-btn-asc"

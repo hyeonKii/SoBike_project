@@ -33,7 +33,7 @@ function AwardAddForm({ reviewId,userId,nickName, setComments, setIsAdding }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="awardAddTitle">
+      <Form.Group controlId="commentAdd" style={{marginTop:"8px"}}>
         <Form.Control
           type="text"
           placeholder="댓글"

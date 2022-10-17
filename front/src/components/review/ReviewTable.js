@@ -16,7 +16,7 @@ function ReviewTable({ review, isEditable, setReviews, isNetwork }) {
   return (
     <tbody>
       <tr>
-        <th>{review?.title}</th>
+        <th>{review?.email}</th>
         <th>{review?.title}</th>
         <th>
         <div>
