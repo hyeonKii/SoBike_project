@@ -51,4 +51,4 @@ const Like =  {
 
 };
 
-module.exports =  Like;
+export {Like};
