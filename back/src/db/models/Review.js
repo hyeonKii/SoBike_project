@@ -12,7 +12,6 @@ const Review =  {
         const review = await ReviewModel.findOne({_id: reviewId});
         
         return {reviewId: review._id,
-            email: review.email,
             userId: review.userId,
             title: review.title,
             contents: review.contents,
@@ -42,7 +41,6 @@ const Review =  {
 
         const reviewList = reviews.map((review)=>{
             return {reviewId: review._id,
-                email: review.email,
                 userId: review.userId,
                 title: review.title,
                 contents: review.contents,
