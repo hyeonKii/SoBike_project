@@ -12,9 +12,8 @@ const userAuthService = {
         const SALT_ROUND = 10;
         // 이메일 중복 확인
         const userEmail = await User.findByEmail(newUser.email);
-        if(userEmail) {
-            throw new Error("중복된 아이디입니다.");
-        }
+
+        if(userEmail) throw new Error("중복된 아이디입니다.");
         
         // 비밀번호 해쉬화
         const hashedPassword = await bcrypt.hash(newUser.password, SALT_ROUND);
@@ -23,28 +22,23 @@ const userAuthService = {
 
         // db에 저장
         const createdNewUser = await User.create(newUser);
+        
         // 문제가 없으면 에러메세지에 null을 넣어준다.
         createdNewUser.errorMessage = null;
         
         return createdNewUser;
     },
     // 로그인 (회원(내) 정보 찾기)
-    getUser: async (email, password) => {
+    login: async (email, password) => {
         // 이메일 존재 확인
         const userInfo = await User.findByEmail(email);
 
-        if(!userInfo) {
-            throw new Error("중복된 아이디입니다.");
-        }
-
+        if(!userInfo) throw new Error("이메일이 없습니다.");
+        
         const currentPasswordHash = userInfo.password;
         const isPasswordcurrent = await bcrypt.compare(password, currentPasswordHash);
         
-        if(!isPasswordcurrent) {
-            const errorMessage = "비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.";
-
-            return { errorMessage };
-        }
+        if(!isPasswordcurrent) throw new Error("비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
         
         // 로그인 성공 시 JWT 토큰 생성
         const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
@@ -52,6 +46,8 @@ const userAuthService = {
         const { userId, nickName } = userInfo;
         const loginUser = { token, userId, email, nickName };
         
+        loginUser.errorMessage = null;
+
         return loginUser;
     },
     // 회원(내) 정보 불러오기
@@ -59,39 +55,32 @@ const userAuthService = {
         const getUserInfo = await User.findById(userId);
         let getUserImage;
 
-        if(getUserInfo) {
-            getUserImage = await UserImage.findById(userId);
-        } else {
-            throw new Error("회원정보 불러오기 실패")
-        }
-        
+        if(getUserInfo) getUserImage = await UserImage.findById(userId);
+        else throw new Error("회원정보 불러오기 실패");
+
         if(getUserImage) {
             getUserInfo.image = "http://localhost:5001/public/images/" + getUserImage.image;
         } else {
             getUserInfo.image = "http://localhost:5001/public/images/lion.jpg";
         }
         
+        getUserInfo.errorMessage = null;
+        
         return getUserInfo;
     },
     // 회원(내) 정보 수정
     setUser: async (userId, fields, files) => {
-        console.log(fields)
-        console.log(files)
         // 유저 정보 수정
         const { password, nickName } = fields;
         const SALT_ROUND = 10;
-        let userInfo = await User.findById(userId);
-       
+        let userInfo = await User.findAll(userId);
+
         if(!userInfo) {
-            const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-
-            return { errorMessage };
-        }
-        
-        if(userInfo.nickName == nickName) {
-            const errorMessage = "있는 닉네임입니다. 바꿔주세요";
-
-            return { errorMessage };
+            throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
+        } else {
+            if(userInfo.nickName === nickName) {
+                throw new Error("있는 닉네임입니다. 다른 닉네임으로 바꿔주세요");
+            }
         }
 
         if(password && nickName) {
@@ -107,7 +96,7 @@ const userAuthService = {
             // 닉네임 업데이트
             userInfo = await User.update(userId, fieldToUpdate, newValue);
         } else {
-            return ;
+            throw new Error("password 혹은 nickName을 입력하지 않으셨습니다.");
         }
 
         // 유저 이미지 생성 및 수정
@@ -158,18 +147,32 @@ const userAuthService = {
                 if(err) throw new Error("이미지 업로드 실패");
             });  
         }
+
+        userInfo.errorMessage = null;
+
         return userInfo;
     },
     // 회원(내) 정보 삭제
     delUser: async (userId) => {
         const deletedUser = await User.delete(userId);
-        const deletedUserImage = await UserImage.delete(userId);
-        
-        fs.unlink(`src/public/images/${deletedUserImage.image}`, (err) => {
-            if(err) throw new Error("이미지 삭제 실패");
-        })
 
-        return { ...deletedUser, ...deletedUserImage};
+        if(deletedUser) {
+            const deletedUserImage = await UserImage.delete(userId);
+            
+            if(deletedUserImage) {
+                fs.unlink(`src/public/images/${deletedUserImage.image}`, (err) => {
+                    if(err) throw new Error("이미지 삭제 실패");
+                });
+            } else {
+                return deletedUserImage;
+            }
+        } else {
+            return deletedUser;
+        }
+        
+        deletedUser.errorMessage = null;
+
+        return deletedUser;
     }
 }
 

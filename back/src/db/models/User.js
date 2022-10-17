@@ -3,8 +3,21 @@ import { UserModel } from "../schemas/user";
 const User = {
     create: async (newUser) => {
         const createdNewUser = await UserModel.create(newUser);
-        
+
         return createdNewUser;
+    },
+    findAll: async (userId) => {
+        let usersInfo = await UserModel.find({ userId });
+
+        if(usersInfo) {
+            usersInfo =  {
+                userId: usersInfo._id,
+                email: usersInfo.email,
+                nickName: usersInfo.nickName
+            };
+        }
+
+        return usersInfo;
     },
     findById: async (userId) => {
         let userInfo = await UserModel.findById({ _id: userId });
@@ -32,7 +45,6 @@ const User = {
         }
         
         return userInfo;
-        
     },
     update: async (userId, fieldToUpdate, newValue) => {
         const filter = { _id: userId };
