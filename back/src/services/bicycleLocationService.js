@@ -35,4 +35,4 @@ const bicycleLocationService = {
 }
 
 
-module.exports = bicycleLocationService;
+export {bicycleLocationService};
