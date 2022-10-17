@@ -11,12 +11,14 @@ reviewRouter.post("/",  async (req, res, next) => {
     try{
         console.log("ReviewBefore")
         const userId = req.body.userId??null;
+        const email = req.body.email??null;
         const title = req.body.title ?? null;
         const contents = req.body.contents??null;
         const locationName = req.body.locationName??null;
         const roadAddress = req.body.roadAddress??null;
         const newReview = await reviewService.addReview({
             userId,
+            email,
             title,
             contents,
             locationName,
