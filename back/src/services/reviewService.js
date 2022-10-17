@@ -1,8 +1,8 @@
 import { Review } from "../db";
 
 const reviewService = {
-     addReview: async ({userId, email, title, contents, locationName, roadAddress}) => {
-        const newReview = {userId, email,title, contents, locationName, roadAddress}
+     addReview: async ({userId, title, contents, locationName, roadAddress}) => {
+        const newReview = {userId,title, contents, locationName, roadAddress}
         const createdNewReview = await Review.create({newReview});
         // console.log(createdNewReview)
         return createdNewReview;
