@@ -1,16 +1,16 @@
-const express = require("express");
+import {Router} from "express";
 // const reviewRouter = require("express").Router();
 // const { login_required } = require( "../middlewares/login_required");
-const bicycleLocationService = require("../services/bicycleLocationService");
+import {bicycleLocationService} from "../services/bicycleLocationService";
 
-const bicycleLocationRouter = express.Router();
+const bicycleLocationRouter = Router();
 
 
 // a
 
 
 
-bicycleLocationRouter.get("datas/bicycle/location", async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycle/location", async (req, res, next)=> {
     try{
         const longitude = req.body.longitude;
         const latitude = req.body.latitude;
@@ -20,7 +20,7 @@ bicycleLocationRouter.get("datas/bicycle/location", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("datas/bicycle/locationName", async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycle/locationName", async (req, res, next)=> {
     try{
         // const longitude = req.body.longitude;
         // const latitude = req.body.latitude;
@@ -33,7 +33,7 @@ bicycleLocationRouter.get("datas/bicycle/locationName", async (req, res, next)=>
         next(error);
     }
 });
-bicycleLocationRouter.get("datas/bicycleAddress", async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycleAddress", async (req, res, next)=> {
     try{
         // const longitude = req.body.longitude;
         // const latitude = req.body.latitude;
@@ -46,7 +46,7 @@ bicycleLocationRouter.get("datas/bicycleAddress", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("datas/bicycle/locations", async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycle/locations", async (req, res, next)=> {
     try{
         // const longitude = req.body.longitude;
         // const latitude = req.body.latitude;
@@ -59,7 +59,7 @@ bicycleLocationRouter.get("datas/bicycle/locations", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("datas/bicycle/locationsByCurrentLocation", async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation", async (req, res, next)=> {
     try{
         const longitude = req.body.longitude;
         const latitude = req.body.latitude;
@@ -74,7 +74,7 @@ bicycleLocationRouter.get("datas/bicycle/locationsByCurrentLocation", async (req
     }
 });
 
-// bicycleLocationRouter.put("datas/bicycle/location", async (req, res, next)=> {
+// bicycleLocationRouter.put("/datas/bicycle/location", async (req, res, next)=> {
 //     try {
 //         const userId = req.params.userId;
 //         const locationId = req.body.locationId;
@@ -95,7 +95,7 @@ bicycleLocationRouter.get("datas/bicycle/locationsByCurrentLocation", async (req
 //     }
 // });
 
-// bicycleLocationRouter.delete("datas/bicycle/location/likes/:userId/",  async(req, res, next) => {
+// bicycleLocationRouter.delete("/datas/bicycle/location/likes/:userId/",  async(req, res, next) => {
 //     try{
 //         const userId = req.params.userId;
 //         const locationId = req.body.locationId;
@@ -117,4 +117,4 @@ bicycleLocationRouter.get("datas/bicycle/locationsByCurrentLocation", async (req
 
 
 
-module.exports = bicycleLocationRouter;
+export {bicycleLocationRouter};
