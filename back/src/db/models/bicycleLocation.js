@@ -100,4 +100,4 @@ const bicycleLocation =  {
 
 };
 
-module.exports =  bicycleLocation;
+export {bicycleLocation};
