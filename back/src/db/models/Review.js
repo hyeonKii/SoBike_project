@@ -1,9 +1,7 @@
 import { ReviewModel } from "../schemas/review";
-import { bicycleLocationModel } from "../schemas/bicycleLocation";
 
 const Review =  {
     create : async ({newReview}) => {
-        const roadAddress = await bicycleLocationModel.findOne({locationName: newReview}).roadAddress;
         const createdNewReview = await ReviewModel.create(newReview);
         return {reviewId: createdNewReview._id,
             userId: createdNewReview.userId,
@@ -11,7 +9,7 @@ const Review =  {
             title: createdNewReview.title,
             contents: createdNewReview.contents,
             locationName: createdNewReview.locationName,
-            roadAddress: roadAddress};
+            roadAddress: createdNewReview.roadAddress};
     },
 
     findById: async ({reviewId}) => {
