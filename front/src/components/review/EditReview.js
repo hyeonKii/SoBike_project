@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
-import { Button, Col, Form, Modal, Card } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import styled from "styled-components";
-
+import Information from "../../bikeDatas.json";
+import Select from "react-select";
 const EditButton =styled.button`
     font-size: 8px;
     border: dotted 0.5px;
@@ -21,9 +22,14 @@ function EditReview({ review, setIsEditing, setReviews }) {
     email:review.email,
     title: review.title,
     contents: review.contents,
-    locationName: review.locationName,
-    roadAddress: "임시2",
   });
+  const options = Information.map((data) => ({
+    value: data.address1,
+    label: data.address2,
+  }));
+  const [locationName, setLocationName] = useState(review.locationName);
+  const [roadAddress, setRoadAddress] = useState(review.roadAddress);
+
   function handleOnchange(e) {
     const { name, value } = e.target;
     setReviewForm((prev) => ({
@@ -44,11 +50,14 @@ function EditReview({ review, setIsEditing, setReviews }) {
         email: reviewForm.email,
         title: reviewForm.title,
         contents: reviewForm.contents,
-        locationName: reviewForm.locationName,
+        locationName: locationName,
+        roadAddress: roadAddress,
       };
       await Api.put(`reviews/${review.reviewId}`, {
         userId,
         ...reviewForm,
+        locationName,
+        roadAddress,
       });
 
       setReviews((prev) => {
@@ -82,7 +91,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
   return (
     <>
       <EditButton onClick={handleShow}>편집</EditButton>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} style={{zIndex:100000}}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -99,7 +108,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
 
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>title</Form.Label>
+              <Form.Label>제목</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="title"
@@ -107,22 +116,35 @@ function EditReview({ review, setIsEditing, setReviews }) {
                 value={reviewForm.title}
                 onChange={handleOnchange}
               />
+            </Form.Group>
+            <Row className="mb-3">
+              <fieldset disabled>
+                <Form.Group as={Col} controlId="formGridState">
+                  <Form.Label>이메일</Form.Label>
+                  <Form.Control
+                    value={reviewForm.email}
+                    onChange={handleOnchange}
+                  />
+                </Form.Group>
+              </fieldset>
               <Form.Group as={Col} controlId="formGridState">
-                <Form.Label>locationName</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="locationName"
+                <Form.Label>장소</Form.Label>
+                <Select
                   name="locationName"
-                  value={reviewForm.locationName}
-                  onChange={handleOnchange}
+                  placeholder={locationName}
+                  options={options}
+                  onChange={(data) => {
+                    setLocationName(data.label);
+                    setRoadAddress(data.value);
+                  }}
                 />
               </Form.Group>
-            </Form.Group>
+            </Row>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Example textarea</Form.Label>
+              <Form.Label>본문</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -136,10 +158,10 @@ function EditReview({ review, setIsEditing, setReviews }) {
             <Form.Group>
               <Button variant="primary" type="submit" onClick={handleClose}>
                 Save
-              </Button>
+              </Button>{' '}
               <Button variant="secondary" onClick={handleClose}>
                 Close
-              </Button>
+              </Button>{' '}
               <Button variant="danger" onClick={handleDelete}>
                 Delete
               </Button>

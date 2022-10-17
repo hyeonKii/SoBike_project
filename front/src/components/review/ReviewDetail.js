@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { MdRoom } from "react-icons/md";
 import Comments from "../comment/Comments";
 import { UserStateContext } from "../../App";
 import styled from "styled-components";
@@ -12,28 +13,27 @@ const ShowMore =styled.button`
     border: 0;
     background-color:transparent;
 `
-
+const Emailbox = styled.div`
+    float : right;
+    display : inline; 
+`
 function ReviewDetail({ review }) {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const userState = useContext(UserStateContext);
   return (
     <>
       <ShowMore onClick={handleShow}>{'>'}더보기</ShowMore>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} style={{zIndex:100000}}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>{review?.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {review?.title}
-          <br />
-          {review?.email}
-          {review?.locationName}
+           <div style={{fontSize: "11px" ,marginLeft: "10px"}}><MdRoom/>{review?.locationName}</div>
+          <Emailbox>작성자: {review?.email}</Emailbox>
           <br />
           {review?.contents}
-        </Modal.Body>
+        
         <Modal.Footer>
           <Container fluid>
             <Row>

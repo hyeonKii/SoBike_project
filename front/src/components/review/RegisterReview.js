@@ -3,7 +3,9 @@ import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
 import styled from "styled-components";
-
+import Information from "../../bikeDatas.json";
+import Select from "react-select";
+import zIndex from "@mui/material/styles/zIndex";
 const RegisterReviewBtn = styled.button`
   margin-top: 5px;
   text-align: center;
@@ -19,11 +21,18 @@ function RegisterReview({ setReviews }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const userState = useContext(UserStateContext);
+
+  const options = Information.map((data) => ({
+    value: data.address1,
+    label: data.address2,
+  }));
+
+  const [locationName, setLocationName] = useState("");
+  const [roadAddress, setRoadAddress] = useState("");
   const [reviewForm, setReviewForm] = useState({
     email: userState.user.email,
     title: "",
     contents: "",
-    locationName: "",
   });
   function handleOnchange(e) {
     const { name, value } = e.target;
@@ -41,7 +50,8 @@ function RegisterReview({ setReviews }) {
         userId,
         ...reviewForm,
         //landAddress:"임시",
-        roadAddress: "임시2",
+        locationName,
+        roadAddress,
       });
       setReviews((prev) => [...prev, res.data]);
     } catch (err) {
@@ -52,7 +62,7 @@ function RegisterReview({ setReviews }) {
   return (
     <>
       <RegisterReviewBtn onClick={handleShow}>리뷰등록</RegisterReviewBtn>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} style={{zIndex:100000}}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
@@ -68,7 +78,7 @@ function RegisterReview({ setReviews }) {
           </Form.Group>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>title</Form.Label>
+              <Form.Label>제목</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="title"
@@ -80,7 +90,7 @@ function RegisterReview({ setReviews }) {
             <Row className="mb-3">
               <fieldset disabled>
                 <Form.Group as={Col} controlId="formGridState">
-                  <Form.Label>email</Form.Label>
+                  <Form.Label>이메일</Form.Label>
                   <Form.Control
                     value={reviewForm.email}
                     onChange={handleOnchange}
@@ -88,13 +98,15 @@ function RegisterReview({ setReviews }) {
                 </Form.Group>
               </fieldset>
               <Form.Group as={Col} controlId="formGridState">
-                <Form.Label>locationName</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="locationName"
+                <Form.Label>장소</Form.Label>
+                <Select
                   name="locationName"
-                  value={reviewForm.locationName}
-                  onChange={handleOnchange}
+                  placeholder="장소"
+                  options={options}
+                  onChange={(data) => {
+                    setLocationName(data.label);
+                    setRoadAddress(data.value);
+                  }}
                 />
               </Form.Group>
             </Row>
@@ -102,7 +114,7 @@ function RegisterReview({ setReviews }) {
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Example textarea</Form.Label>
+              <Form.Label>본문</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -116,7 +128,7 @@ function RegisterReview({ setReviews }) {
             <Form.Group>
               <Button variant="primary" type="submit" onClick={handleClose}>
                 Save
-              </Button>
+              </Button>{' '}
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>

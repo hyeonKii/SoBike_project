@@ -37,7 +37,7 @@ function CommentCard({ comment, isEditable, setIsEditing, setComments }) {
               onClick={() => setIsEditing((prev) => !prev)}
             >
               편집
-            </Button>
+            </Button>.{' '}
             <Button
               variant="outline-danger"
               size="sm"

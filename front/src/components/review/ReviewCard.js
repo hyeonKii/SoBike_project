@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Card, Row, Col } from "react-bootstrap";
+import { MdRoom } from "react-icons/md";
 import "../components.css";
 import ReviewDetail from "./ReviewDetail";
 import EditReview from "./EditReview";
@@ -19,13 +20,13 @@ function ReviewCard({ review, isEditable, setReviews, isNetwork }) {
           <Card.Img
             style={{ width: "10rem", height: "8rem" }}
             className="mb-3"
-            src={`http://kdt-ai5-team11.elicecoding.com:5001/${review?.profileImageFilename}`}
+            // src={`http://kdt-ai5-team11.elicecoding.com:5001/${review?.profileImageFilename}`}
             alt="사용자 등록 프로필 이미지"
           />
         </Row>
         <Card.Title>{review?.title}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
-          {review?.locationName}
+          <MdRoom/>{review?.locationName}
         </Card.Subtitle>
         {/* <Card.Text>{user?.description}</Card.Text> */}
         <div>
