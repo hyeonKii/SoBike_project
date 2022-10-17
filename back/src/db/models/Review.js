@@ -1,4 +1,4 @@
-const ReviewModel = require( "../schemas/review");
+import { ReviewModel } from "../schemas/review";
 
 const Review =  {
     create : async ({newReview}) => {
@@ -13,10 +13,10 @@ const Review =  {
         
         return {reviewId: review._id,
             userId: review.userId,
+            email: review.email,
             title: review.title,
             contents: review.contents,
             locationName: review.locationName,
-            landAddress: review.landAddress,
             roadAddress: review.roadAddress }
     },
 
@@ -31,7 +31,7 @@ const Review =  {
             update,
             option
         );
-        console.log(updatedReview)
+        // console.log(updatedReview)
         return updatedReview;
     },
 
@@ -42,10 +42,10 @@ const Review =  {
         const reviewList = reviews.map((review)=>{
             return {reviewId: review._id,
                 userId: review.userId,
+                email: review.email,
                 title: review.title,
                 contents: review.contents,
                 locationName: review.locationName,
-                landAddress: review.landAddress,
                 roadAddress: review.roadAddress }
         })
         return reviewList;
@@ -60,4 +60,4 @@ const Review =  {
 
 };
 
-module.exports =  Review;
+export { Review };
