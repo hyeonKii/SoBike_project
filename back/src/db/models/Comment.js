@@ -66,7 +66,14 @@ const Comment = {
         const deletedComment = await CommentModel.findOneAndDelete({ _id: commentId, reviewId });
 
         return deletedComment;
+    },
+    deleteAll: async ({reviewId}) => {
+        console.log(reviewId)
+        const deletedComments = await CommentModel.deleteMany({reviewId:reviewId} );
+        // console.log(deletedComments)
+        return deletedComments;
     }
+    
 };
 
 export { Comment };
