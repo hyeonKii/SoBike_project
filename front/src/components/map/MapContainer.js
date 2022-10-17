@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import * as Api from "../../api";
-import bikeDatas from './bikeDatas.json'
+import bikeDatas from "./bikeDatas.json";
 
 const { kakao } = window; //스크립트로 심은 kakao maps api를 window전역 객체에서 뽑아 사용
 const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭하면 장소명을 표출할 인포윈도우
@@ -10,6 +10,7 @@ const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭
 const MapContainer = (props) => {
   const myMap = useRef("");
   const [loadedPlaces, setLoadedPlaces] = useState("");
+  const [latlng, setLatlng] = useState("");
 
   useEffect(() => {
     Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
@@ -26,11 +27,11 @@ const MapContainer = (props) => {
     const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
     const getInfo = () => {
-      // 지도의 현재 중심좌표를 얻어옵니다 
+      // 지도의 현재 중심좌표를 얻어옵니다
       const center = map.getCenter();
-      console.log('현재 중심좌표', center);
+      console.log("현재 중심좌표", center);
     };
-    getInfo()
+    getInfo();
     //--------------------------------------------------------------------------
 
     // 마커 클러스터러를 생성합니다
@@ -82,8 +83,12 @@ const MapContainer = (props) => {
     //--------------------------------------------------------------------------------
     // json 파일 테이터입니다
     const bikeData = bikeDatas.map((data, index) => {
-      return [data.latitude, data.longitude, `<div style="padding:5px">${data.address2}</div>`]
-    })
+      return [
+        data.latitude,
+        data.longitude,
+        `<div style="padding:5px">${data.address2}</div>`,
+      ];
+    });
 
     const markers = [];
     // json 파일 데이터를 마커에 표시합니다.
@@ -140,7 +145,58 @@ const MapContainer = (props) => {
     }
     // 클러스터러에 마커들을 추가합니다
     clusterer.addMarkers(markers);
-  }, [props.searchPlace]); //검색시 새로고침
+
+    //-------------------------------------------------------------
+    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+      // 클릭한 위도, 경도 정보를 가져옵니다
+      const latlng = mouseEvent.latLng;
+      setLatlng(latlng);
+      console.log("클릭한 위도", latlng.getLat())
+      console.log("클릭한 경도", latlng.getLng())
+    });
+
+    //----------------------------------------------------------------------------
+    const places = new kakao.maps.services.Places(); //장소 검색 객체 생성
+
+    places.keywordSearch(props.searchPlace, placesSearchCB); //키워드로 장소 검색 ()
+
+    // 키워드 검색 완료 시 호출되는 콜백함수
+    function placesSearchCB(data, status, pagination) {
+      if (status === kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가
+        let bounds = new kakao.maps.LatLngBounds();
+
+        for (let i = 0; i < data.length; i++) {
+          displayMarker(data[i]);
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정
+        map.setBounds(bounds);
+
+        // 지도에 마커를 표시하는 함수입니다
+        function displayMarker(place) {
+          // 마커를 생성하고 지도에 표시합니다
+          var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.y, place.x),
+          });
+
+          // // 마커에 클릭이벤트를 등록합니다
+          // kakao.maps.event.addListener(marker, "click", function () {
+          //   // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+          //   infowindow.setContent(
+          //     '<div style="padding:5px;font-size:12px;">' +
+          //       place.place_name +
+          //       "</div>"
+          //   );
+          //   infowindow.open(map, marker);
+          // });
+        }
+      }
+    }
+  }, [props.searchPlace, latlng]); //검색시 새로고침
 
   return (
     <div
