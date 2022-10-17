@@ -10,7 +10,7 @@ const bicycleLocationRouter = express.Router();
 
 
 
-bicycleLocationRouter.get("/bicycle/location", async (req, res, next)=> {
+bicycleLocationRouter.get("datas/bicycle/location", async (req, res, next)=> {
     try{
         const longitude = req.body.longitude;
         const latitude = req.body.latitude;
@@ -20,7 +20,7 @@ bicycleLocationRouter.get("/bicycle/location", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("/bicycle/locationName", async (req, res, next)=> {
+bicycleLocationRouter.get("datas/bicycle/locationName", async (req, res, next)=> {
     try{
         // const longitude = req.body.longitude;
         // const latitude = req.body.latitude;
@@ -33,7 +33,7 @@ bicycleLocationRouter.get("/bicycle/locationName", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("/bicycleAddress", async (req, res, next)=> {
+bicycleLocationRouter.get("datas/bicycleAddress", async (req, res, next)=> {
     try{
         // const longitude = req.body.longitude;
         // const latitude = req.body.latitude;
@@ -46,7 +46,7 @@ bicycleLocationRouter.get("/bicycleAddress", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("/bicycle/locations", async (req, res, next)=> {
+bicycleLocationRouter.get("datas/bicycle/locations", async (req, res, next)=> {
     try{
         // const longitude = req.body.longitude;
         // const latitude = req.body.latitude;
@@ -59,7 +59,7 @@ bicycleLocationRouter.get("/bicycle/locations", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation", async (req, res, next)=> {
+bicycleLocationRouter.get("datas/bicycle/locationsByCurrentLocation", async (req, res, next)=> {
     try{
         const longitude = req.body.longitude;
         const latitude = req.body.latitude;
@@ -74,7 +74,7 @@ bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation", async (req, res
     }
 });
 
-// bicycleLocationRouter.put("/bicycle/location", async (req, res, next)=> {
+// bicycleLocationRouter.put("datas/bicycle/location", async (req, res, next)=> {
 //     try {
 //         const userId = req.params.userId;
 //         const locationId = req.body.locationId;
@@ -95,7 +95,7 @@ bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation", async (req, res
 //     }
 // });
 
-// bicycleLocationRouter.delete("/bicycle/location/likes/:userId/",  async(req, res, next) => {
+// bicycleLocationRouter.delete("datas/bicycle/location/likes/:userId/",  async(req, res, next) => {
 //     try{
 //         const userId = req.params.userId;
 //         const locationId = req.body.locationId;
