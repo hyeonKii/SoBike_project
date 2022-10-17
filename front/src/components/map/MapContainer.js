@@ -12,7 +12,7 @@ const MapContainer = (props) => {
 
   useEffect(() => {
     Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
-    console.log(loadedPlaces)
+    console.log(loadedPlaces);
 
     const container = myMap.current; //지도를 담을 영역의 DOM 레퍼런스
     const options = {
@@ -79,6 +79,7 @@ const MapContainer = (props) => {
         126.869598,
         '<div style="padding:5px">목동3단지 시내버스정류장</div>',
       ],
+      [37.610367, 127.096873, `<div style="padding:5px">신내로 128</div>`],
     ];
     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
     function makeOverListener(map, marker, infowindow) {

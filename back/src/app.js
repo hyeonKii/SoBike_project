@@ -8,6 +8,7 @@ const path = require("path");
 const userAuthRouter = require("./routes/userRouter");
 const reviewRouter = require("./routes/reviewRouter");
 const commentRouter = require("./routes/commentRouter");
+const bicycleLocationRouter = require("./routes/bicycleLocationRouter");
 
 
 // 미들웨어
@@ -24,6 +25,7 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 app.use("/", userAuthRouter);
 app.use("/", reviewRouter);
 app.use("/", commentRouter);
+app.use("/", bicycleLocationRouter);
 
 // 기본 페이지
 app.get("/", (req, res) => {

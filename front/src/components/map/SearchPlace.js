@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-
+import * as Api from "../../api";
 import MapContainer from "./MapContainer";
 
 const SearchPlace = () => {
@@ -15,7 +15,9 @@ const SearchPlace = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
- 
+    // await Api.get("/bicycle/location").then((res) => {
+    //   console.log(res.data);
+    // })
 
     //place의 값을 입력값으로
     setPlace(inputText);
