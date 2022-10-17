@@ -3,7 +3,13 @@ import { ReviewModel } from "../schemas/review";
 const Review =  {
     create : async ({newReview}) => {
         const createdNewReview = await ReviewModel.create(newReview);
-        return createdNewReview;
+        return {reviewId: createdNewReview._id,
+            userId: createdNewReview.userId,
+            email: createdNewReview.email,
+            title: createdNewReview.title,
+            contents: createdNewReview.contents,
+            locationName: createdNewReview.locationName,
+            roadAddress: createdNewReview.roadAddress };
     },
 
     findById: async ({reviewId}) => {
@@ -32,7 +38,13 @@ const Review =  {
             option
         );
         // console.log(updatedReview)
-        return updatedReview;
+        return {reviewId: updatedReview._id,
+            userId: updatedReview.userId,
+            email: updatedReview.email,
+            title: updatedReview.title,
+            contents: updatedReview.contents,
+            locationName: updatedReview.locationName,
+            roadAddress: updatedReview.roadAddress };
     },
 
     findAll: async ()=> {
@@ -54,7 +66,7 @@ const Review =  {
     delete: async ({ reviewId })=> {
         const filter = { _id: reviewId };
         console.log(reviewId)
-        const deleteReview = await ReviewModel.deleteOne(filter);
+        const deleteReview = await ReviewModel.findOneAndDelete(filter);
         return deleteReview;
       }
 
