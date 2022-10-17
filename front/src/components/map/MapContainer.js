@@ -14,7 +14,6 @@ const MapContainer = (props) => {
   const [longitude, setLongitude] = useState(126.9779692);
   const [latlng, setLatlng] = useState("");
 
-  console.log('콘솔로그',latitude, longitude)
   useEffect(() => {
     // Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
     const container = myMap.current; //지도를 담을 영역의 DOM 레퍼런스
@@ -42,12 +41,12 @@ const MapContainer = (props) => {
       navigator.geolocation.getCurrentPosition(function (position) {
         const lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
-          setLatitude(lat)
-          setLongitude(lon)
-        console.log('현재 위치의 위도, 경도', lat, lon)
+        setLatitude(lat);
+        setLongitude(lon);
 
-        Api.get("datas/bicycle/locationsByCurrentLocation", {lon, lat}).then((res) => console.log("data 확인용",res));
-          
+        currentLocation(lon, lat);
+        console.log("현재 위치의 위도, 경도", lat, lon);
+
         // 현재 위치 표시입니다.
         const locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성, 변경
           message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용
@@ -132,7 +131,8 @@ const MapContainer = (props) => {
 
       markers.push(marker);
 
-      kakao.maps.event.addListener( // 마커에 마우스 올리고 내렸을 때
+      kakao.maps.event.addListener(
+        // 마커에 마우스 올리고 내렸을 때
         marker,
         "mouseover",
         makeOverListener(map, marker, infowindow)
@@ -153,6 +153,14 @@ const MapContainer = (props) => {
     //   setLatlng(latlng);
     //   console.log("클릭한 위도와 경도", latlng.getLat(), latlng.getLng());
     // });
+    //------------------------------------------------------------------------지도의 현재 중심좌표
+
+    // function getInfo() {
+    //   // 지도의 현재 중심좌표를 얻어옵니다
+    //   var center = map.getCenter();
+    //   // 지도의 현재 영역을 얻어옵니다
+    //   var bounds = map.getBounds();
+    // }
 
     //---------------------------------------------------------------------------- 검색 기능
     const places = new kakao.maps.services.Places(); //장소 검색 객체 생성
@@ -187,6 +195,12 @@ const MapContainer = (props) => {
       }
     }
   }, [props.searchPlace]); //검색시 새로고침
+
+  const currentLocation = async (longitude, latitude) => {
+    await Api.get(
+      `datas/bicycle/locationsByCurrentLocation/${longitude}/${latitude}`
+    ).then((res) => console.log("data 확인용", res));
+  };
 
   return (
     <div

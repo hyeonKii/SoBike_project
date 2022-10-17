@@ -2,27 +2,29 @@ import { Router } from "express";
 
 import { bicycleLocationService } from "../services/bicycleLocationService";
 
-
 const express = require("express");
 // const reviewRouter = require("express").Router();
 // const { login_required } = require( "../middlewares/login_required");
 
-
 const bicycleLocationRouter = express.Router();
 
-bicycleLocationRouter.get("/datas/bicycle/location", async (req, res, next) => {
-  try {
-    const longitude = req.body.longitude;
-    const latitude = req.body.latitude;
-    const location = await bicycleLocationService.getByLocation({
-      longitude,
-      latitude,
-    });
-    res.status(200).send(location);
-  } catch (error) {
-    next(error);
+bicycleLocationRouter.get(
+  "/bicycle/locationsByCurrentLocation/:longitude/:latitude",
+  async (req, res, next) => {
+    try {
+      const longitude = req.params.longitude;
+      const latitude = req.params.latitude;
+      const location =
+        await bicycleLocationService.getLocationsByCurrentLocations({
+          longitude,
+          latitude,
+        });
+      res.status(200).send(location);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 bicycleLocationRouter.get(
   "/datas/bicycle/locationName",
   async (req, res, next) => {
@@ -135,4 +137,4 @@ bicycleLocationRouter.get(
 // // }
 // );
 
-export { bicycleLocationRouter } ;
+export { bicycleLocationRouter };
