@@ -2,13 +2,23 @@ import { CommentModel } from "../schemas/comment";
 
 const Comment = {
     create: async (newComment) => {
-        const createdComment = await CommentModel.create(newComment);
+        let createdComment = await CommentModel.create(newComment);
+        
+        if(createdComment) {
+            createdComment = {
+                commentId: createdComment._id,
+                reviewId: createdComment.reviewId,
+                userId: createdComment.userId,
+                nickName: createdComment.nickName,
+                contents: createdComment.contents,
+                createdAt: createdComment.createdAt
+            }
+        }
 
         return createdComment;
     },
     findAll: async (reviewId) => {
         let comments = await CommentModel.find({ reviewId });
-
         if(comments) {
             comments = comments.map((data) => {
                 return {
