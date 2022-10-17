@@ -71,23 +71,24 @@ const userAuthService = {
     // 회원(내) 정보 수정
     setUser: async (userId, fields, files) => {
         // 유저 정보 수정
-        const { password, nickName } = fields;
-        const SALT_ROUND = 10;
-        let userInfo = await User.findAll(userId);
-
-        if(!userInfo) {
-            throw new Error("가입 내역이 없습니다. 다시 한 번 확인해 주세요.");
-        } else {
-            if(userInfo.nickName === nickName) {
-                throw new Error("있는 닉네임입니다. 다른 닉네임으로 바꿔주세요");
-            }
+        const { email, nickName } = fields;
+        const userEmail = await User.findByEmail(email);
+        let userInfo;
+        
+        if(userEmail) {
+            throw new Error("중복된 이메일입니다.");
         }
 
-        if(password && nickName) {
-            let fieldToUpdate = "password";
-            let newValue = await bcrypt.hash(password, SALT_ROUND);
+        const userNickName = await User.findByNickName(nickName);
+
+        if(userNickName) {
+            throw new Error("중복된 닉네임입니다..");
+        }
+
+        if(email && nickName) {
+            let fieldToUpdate = "email";
+            let newValue = email;
             
-            // 비밀번호 업데이트
             userInfo = await User.update(userId, fieldToUpdate, newValue);
 
             fieldToUpdate = "nickName";

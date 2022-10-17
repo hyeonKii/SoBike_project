@@ -6,19 +6,6 @@ const User = {
 
         return createdNewUser;
     },
-    findAll: async (userId) => {
-        let usersInfo = await UserModel.find({ userId });
-
-        if(usersInfo) {
-            usersInfo =  {
-                userId: usersInfo._id,
-                email: usersInfo.email,
-                nickName: usersInfo.nickName
-            };
-        }
-
-        return usersInfo;
-    },
     findById: async (userId) => {
         let userInfo = await UserModel.findById({ _id: userId });
 
@@ -34,6 +21,20 @@ const User = {
     },
     findByEmail: async (email) => {
         let userInfo = await UserModel.findOne({ email });
+
+        if(userInfo) {
+            userInfo = {
+                userId: userInfo._id,
+                email: userInfo.email,
+                password: userInfo.password,
+                nickName: userInfo.nickName
+            }
+        }
+        
+        return userInfo;
+    },
+    findByNickName: async (nickName) => {
+        let userInfo = await UserModel.findOne({ nickName });
 
         if(userInfo) {
             userInfo = {
