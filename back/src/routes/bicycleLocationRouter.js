@@ -59,13 +59,14 @@ bicycleLocationRouter.get("/bicycle/locations", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation", async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:latitude?:longitude", async (req, res, next)=> {
     try{
-        const longitude = req.body.longitude;
-        const latitude = req.body.latitude;
+        // console.log("asfdsf")
+        const longitude = parseFloat(req.query.longitude);
+        const latitude = parseFloat(req.query.latitude);
         // const locationName = req.body.locationName
-        // console.log("longitude: ", longitude)
-        // console.log("latitude: ", latitude)
+        console.log("longitude: ", longitude)
+        console.log("latitude: ", latitude)
         // console.log(locationName)
         const location = await bicycleLocationService.getLocationsByCurrentLocations({longitude, latitude})
         res.status(200).send(location);
