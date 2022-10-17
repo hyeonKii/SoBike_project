@@ -5,30 +5,21 @@ const Comment = {
         let createdComment = await CommentModel.create(newComment);
         
         if(createdComment) {
-            createdComment = {
-                commentId: createdComment._id,
-                reviewId: createdComment.reviewId,
-                userId: createdComment.userId,
-                nickName: createdComment.nickName,
-                contents: createdComment.contents,
-                createdAt: createdComment.createdAt
-            }
+            createdComment = { commentId: createdComment._doc._id, ...createdComment._doc};
+            delete createdComment._id;
         }
 
         return createdComment;
     },
     findAll: async (reviewId) => {
         let comments = await CommentModel.find({ reviewId });
+        
+        
         if(comments) {
             comments = comments.map((data) => {
-                return {
-                    commentId: data._id,
-                    reviewId: data.reviewId,
-                    userId: data.userId,
-                    nickName: data.nickName,
-                    contents: data.contents,
-                    createdAt: data.createdAt
-                }
+                const comment = { commentId: data._doc._id, ...data._doc};
+                delete comment._id;
+                return { ...comment };
             })
         }
 
@@ -38,14 +29,8 @@ const Comment = {
         let comment = await CommentModel.findById({ _id: commentId, reviewId });
 
         if(comment) {
-            comment =  {
-                commentId: comment._id,
-                reviewId: comment.reviewId,
-                userId: comment.userId,
-                nickName: comment.nickName,
-                contents: comment.contents,
-                createdAt: comment.createdAt
-            }
+            comment = { commentId: comment._doc._id, ...comment._doc};
+            delete comment._id;
         }
 
         return comment;
