@@ -40,6 +40,16 @@ const commentService = {
 
         return delComment;
     },
+    delComments: async ({reviewId}) => {
+        // console.log("service: ", reviewId)
+        const delComments = await Comment.deleteAll({reviewId});
+        
+        if(!delComments) {
+            throw new Error("댓글 삭제 실패")
+        }
+
+        return delComments;
+    },
 }
 
 export { commentService };
