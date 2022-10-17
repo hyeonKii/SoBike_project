@@ -22,7 +22,7 @@ const commentService = {
         if(contents) {
             const fieldToUpdate = "contents";
             const newValue = contents;
-            setComment = await Comment.update(commentId, fieldToUpdate, newValue);
+            setComment = await Comment.update(reviewId, commentId, fieldToUpdate, newValue);
 
             if(!setComment) {
                 throw new Error("댓글 수정 실패")

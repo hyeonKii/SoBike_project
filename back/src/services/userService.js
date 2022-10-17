@@ -66,9 +66,9 @@ const userAuthService = {
         }
         
         if(getUserImage) {
-            getUserInfo.image = "public/images/" + getUserImage.image;
+            getUserInfo.image = "http://localhost:5001/public/images/" + getUserImage.image;
         } else {
-            getUserInfo.image = "public/images/lion.jpg";
+            getUserInfo.image = "http://localhost:5001/public/images/lion.jpg";
         }
         
         return getUserInfo;
