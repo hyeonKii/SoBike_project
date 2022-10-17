@@ -26,10 +26,6 @@ const ReviewSchema = new Schema(
             type: String, 
             required: true
         },
-        landAddress:{
-            type: String, 
-            required: true,
-        },
         roadAddress: {
             type: String, 
             required: true
