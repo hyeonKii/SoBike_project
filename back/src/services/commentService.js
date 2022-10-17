@@ -11,8 +11,8 @@ const commentService = {
 
         return getComment;
     },
-    setComment: async (commentId, contents) => {
-        const getComment = await Comment.findById(commentId);
+    setComment: async (reviewId, commentId, contents) => {
+        const getComment = await Comment.findById(reviewId, commentId);
         let setComment;
 
         if(!getComment) {
@@ -31,8 +31,8 @@ const commentService = {
         
         return setComment;
     },
-    delComment: async (commentId) => {
-        const delComment = await Comment.delete(commentId);
+    delComment: async (reviewId, commentId) => {
+        const delComment = await Comment.delete(reviewId, commentId);
 
         if(!delComment) {
             throw new Error("댓글 삭제 실패")

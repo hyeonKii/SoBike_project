@@ -1,10 +1,10 @@
 import { UserModel } from "../schemas/user";
 
 const User = {
-    create: async (newUserInfo) => {
-        const createdNewUserInfo = await UserModel.create(newUserInfo);
+    create: async (newUser) => {
+        const createdNewUser = await UserModel.create(newUser);
         
-        return createdNewUserInfo;
+        return createdNewUser;
     },
     findById: async (userId) => {
         let userInfo = await UserModel.findById({ _id: userId });

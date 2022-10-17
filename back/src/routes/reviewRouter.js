@@ -1,7 +1,9 @@
 import { Router } from "express";
 
 import { loginRequired } from "../middlewares/loginRequired";
+
 import { reviewService } from "../services/reviewService";
+import { commentService } from "../services/commentService";
 
 const reviewRouter = Router();
 
@@ -32,7 +34,7 @@ reviewRouter.post("/", loginRequired, async (req, res, next) => {
     }
 });
 
-reviewRouter.get("/", async (req, res, next)=> {
+reviewRouter.get("/", loginRequired, async (req, res, next)=> {
     try{
         // console.log("ㅇㄴㅁㄹㄴㅇ")
         const reviews = await reviewService.getReviews();
@@ -43,7 +45,7 @@ reviewRouter.get("/", async (req, res, next)=> {
     }
 });
 
-reviewRouter.get("/:reviewId", async (req, res, next) => {
+reviewRouter.get("/:reviewId", loginRequired, async (req, res, next) => {
     try{
 
         const reviewId = req.params.reviewId;
@@ -60,7 +62,7 @@ reviewRouter.get("/:reviewId", async (req, res, next) => {
 
 })
 
-reviewRouter.put("/:reviewId", async (req, res, next)=> {
+reviewRouter.put("/:reviewId", loginRequired, async (req, res, next)=> {
     try {
         const reviewId = req.params.reviewId;
         const title = req.body.title?? null;
@@ -80,7 +82,7 @@ reviewRouter.put("/:reviewId", async (req, res, next)=> {
     }
 });
 
-reviewRouter.delete("/:reviewId",  async(req, res, next) => {
+reviewRouter.delete("/:reviewId", loginRequired, async(req, res, next) => {
     try{
         const reviewId = req.params.reviewId;
         // console.log("reviewId: ", reviewId)
@@ -92,6 +94,74 @@ reviewRouter.delete("/:reviewId",  async(req, res, next) => {
         res.status(200).json(deletedReview);
     }catch(error){
         next(error);
+    }
+});
+
+// 댓글 등록
+reviewRouter.post("/:reviewId/comments", loginRequired, async (req, res, next) => {
+    try {
+        const userId = req.currentUserId;
+        const { reviewId } = req.params;
+        const { nickName, contents } = req.body;
+        const commentInfo = await commentService.addComment({userId, reviewId, nickName, contents });
+
+        if(commentInfo.errorMessage) {
+            throw new Error("댓글 등록에 실패하였습니다.")
+        }
+
+        res.status(200).json(commentInfo);
+    } catch(err) {
+        next(err);
+    }
+});
+
+// 댓글 불러오기
+reviewRouter.get("/:reviewId/comments", loginRequired, async (req, res, next) => {
+    try {
+        const reviewId = req.params.reviewId;
+  
+        const reviewsInfo = await commentService.getComment(reviewId);
+        
+        if(reviewsInfo.errorMessage) {
+            throw new Error("댓글 불러오기 실패")
+        }
+
+        res.status(200).json(reviewsInfo);
+    } catch(err) {
+        next(err);
+    }
+});
+
+// 댓글 수정
+reviewRouter.put("/:reviewId/comments/:commentId", loginRequired, async (req, res, next) => {
+    try {
+        const { reviewId, commentId } = req.params;
+        const { contents } = req.body;
+        const commentInfo = await commentService.setComment(reviewId, commentId, contents);
+
+        if(commentInfo.errorMessage) {
+            throw new Error("댓글 수정을 실패하였습니다.")
+        }
+
+        res.status(200).json(commentInfo);
+    } catch(err) {
+        next(err);
+    }
+});
+
+// 댓글 삭제
+reviewRouter.delete("/:reviewId/comments/:commentId", loginRequired, async (req, res, next) => {
+    try {
+        const { reviewId, commentId }= req.params;
+        const commentInfo = await commentService.delComment(reviewId, commentId);
+
+        if(commentInfo.errorMessage) {
+            throw new Error("댓글 삭제를 실패하였습니다.")
+        }
+
+        res.status(200).json(commentInfo);
+    } catch(err) {
+        next(err);
     }
 });
 
