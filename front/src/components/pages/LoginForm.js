@@ -37,11 +37,6 @@ const LoginForm = () => {
   //local storage에 사용할 key(아이디 저장 체크박스 true, false를 값으로)
   const LS_KEY_SAVE_ID = "LS_KEY_SAVE_ID";
 
-  // //local storage에 사용할 key(토큰 값으로)
-  // const LS_KEY_LOGIN = "LS_KEY_LOGIN";
-  // //local storage에 사용할 key(자동 로그인 체크박스 true, false를 값으로)
-  // const LS_KEY_SAVE_LOGIN = "LS_KEY_SAVE_LOGIN";
-
   useEffect(() => {
     //체크박스 정보 변수에 초기화, 체크라면 true
     let idFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_ID));

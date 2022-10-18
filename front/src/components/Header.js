@@ -25,6 +25,7 @@ function Header() {
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
+    // localStorage 에 저장했던 JWT 토큰을 삭제함.
     localStorage.removeItem("LS_KEY_LOGIN");
     // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: "LOGOUT" });

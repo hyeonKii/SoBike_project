@@ -58,14 +58,17 @@ function App() {
       console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;");
     }
     try {
+      // 이전에 발급받은 토큰이 로컬에 있다면, 이를 가지고 유저 정보를 받아옴.
       let jwtToken = localStorage.getItem(LS_KEY_LOGIN);
-
+      // 로컬의 토큰을 세션에도 사용.
       sessionStorage.setItem("userToken", jwtToken);
 
+      // 세션의 토큰으로 유저 정보를 받아옴.
       const res = await Api.get("users/current");
       const currentUser = res.data;
       console.log(currentUser);
 
+      // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: currentUser,
