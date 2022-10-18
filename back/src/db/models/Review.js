@@ -9,7 +9,7 @@ const Review =  {
             title: createdNewReview.title,
             contents: createdNewReview.contents,
             locationName: createdNewReview.locationName,
-            roadAddress: createdNewReview.roadAddress };
+            roadAddress: createdNewReview.roadAddress};
     },
 
     findById: async ({reviewId}) => {

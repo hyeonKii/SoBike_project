@@ -1,12 +1,12 @@
-const express = require("express");
+import {Router} from "express"
 // const reviewRouter = require("express").Router();
 // const { login_required } = require( "../middlewares/login_required");
-const likeService = require("../services/likeService");
+import {likeService} from "../services/likeService";
 
-const likeRouter = express.Router();
+const likeRouter = Router();
 
 
-likeRouter.post("/datas/bicycle/location/likes",  async (req, res, next) => {
+likeRouter.post("/",  async (req, res, next) => {
     try{
         const userId = req.body.userId ;
         const locationId = req.body.locationId ?? null;
@@ -29,7 +29,7 @@ likeRouter.post("/datas/bicycle/location/likes",  async (req, res, next) => {
 
 
 
-likeRouter.get("/datas/bicycle/location/likes/:userId/", async (req, res, next)=> {
+likeRouter.get("/:userId/", async (req, res, next)=> {
     try{
         const userId = req.params.userId;
         // const locationId = req.body.locationId;
@@ -42,7 +42,7 @@ likeRouter.get("/datas/bicycle/location/likes/:userId/", async (req, res, next)=
     }
 });
 
-likeRouter.put("/datas/bicycle/location/likes/:userId/", async (req, res, next)=> {
+likeRouter.put("/:userId/", async (req, res, next)=> {
     try {
         const userId = req.params.userId;
         const locationId = req.body.locationId;
@@ -63,7 +63,7 @@ likeRouter.put("/datas/bicycle/location/likes/:userId/", async (req, res, next)=
     }
 });
 
-likeRouter.delete("/datas/bicycle/location/likes/:userId/",  async(req, res, next) => {
+likeRouter.delete("/:userId/",  async(req, res, next) => {
     try{
         const userId = req.params.userId;
         const locationId = req.body.locationId;
@@ -84,4 +84,4 @@ likeRouter.delete("/datas/bicycle/location/likes/:userId/",  async(req, res, nex
 
 
 
-module.exports = likeRouter;
+export {likeRouter};

@@ -209,7 +209,8 @@ const MapContainer = (props) => {
     // console.log(`확인용:`,long)
     Api.get(
       `datas/bicycle/locationsByCurrentLocation?latitude=${lati}&longitude=${long}`
-    ).then((res) => {console.log("data 확인용", res.data)});
+    ).then((res) => setServerData(res.data));
+    console.log(serverData);
   };
 
   function getInfo() {

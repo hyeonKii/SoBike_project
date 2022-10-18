@@ -1,4 +1,4 @@
-import { bicycleLocation } from "../db";
+const { bicycleLocation} = require("../db")
 
 const bicycleLocationService = {
 
@@ -35,4 +35,4 @@ const bicycleLocationService = {
 }
 
 
-export { bicycleLocationService };
+export {bicycleLocationService};

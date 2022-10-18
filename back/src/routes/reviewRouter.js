@@ -79,7 +79,7 @@ reviewRouter.put("/:reviewId",  async (req, res, next)=> {
             throw new Error(updatedReview.errorMessage);
         }
 
-        res.status(200).json(updatedReview);
+        res.status(201).json(updatedReview);
     }catch(err){
         next(err);
     }
@@ -88,13 +88,15 @@ reviewRouter.put("/:reviewId",  async (req, res, next)=> {
 reviewRouter.delete("/:reviewId",  async(req, res, next) => {
     try{
         const reviewId = req.params.reviewId;
-        // console.log("reviewId: ", reviewId)
+        console.log("reviewId: ", reviewId)
         const deletedReview = await reviewService.delReview({reviewId});
+        const deletedComments = await commentService.delComments({reviewId});
         // console.log(deletedReview)
+        
         if(deletedReview.errorMessage){
             throw new Error(deletedReview.errorMessage);
         }
-        res.status(200).json(deletedReview);
+        res.status(200).json({deletedReview,deletedComments});
     }catch(error){
         next(error);
     }
@@ -112,7 +114,7 @@ reviewRouter.post("/:reviewId/comments", loginRequired, async (req, res, next) =
             throw new Error("댓글 등록에 실패하였습니다.")
         }
 
-        res.status(200).json(commentInfo);
+        res.status(201).json(commentInfo);
     } catch(err) {
         next(err);
     }
@@ -146,7 +148,7 @@ reviewRouter.put("/:reviewId/comments/:commentId", loginRequired, async (req, re
             throw new Error("댓글 수정을 실패하였습니다.")
         }
 
-        res.status(200).json(commentInfo);
+        res.status(201).json(commentInfo);
     } catch(err) {
         next(err);
     }

@@ -61,4 +61,4 @@ const likeService = {
     }
 };
 
-module.exports = likeService;
+export {likeService};
