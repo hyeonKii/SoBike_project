@@ -1,14 +1,14 @@
 import {Router} from "express"
 // const reviewRouter = require("express").Router();
-// const { login_required } = require( "../middlewares/login_required");
+const { loginRequired } = require( "../middlewares/loginRequired");
 import {likeService} from "../services/likeService";
 
 const likeRouter = Router();
 
 
-likeRouter.post("/",  async (req, res, next) => {
+likeRouter.post("/",  loginRequired, async (req, res, next) => {
     try{
-        const userId = req.body.userId ;
+        const userId = req.currentUserId ;
         const locationId = req.body.locationId ?? null;
         // const isLike = req.body.isLike??null;
 
@@ -63,10 +63,10 @@ likeRouter.put("/:userId/", async (req, res, next)=> {
     }
 });
 
-likeRouter.delete("/:userId/",  async(req, res, next) => {
+likeRouter.delete("/:locationId/", loginRequired,  async(req, res, next) => {
     try{
-        const userId = req.params.userId;
-        const locationId = req.body.locationId;
+        const userId = req.currentUserId;
+        const locationId = req.params.locationId;
         console.log("userId:",userId)
         console.log("locationId:",locationId)
         // console.log("reviewId: ", reviewId)
