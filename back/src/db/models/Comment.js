@@ -1,12 +1,19 @@
 import { CommentModel } from "../schemas/comment";
 
+const responseCommentInfo = (commentInfo) => {
+    const comment = { commentId: commentInfo._id, ...commentInfo };
+
+    delete comment._id;
+
+    return comment;
+}
+
 const Comment = {
     create: async (newComment) => {
-        let createdComment = await CommentModel.create(newComment);
+        const createdComment = await CommentModel.create(newComment);
         
         if(createdComment) {
-            createdComment = { commentId: createdComment._doc._id, ...createdComment._doc};
-            delete createdComment._id;
+            return responseCommentInfo(createdComment._doc);
         }
 
         return createdComment;
@@ -14,23 +21,19 @@ const Comment = {
     findAll: async (reviewId) => {
         let comments = await CommentModel.find({ reviewId });
         
-        
         if(comments) {
             comments = comments.map((data) => {
-                const comment = { commentId: data._doc._id, ...data._doc};
-                delete comment._id;
-                return { ...comment };
+                return responseCommentInfo(data._doc);
             })
         }
 
         return comments;
     },
     findById: async (reviewId, commentId) => {
-        let comment = await CommentModel.findById({ _id: commentId, reviewId });
+        const comment = await CommentModel.findById({ _id: commentId, reviewId });
 
         if(comment) {
-            comment = { commentId: comment._doc._id, ...comment._doc};
-            delete comment._id;
+            return responseCommentInfo(comment._doc);
         }
 
         return comment;
@@ -45,20 +48,26 @@ const Comment = {
             option
         );
 
+        if(updatedComment) {
+            return responseCommentInfo(updatedComment._doc);
+        }
+
         return updatedComment;
     },
     delete: async (reviewId, commentId) => {
         const deletedComment = await CommentModel.findOneAndDelete({ _id: commentId, reviewId });
 
+        if(deletedComment) {
+            return responseCommentInfo(deletedComment._doc);
+        }
+        
         return deletedComment;
     },
     deleteAll: async ({reviewId}) => {
-        console.log(reviewId)
         const deletedComments = await CommentModel.deleteMany({reviewId:reviewId} );
-        // console.log(deletedComments)
+
         return deletedComments;
     }
-    
 };
 
 export { Comment };
