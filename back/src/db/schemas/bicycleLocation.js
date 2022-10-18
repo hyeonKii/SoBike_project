@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model, Types } from "mongoose";
 
-const bicycleLocationSchema = new mongoose.Schema(
+const bicycleLocationSchema = new Schema(
     {
         roadAddress:{
             type: String, 
@@ -30,5 +30,5 @@ const bicycleLocationSchema = new mongoose.Schema(
 //     {collection: 'bicycleLocation'}
 )
 
-const bicycleLocationModel = mongoose.model("BicycleLocation", bicycleLocationSchema)
+const bicycleLocationModel = model("BicycleLocation", bicycleLocationSchema)
 module.exports = bicycleLocationModel;
