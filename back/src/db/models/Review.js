@@ -1,4 +1,5 @@
 import { ReviewModel } from "../schemas/review";
+import { ReviewImage } from "./ReviewImage";
 
 const Review =  {
     create : async ({newReview}) => {
@@ -16,14 +17,17 @@ const Review =  {
         // console.log(reviewId)
         console.log("a")
         const review = await ReviewModel.findOne({_id: reviewId});
-        
+        const reviewImage = await ReviewImage.findById(reviewId)
+
         return {reviewId: review._id,
             userId: review.userId,
             email: review.email,
             title: review.title,
             contents: review.contents,
             locationName: review.locationName,
-            roadAddress: review.roadAddress }
+            roadAddress: review.roadAddress,
+            reviewImageId: reviewImage.reviewImageId,
+            reviewImage: reviewImage.reviewImage }
     },
 
     update: async ({reviewId, fieldToUpdate, newValue})=> {
@@ -50,15 +54,25 @@ const Review =  {
     findAll: async ()=> {
         console.log("afdf")
         const reviews = await ReviewModel.find();
-
-        const reviewList = reviews.map((review)=>{
+     
+        const getReviewImage = await ReviewImage.findAll();
+        // console.log("getReviewImage: ",getReviewImage) 
+        const reviewList = reviews.map( (review)=>{
+            const reviewId = review._id;
+            // console.log("review:", review)
+            // console.log("reviewId: ", reviewId)
+            const reviewImage = getReviewImage.filter(image => image.reviewId === reviewId)
+            // console.log("reviewImage: ", reviewImage)
+            // console.log("reviewImageId: ", reviewImage[0].reviewImageId)
             return {reviewId: review._id,
                 userId: review.userId,
                 email: review.email,
                 title: review.title,
                 contents: review.contents,
                 locationName: review.locationName,
-                roadAddress: review.roadAddress }
+                roadAddress: review.roadAddress,
+                reviewImageId: reviewImage[0].reviewImageId,
+                reviewImage: reviewImage[0].reviewImage }
         })
         return reviewList;
     },
