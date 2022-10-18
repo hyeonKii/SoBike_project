@@ -32,7 +32,7 @@ function Header() {
     // 기본 페이지로 돌아감.
     navigate("/");
   };
-  //-----------------------------------------------------
+ 
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -43,7 +43,7 @@ function Header() {
       window.removeEventListener("scroll", throttle(updateScroll, 100));
     };
   }, []);
-  //--------------------------------------------
+  
   return (
     <header className={scrollPosition < 25 ? "header" : "header-opacity"}>
       <div className="logo">
