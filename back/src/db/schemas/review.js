@@ -30,7 +30,7 @@ const ReviewSchema = new Schema(
             type: String, 
             required: true
         }
-    }
+    }, {timestamps: true}
 )
 
 const ReviewModel = model("Review", ReviewSchema);
