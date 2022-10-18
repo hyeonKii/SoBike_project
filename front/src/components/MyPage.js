@@ -7,6 +7,14 @@ import * as Api from "../api";
 import User from "./user/User";
 
 import "./MyPage.css";
+import styled from "styled-components";
+
+const RegisterDiv=styled.div `
+  background-color: rgba(1, 1, 1, 0.5);
+  width: 100%;
+  height: 80px;
+  z-index:-1;
+  `
 
 function MyPage() {
   const navigate = useNavigate();
@@ -60,39 +68,75 @@ function MyPage() {
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
-          <User
-            portfolioOwnerId={portfolioOwner.userId}
-            isEditable={portfolioOwner.userId === userState.user?.userId}
-          />
-        </Col>
-
-        <Col>
-
-          <div className="rentalOffice" style={{ textAlign: "center" }}>
-            관심대여소
-          </div>
-
-          <Col>
-            <Card style={{ width: '18rem' }}>
-              <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up the
-                  bulk of the card's content.
-                </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
-              </Card.Body>
-            </Card>
+    <>
+      <RegisterDiv></RegisterDiv>
+      <Container fluid
+        className="container">
+        <Row>
+          <Col md="3" lg="3">
+            <User
+              portfolioOwnerId={portfolioOwner.userId}
+              isEditable={portfolioOwner.userId === userState.user?.userId}
+            />
           </Col>
 
-          
+          <Col style={{marginTop: "100px"}}>
+              <div
+                className="rentalLocation" 
+                style={{
+                    display:"flex",
+                    height:"40px",
+                    textAlign: "center",
+                    justifyContent:"center",
+                    backgroundColor: "#CC99FF",
+                    borderRadius: "10px",
+                    boxShadow: "7px 7px 39px rgba(227, 193, 235, 1)"
+                    }}
+              >
+              <div style={{
+                  display: "flex",
+                  marginTop: "5px",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                  color: "white",
+                  }}
+              >
+                관심대여소
+              </div>
+            </div>
 
-        </Col>
-      </Row>
-    </Container>
+            <Col
+              style={{
+                display: "flex",
+                marginTop: "3rem",
+                justifyContent: "center",
+              }}
+            >
+              <Card 
+                className="rentalCard"
+                style={{ 
+                  width: '800px', 
+                  height: "150px",
+                  boxShadow: "7px 7px 39px rgba(243, 228, 246, 1)",
+                  border: "none",
+                  borderRadius: "20px"
+                  }}>
+                <Card.Body>
+                  <Card.Title>대여소 이름</Card.Title>
+                  <Card.Text>
+                    서울 특별시 용산구
+                  </Card.Text>
+                  <Button variant="primary">리뷰</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            
+
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 
