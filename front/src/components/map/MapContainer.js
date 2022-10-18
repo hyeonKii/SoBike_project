@@ -12,6 +12,7 @@ const MapContainer = (props) => {
   const mapRef = useRef();
   const [latitude, setLatitude] = useState(37.566535);
   const [longitude, setLongitude] = useState(126.9779692);
+  const [serverData, setServerData] = useState("");
 
   useEffect(() => {
     // Api.get("bicycles/location").then((res) => setLoadedPlaces(res.data));
@@ -180,10 +181,13 @@ const MapContainer = (props) => {
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
         console.log("검색 경도 위도: ", data[0].x, data[0].y);
-        getInfo();
+        setLatitude(place.y);
+        setLongitude(place.x);
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정
         mapRef.current.setBounds(bounds);
+
+        getInfo();
 
         // 지도에 마커를 표시하는 함수입니다
         function displayMarker(place) {
@@ -192,19 +196,20 @@ const MapContainer = (props) => {
           //   map: mapRef.current,
           //   position: new kakao.maps.LatLng(place.y, place.x),
           // });
-          setLatitude(place.y);
-          setLongitude(place.x);
         }
         setInputText("");
       }
-      currentLocation(data[0].x, data[0].y)
+      currentLocation(data[0].x, data[0].y);
     }
   };
 
   const currentLocation = async (longitude, latitude) => {
-    await Api.get(
-      `datas/bicycle/locationsByCurrentLocation/${longitude}/${latitude}`
-    ).then((res) => console.log("data 확인용", res));
+    const long = String(longitude);
+    const lati = String(latitude);
+    // console.log(`확인용:`,long)
+    Api.get(
+      `datas/bicycle/locationsByCurrentLocation?latitude=${lati}&longitude=${long}`
+    ).then((res) => {console.log("data 확인용", res.data)});
   };
 
   function getInfo() {
@@ -212,7 +217,7 @@ const MapContainer = (props) => {
     const center = mapRef.current.getCenter();
     // 지도의 현재 영역을 얻어옵니다
     const bounds = mapRef.current.getBounds();
-    console.log("현재 중심 좌표", center.Ma, center.La);
+    console.log("현재 중심 좌표", bounds);
   }
 
   return (

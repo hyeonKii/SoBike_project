@@ -18,7 +18,7 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use("/users", userAuthRouter);
 app.use("/reviews", reviewRouter);
-app.use("/", bicycleLocationRouter);
+app.use("/datas", bicycleLocationRouter);
 
 app.get("/", (req, res) => {
     res.send("기본적인 페이지 접속을 하셨습니다. 파이팅!");
