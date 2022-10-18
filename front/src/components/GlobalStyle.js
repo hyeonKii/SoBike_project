@@ -25,7 +25,6 @@ const GlobalStyle = createGlobalStyle`
   }
   .Container{
     margin: auto;
-    width: 50%;
   }
 
 `
