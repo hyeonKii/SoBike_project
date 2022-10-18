@@ -1,7 +1,11 @@
-const mongoose = require("mongoose");
+import { Schema, model, Types } from "mongoose";
 
-const LikeSchema = new mongoose.Schema(
+const LikeSchema = new Schema(
     {
+        _id: {
+            type: String,
+            default: () => String(new Types.ObjectId())
+        },
         locationId:{
             type: String, 
             required: true
@@ -19,5 +23,5 @@ const LikeSchema = new mongoose.Schema(
     {timestamps: true}
 )
 
-const LikeModel = mongoose.model("Like", LikeSchema)
+const LikeModel = model("Like", LikeSchema)
 module.exports = LikeModel;
