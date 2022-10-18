@@ -56,7 +56,6 @@ const userAuthService = {
         let getUserImage;
 
         if(getUserInfo) getUserImage = await UserImage.findById(userId);
-        else throw new Error("회원정보 불러오기 실패");
 
         if(getUserImage) {
             getUserInfo.image = "http://localhost:5001/public/images/" + getUserImage.image;
@@ -96,59 +95,58 @@ const userAuthService = {
             
             // 닉네임 업데이트
             userInfo = await User.update(userId, fieldToUpdate, newValue);
-        } else {
-            throw new Error("password 혹은 nickName을 입력하지 않으셨습니다.");
         }
 
         // 유저 이미지 생성 및 수정
-        const originalFilename = files.userFile.originalFilename;
-        const extension = path.extname(originalFilename);
-        let fileName;
+        if(userInfo) {
+            const originalFilename = files.userFile.originalFilename;
+            const extension = path.extname(originalFilename);
+            let fileName;
+            if(originalFilename.split(".").length > 2) {
+                const name = originalFilename.split(".");
 
-        if(originalFilename.split(".").length > 2) {
-            const name = originalFilename.split(".");
-
-            for(let i = 0; i < fileName.length-1; i++) {
-                fileName += name[i];
+                for(let i = 0; i < fileName.length-1; i++) {
+                    fileName += name[i];
+                }
+            } else {
+                fileName = originalFilename.split(".")[0];
             }
-        } else {
-            fileName = originalFilename.split(".")[0];
-        }
 
-        fileName = fileName + "-" + Date.now() + extension;
+            fileName = fileName + "-" + Date.now() + extension;
 
-        const oldPath = files.userFile.filepath;
-        const newPath = __dirname + "/../public/images/" + fileName;
-        const currentUserImageInfo = await UserImage.findById(userId);
-        
-        if(!currentUserImageInfo) {
-            // DB에 저장된 이미지가 없으면 생성
-            const createUserImage = await UserImage.create(userId, fileName);
-
-            if(!createUserImage) throw new Error("DB에 이미지 생성 실패");
-
-            fs.rename(oldPath, newPath, async (err) => {
-                if(err) throw new Error("이미지 업로드 실패");
-            });
-
-            userInfo.image = createUserImage.image
-        } else {
-            // DB에 이미가 있으면 업데이트
-            const fieldToUpdate = "image";
-            const newValue = fileName;
-            const updatedUserImage = await UserImage.update(userId, fieldToUpdate, newValue);
+            const oldPath = files.userFile.filepath;
+            const newPath = __dirname + "/../public/images/" + fileName;
+            const currentUserImageInfo = await UserImage.findById(userId);
             
-            userInfo.image = updatedUserImage.image;
+            if(!currentUserImageInfo) {
+                // DB에 저장된 이미지가 없으면 생성
+                const createUserImage = await UserImage.create(userId, fileName);
 
-            fs.unlink(`src/public/images/${currentUserImageInfo.image}`, (err) => {
-                if(err) throw new Error("이미지 삭제 실패");
-            })
+                if(!createUserImage) throw new Error("DB에 이미지 생성 실패");
 
-            fs.rename(oldPath, newPath, (err) => {
-                if(err) throw new Error("이미지 업로드 실패");
-            });  
+                fs.rename(oldPath, newPath, async (err) => {
+                    if(err) throw new Error("이미지 업로드 실패");
+                });
+
+                userInfo.image = createUserImage.image
+            } else {
+                // DB에 이미가 있으면 업데이트
+                const fieldToUpdate = "image";
+                const newValue = fileName;
+                const updatedUserImage = await UserImage.update(userId, fieldToUpdate, newValue);
+                
+                userInfo.image = updatedUserImage.image;
+
+                fs.unlink(`src/public/images/${currentUserImageInfo.image}`, (err) => {
+                    if(err) throw new Error("이미지 삭제 실패");
+                })
+
+                fs.rename(oldPath, newPath, (err) => {
+                    if(err) throw new Error("이미지 업로드 실패");
+                });  
+            }
         }
-
+        
         userInfo.errorMessage = null;
 
         return userInfo;
@@ -167,8 +165,6 @@ const userAuthService = {
             } else {
                 return deletedUserImage;
             }
-        } else {
-            return deletedUser;
         }
         
         deletedUser.errorMessage = null;
