@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import * as Api from "../../api";
 import bikeDatas from "./bikeDatas.json";
-
+import StorePlaces from "./StorePlaces";
 import {
   Container,
   Row,
@@ -358,6 +357,9 @@ function Search(props) {
                 <Row className="justify-content-md-left">
                   <h3 style={{ fontWeight: "bold" }}>검색 결과</h3>
                 </Row>
+                {serverData.length > 0 && (
+                  <StorePlaces serverData={serverData} />
+                )}
               </Card.Body>
             </Card>
           </Col>
