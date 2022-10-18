@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Modal, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
+import { LOGIN_SUCCESS } from "../../reducer";
+import { validateEmail } from "../validate/Validate";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -54,8 +56,6 @@ const LoginForm = () => {
     if (loginSaveFlag !== null) setSaveLogin(loginSaveFlag);
     //체그가 안되어 있다면 저장된 아이디를 빈칸으로 교체
     if (loginSaveFlag === false) localStorage.setItem(LS_KEY_LOGIN, "");
-    //저장된 아이디 값을 email 값으로 설정
-    let loginData = localStorage.getItem(LS_KEY_LOGIN);
   }, []);
 
   //아이디 저장 체크 정보
@@ -70,13 +70,14 @@ const LoginForm = () => {
   };
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
+  // const validateEmail = (email) => {
+  //   return email
+  //     .toLowerCase()
+  //     .match(
+  //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //     );
+  // };
+  
 
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
@@ -103,7 +104,7 @@ const LoginForm = () => {
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: user,
       });
 

@@ -2,18 +2,13 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import * as Api from "./api";
-import { loginReducer } from "./reducer";
+import { loginReducer, LOGIN_SUCCESS } from "./reducer";
 
 import "./App.css";
 
 import Header from "./components/Header";
-import Main from "./components/pages/Main";
-import Introduce from "./components/introduce/Introduce";
-import Review from "./components/review/Review";
-import RegisterForm from "./components/pages/RegisterForm";
-import MyPage from "./components/MyPage";
 import LoginForm from "./components/pages/LoginForm";
-import Search from "./components/search/Search";
+import { ROUTE } from './components/route'
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -43,11 +38,10 @@ function App() {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
       const res = await Api.get("users/current");
       const currentUser = res.data;
-      console.log(currentUser);
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: currentUser,
       });
 
@@ -66,11 +60,10 @@ function App() {
       // 세션의 토큰으로 유저 정보를 받아옴.
       const res = await Api.get("users/current");
       const currentUser = res.data;
-      console.log(currentUser);
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: currentUser,
       });
     } catch {
@@ -100,12 +93,12 @@ function App() {
               <Header />
               <LoginForm />
               <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/introduce" element={<Introduce />} />
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/review" element={<Review />} />
-                <Route path="/register" element={<RegisterForm />} />
+                <Route path={ ROUTE.MAIN.path } element={ ROUTE.MAIN.element } />
+                <Route path={ ROUTE.INTRODUCE.path } element={ ROUTE.INTRODUCE.element } />
+                <Route path={ ROUTE.MYPAGE.path } element={ ROUTE.MYPAGE.element } />
+                <Route path={ ROUTE.SEARCH.path } element={ ROUTE.SEARCH.element } />
+                <Route path={ ROUTE.REVIEW.path } element={ ROUTE.REVIEW.element } />
+                <Route path={ ROUTE.REGISTER.path } element={ ROUTE.REGISTER.element } />
               </Routes>
             </Router>
           </AutoLoginContext.Provider>
