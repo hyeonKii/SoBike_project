@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { UserStateContext, DispatchContext, LoginContext } from "../App";
+import { UserStateContext, DispatchContext, LoginModalContext } from "../App";
 
 import { throttle } from "lodash";
 
@@ -11,7 +11,7 @@ function Header() {
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
-  const { setShow } = useContext(LoginContext);
+  const { setShow } = useContext(LoginModalContext);
 
   //모달창 열림
   const handleShow = () => {
@@ -25,6 +25,7 @@ function Header() {
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
+    localStorage.removeItem("LS_KEY_LOGIN");
     // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: "LOGOUT" });
     // 기본 페이지로 돌아감.
