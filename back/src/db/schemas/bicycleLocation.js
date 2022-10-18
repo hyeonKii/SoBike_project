@@ -26,7 +26,7 @@ const bicycleLocationSchema = new mongoose.Schema(
             type: Boolean,
             required: true
        }
-    },
+    }, {timestamps: true}
 //     {collection: 'bicycleLocation'}
 )
 
