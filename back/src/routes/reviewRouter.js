@@ -4,33 +4,36 @@ import { loginRequired } from "../middlewares/loginRequired";
 
 import { reviewService } from "../services/reviewService";
 import { commentService } from "../services/commentService";
+import formidable from "formidable";
+import { update } from "lodash";
 
 const reviewRouter = Router();
 
-reviewRouter.post("/",  async (req, res, next) => {
+reviewRouter.post("/",  loginRequired, async (req, res, next) => {
     try{
-        console.log("ReviewBefore")
-        const userId = req.body.userId??null;
-        const email = req.body.email??null;
-        const title = req.body.title ?? null;
-        const contents = req.body.contents??null;
-        const locationName = req.body.locationName??null;
-        const roadAddress = req.body.roadAddress??null;
-        const newReview = await reviewService.addReview({
-            userId,
-            email,
-            title,
-            contents,
-            locationName,
-            roadAddress
-        });
-        console.log("ReviewAfter")
+        const userId = req.currentUserId;
+        // const email = req.body.email??null;
+        // const title = req.body.title ?? null;
+        // const contents = req.body.contents??null;
+        // const locationName = req.body.locationName??null;
+        // const roadAddress = req.body.roadAddress??null;
+        // const fileName = req.body.fileName??null;
 
-        if(newReview.errorMessage){
-            throw new Error(newReview.errorMessage);
-        }
+        const form = new formidable.IncomingForm()
+        let newReview;
+        form.parse(req, async(err, fields, files) =>{
+            newReview = await reviewService.addReview(userId, fields, files);
+            // console.log("위치: reviewRouter1", newReview)
+            // console.log("sdafasdf")
+            if (newReview.errorMessage){
+                throw new Error("리뷰 정보 등록 실패")
+            }
 
-    res.status(201).json(newReview);
+            res.status(201).json(newReview);
+        })
+
+    
+    
     }catch (error) {
         next(error);
     }
@@ -40,7 +43,9 @@ reviewRouter.get("/",  async (req, res, next)=> {
     try{
         // console.log("ㅇㄴㅁㄹㄴㅇ")
         const reviews = await reviewService.getReviews();
-        console.log("router:" ,reviews)
+        // const reviewImages = await reviewService.getReviewImage();
+        // console.log("router:" ,reviews)
+        // console.log("router:" ,reviews)
         res.status(200).send(reviews);
     }catch(error){
         next(error);
@@ -66,20 +71,21 @@ reviewRouter.get("/:reviewId", async (req, res, next) => {
 
 reviewRouter.put("/:reviewId",  async (req, res, next)=> {
     try {
-        const reviewId = req.params.reviewId;
-        const title = req.body.title?? null;
-        const contents = req.body.contents??null;
-        const locationName = req.body.locationName??null;
+        const {reviewId} = req.params;
+        // const title = req.body.title?? null;
+        // const contents = req.body.contents??null;
+        // const locationName = req.body.locationName??null;
+        const form = new formidable.IncomingForm();
 
-        const toUpdate = {title, contents, locationName};
-        // console.log(toUpdate)
-        const updatedReview = await reviewService.setReview({reviewId, toUpdate});
-
-        if (updatedReview.errorMessage){
-            throw new Error(updatedReview.errorMessage);
-        }
-
-        res.status(201).json(updatedReview);
+        form.parse(req, async(err, fields, files)=>{
+            const updatedReview =  await reviewService.setReview(reviewId, fields, files);
+            
+            if (updatedReview.errorMessage){
+                throw new Error(updatedReview.errorMessage);
+            }
+            console.log("데이터 위치는 라우터: ", updatedReview)
+            res.status(201).json(updatedReview);
+        })
     }catch(err){
         next(err);
     }
@@ -101,6 +107,7 @@ reviewRouter.delete("/:reviewId",  async(req, res, next) => {
         next(error);
     }
 });
+
 
 // 댓글 등록
 reviewRouter.post("/:reviewId/comments", loginRequired, async (req, res, next) => {
