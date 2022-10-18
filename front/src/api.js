@@ -11,7 +11,6 @@ async function get(endpoint, params = "") {
   );
 
   return axios.get(serverUrl + endpoint + "/" + params, {
-
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
@@ -19,39 +18,55 @@ async function get(endpoint, params = "") {
 }
 
 async function post(endpoint, data) {
-  console.log(`데이터 위치는 api: `,data);
+  console.log(`데이터 위치는 api: `, data);
 
-  const bodyData = JSON.stringify(data);
-  console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
-  console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
+  if (Object.keys(data).length) {
+    const bodyData = JSON.stringify(data);
+    console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+    console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
+    return axios.post(serverUrl + endpoint, bodyData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+  } else {
+    console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+    console.log(`%cPOST 요청 데이터: ${data}`, "color: #296aba;");
 
-
-  return axios.post(serverUrl + endpoint, bodyData, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
-  });
+    return axios.post(serverUrl + endpoint, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+  }
 }
 
 async function put(endpoint, data) {
 
+  if (Object.keys(data).length) {
+    const bodyData = JSON.stringify(data);
+    console.log(`%cPUT 요청: ${serverUrl + endpoint}`, "color: #059c4b;");
+    console.log(`%cPUT 요청 데이터: ${bodyData}`, "color: #059c4b;");
+    return axios.put(serverUrl + endpoint, bodyData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+  } else {
+    console.log(`%cPUT 요청: ${serverUrl + endpoint}`, "color: #059c4b;");
+    console.log(`%cPUT 요청 데이터: ${data}`, "color: #059c4b;");
 
-  const bodyData = JSON.stringify(data);
-  console.log(`%cPUT 요청: ${serverUrl + endpoint}`, "color: #059c4b;");
-  console.log(`%cPUT 요청 데이터: ${bodyData}`, "color: #059c4b;");
-
-
-  
-  return axios.put(serverUrl + endpoint, bodyData, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
-  });
+    return axios.put(serverUrl + endpoint, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+  }
 }
-
-
 
 async function del(endpoint, params = "") {
   console.log(`DELETE 요청 ${serverUrl + endpoint + "/" + params}`);
@@ -61,7 +76,5 @@ async function del(endpoint, params = "") {
     },
   });
 }
-
-
 
 export { get, post, put, del as delete };
