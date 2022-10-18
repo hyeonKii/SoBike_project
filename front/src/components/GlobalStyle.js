@@ -13,6 +13,20 @@ const GlobalStyle = createGlobalStyle`
   .contentbox{
     margin: 20px;
   }
+  .inputWarning{
+    font-size :8px;
+    color :#E68080;
+  }
+  .RegisterDiv{
+  background-color: rgba(1, 1, 1, 0.5);
+  width: 100%;
+  height: 80px;
+  z-index:-1;
+  }
+  .Container{
+    margin: auto;
+    width: 50%;
+  }
 
 `
 

@@ -5,19 +5,14 @@ import { UserStateContext } from "../../App";
 import styled from "styled-components";
 import Information from "../../bikeDatas.json";
 import Select from "react-select";
-const RegisterReviewBtn = styled.button`
-  margin-top: 5px;
-  text-align: center;
-  border: 0;
-  background-color: transparent;
-  &:hover {
-    background-color: rgb(199, 208, 210);
-  }
-`;
+import GlobalStyle from "../GlobalStyle";
+
+
 
 function ReviewRegisterForm({ setReviews , handleClose }) {
   const [show, setShow] = useState(false);
   const userState = useContext(UserStateContext);
+ 
 
   const options = Information.map((data) => ({
     value: data.address1,
@@ -54,9 +49,13 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
       console.log("review 등록에 실패하였습니다.", err);
     }
   };
-
+  const isSelectLocationName = locationName.length > 0;
+  const isWriteTitle = reviewForm.title.length > 0;
+  const isWriteCotent = reviewForm.contents.length > 0;
+  const isFormValid = isSelectLocationName&&isWriteTitle&&isWriteCotent
   return (
     <>
+    <GlobalStyle/>
       <Form.Group controlId="userEditProfileImage" className="mb-3">
         <Form.Control
           type="file"
@@ -76,6 +75,11 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
             value={reviewForm.title}
             onChange={handleOnchange}
           />
+          {!isWriteTitle && (
+                <p class="inputWarning">
+                  제목을 작성해 주세요.
+                </p>
+              )}
         </Form.Group>
         <Row className="mb-3">
           <fieldset disabled>
@@ -98,6 +102,11 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
                 setRoadAddress(data.value);
               }}
             />
+            {!isSelectLocationName && (
+                <p class="inputWarning">
+                  장소를 선택해주세요
+                </p>
+              )}
           </Form.Group>
         </Row>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -111,9 +120,14 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
             value={reviewForm.contents}
             onChange={handleOnchange}
           />
+          {!isWriteCotent && (
+                <p class="inputWarning">
+                  본문을 작성해 주세요.
+                </p>
+              )}
         </Form.Group>
         <Form.Group>
-          <Button variant="primary" type="submit" onClick={handleClose}>
+          <Button variant="primary" type="submit" onClick={handleClose} disabled={!isFormValid}>
             Save
           </Button>{" "}
           <Button variant="secondary" onClick={handleClose}>

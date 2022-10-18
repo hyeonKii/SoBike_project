@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {Container} from "react-bootstrap";
-
+import GlobalStyle from "../GlobalStyle";
 
 import '../css/introduce.css';
 
@@ -16,8 +16,6 @@ import CarbonChart3 from "../chart/CarbonChart3.js";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
-
   return (
     <div
       role="tabpanel"
@@ -49,9 +47,6 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-
-
-
 export default function Introduce() {
   const [value, setValue] = React.useState(0);
   
@@ -60,10 +55,13 @@ export default function Introduce() {
   };
 
   return (
-    <Container>
+    <>
+    <GlobalStyle/>
+    <Container fluid className="p-0">
+    <div class="RegisterDiv"></div>
       {/* <Box
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'fixed', height: 224 }}> */}
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%',marginTop: "50px" }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} centered>
           {/* <Tabs
@@ -212,6 +210,6 @@ export default function Introduce() {
   
       </Box>
     </Container>
-    
+    </>
     ); 
 }

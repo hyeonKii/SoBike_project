@@ -9,13 +9,7 @@ import ReviewTable from "./ReviewTable";
 import "./Network.css";
 import RegisterReview from "./RegisterReview";
 import styled from "styled-components";
-
-const RegisterDiv=styled.div `
-  background-color: rgba(1, 1, 1, 0.5);
-  width: 100%;
-  height: 80px;
-  z-index:-1;
-  `
+import GlobalStyle from "../GlobalStyle";
 
 function Review() {
   //const navigate = useNavigate();
@@ -60,8 +54,9 @@ function Review() {
   //console.log(userState.user.userId)
   return (
     <>
+      <GlobalStyle/>
       <Container fluid className="p-0">
-      <RegisterDiv></RegisterDiv>
+      <div class="RegisterDiv"></div>
         <Row className="justify-content-md-center mt-5">
           <Col md={{ span: 1, offset: 4 }}>
             <Form className="mb-3">
