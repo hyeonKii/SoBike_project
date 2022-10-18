@@ -5,7 +5,6 @@ import { loginRequired } from "../middlewares/loginRequired";
 import { reviewService } from "../services/reviewService";
 import { commentService } from "../services/commentService";
 import formidable from "formidable";
-import { update } from "lodash";
 
 const reviewRouter = Router();
 
