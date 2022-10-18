@@ -2,8 +2,9 @@ import { ReviewModel } from "../schemas/review";
 import { ReviewImage } from "./ReviewImage";
 
 const Review =  {
-    create : async ({newReview}) => {
+    create : async (newReview) => {
         const createdNewReview = await ReviewModel.create(newReview);
+        console.log("createdNewReview : ", createdNewReview)
         return {reviewId: createdNewReview._id,
             userId: createdNewReview.userId,
             email: createdNewReview.email,
@@ -71,8 +72,9 @@ const Review =  {
                 contents: review.contents,
                 locationName: review.locationName,
                 roadAddress: review.roadAddress,
-                reviewImageId: reviewImage[0].reviewImageId,
-                reviewImage: reviewImage[0].reviewImage }
+                // reviewImageId: reviewImage[0].reviewImageId,
+                // reviewImage: reviewImage[0].reviewImage 
+            }
         })
         return reviewList;
     },
