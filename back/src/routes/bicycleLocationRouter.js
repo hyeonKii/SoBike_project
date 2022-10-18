@@ -69,6 +69,9 @@ bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:latitude?:longit
         console.log("latitude: ", latitude)
         // console.log(locationName)
         const location = await bicycleLocationService.getLocationsByCurrentLocations({longitude, latitude})
+
+        console.log("백 확인용",location);
+
         res.status(200).send(location);
     }catch(error){
         next(error);

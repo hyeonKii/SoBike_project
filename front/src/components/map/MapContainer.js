@@ -20,7 +20,7 @@ const MapContainer = (props) => {
     const options = {
       //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
-      level: 3, //지도의 레벨(확대, 축소 정도)
+      level: 5, //지도의 레벨(확대, 축소 정도)
       mapTypeId: kakao.maps.MapTypeId.ROADMAP, // 지도종류
     };
 
@@ -186,6 +186,8 @@ const MapContainer = (props) => {
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정
         mapRef.current.setBounds(bounds);
+        // 서버로 데이터 보냄
+        currentLocation(data[0].x, data[0].y);
 
         getInfo();
 
@@ -199,7 +201,6 @@ const MapContainer = (props) => {
         }
         setInputText("");
       }
-      currentLocation(data[0].x, data[0].y);
     }
   };
 
@@ -210,7 +211,7 @@ const MapContainer = (props) => {
     Api.get(
       `datas/bicycle/locationsByCurrentLocation?latitude=${lati}&longitude=${long}`
     ).then((res) => setServerData(res.data));
-    console.log(serverData);
+    console.log("serverData", serverData);
   };
 
   function getInfo() {
@@ -220,6 +221,8 @@ const MapContainer = (props) => {
     const bounds = mapRef.current.getBounds();
     console.log("현재 중심 좌표", bounds);
   }
+
+  console.log("밖의 데이터",serverData);
 
   return (
     <>
