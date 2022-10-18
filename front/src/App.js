@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import * as Api from "./api";
-import { loginReducer } from "./reducer";
+import { loginReducer, LOGIN_SUCCESS } from "./reducer";
 
 import "./App.css";
 
@@ -43,11 +43,11 @@ function App() {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
       const res = await Api.get("users/current");
       const currentUser = res.data;
-      console.log(currentUser);
+
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: currentUser,
       });
 
@@ -66,11 +66,11 @@ function App() {
       // 세션의 토큰으로 유저 정보를 받아옴.
       const res = await Api.get("users/current");
       const currentUser = res.data;
-      console.log(currentUser);
+
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: currentUser,
       });
     } catch {

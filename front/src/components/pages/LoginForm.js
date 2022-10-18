@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Modal, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
+import { LOGIN_SUCCESS } from "../../reducer";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -54,8 +55,6 @@ const LoginForm = () => {
     if (loginSaveFlag !== null) setSaveLogin(loginSaveFlag);
     //체그가 안되어 있다면 저장된 아이디를 빈칸으로 교체
     if (loginSaveFlag === false) localStorage.setItem(LS_KEY_LOGIN, "");
-    //저장된 아이디 값을 email 값으로 설정
-    let loginData = localStorage.getItem(LS_KEY_LOGIN);
   }, []);
 
   //아이디 저장 체크 정보
@@ -103,7 +102,7 @@ const LoginForm = () => {
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: user,
       });
 
