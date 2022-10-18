@@ -5,6 +5,7 @@ import { UserStateContext, DispatchContext, LoginModalContext } from "../App";
 import { throttle } from "lodash";
 
 import classes from "./Header.css";
+import { ROUTE } from './route';
 
 function Header() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ function Header() {
       <div className="logo">
         <NavLink
           className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/"
+          to={ ROUTE.MAIN.link }
         >
           So Bike
         </NavLink>
@@ -59,7 +60,7 @@ function Header() {
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
-              to="/introduce"
+              to={ ROUTE.INTRODUCE.link }
             >
               서비스 소개
             </NavLink>
@@ -67,7 +68,7 @@ function Header() {
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
-              to="/search"
+              to={ ROUTE.SEARCH.link }
             >
               대여소 검색
             </NavLink>
@@ -75,7 +76,7 @@ function Header() {
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
-              to="/review"
+              to={ ROUTE.REVIEW.link }
             >
               리뷰
             </NavLink>
@@ -87,7 +88,7 @@ function Header() {
                   className={(navData) =>
                     navData.isActive ? classes.active : ""
                   }
-                  to="/mypage"
+                  to={ ROUTE.MYPAGE.link }
                 >
                   내정보
                 </NavLink>
@@ -120,7 +121,7 @@ function Header() {
                   className={(navData) =>
                     navData.isActive ? classes.active : ""
                   }
-                  to="/register"
+                  to={ ROUTE.REGISTER.link }
                 >
                   회원가입
                 </NavLink>
