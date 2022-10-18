@@ -2,7 +2,11 @@ import { Schema, model, Types } from "mongoose";
 
 const bicycleLocationSchema = new Schema(
     {
-        roadAddress:{
+     _id: {
+          type: String,
+          default: () => String(new Types.ObjectId())
+      },
+      roadAddress:{
             type: String, 
             required: true
         },
