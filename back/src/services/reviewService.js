@@ -6,11 +6,12 @@ const reviewService = {
      addReview: async (userId, fields, files) => {
         const {email, title, contents, locationName, roadAddress} = fields;
         const newReview = {userId, email, title, contents, locationName, roadAddress}
-        // console.log(userId)
-        // console.log(fields)
+        console.log(userId)
+        console.log(fields)
         // console.log(files)
-        const createdNewReview = await Review.create({newReview});
-
+        const createdNewReview = await Review.create(newReview);
+        console.log("여기2")
+        console.log(createdNewReview)
         // console.log("created: ",createdNewReview.reviewId)
 
         
