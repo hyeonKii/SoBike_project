@@ -15,7 +15,8 @@ const LikeSchema = new mongoose.Schema(
             required: true,
             default: true
        }
-    }
+    },
+    {timestamps: true}
 )
 
 const LikeModel = mongoose.model("Like", LikeSchema)
