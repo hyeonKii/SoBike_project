@@ -36,14 +36,14 @@ function Header() {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
   useEffect(() => {
-    window.addEventListener("scroll", throttle(updateScroll, 300));
+    window.addEventListener("scroll", throttle(updateScroll, 100));
     return () => {
-      window.removeEventListener("scroll", throttle(updateScroll, 300));
+      window.removeEventListener("scroll", throttle(updateScroll, 100));
     };
   }, []);
   //--------------------------------------------
   return (
-    <header className={scrollPosition < 60 ? "header" : "header-opacity"}>
+    <header className={scrollPosition < 25 ? "header" : "header-opacity"}>
       <div className="logo">
         <NavLink
           className={(navData) => (navData.isActive ? classes.active : "")}
