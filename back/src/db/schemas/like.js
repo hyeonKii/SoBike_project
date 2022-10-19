@@ -7,7 +7,7 @@ const LikeSchema = new Schema(
             default: () => String(new Types.ObjectId())
         },
         locationId:{
-            type: String, 
+            type: Number, 
             required: true
         },
         userId:{
