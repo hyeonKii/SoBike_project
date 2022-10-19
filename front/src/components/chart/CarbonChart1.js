@@ -1,9 +1,10 @@
 import React from "react";
 import {
-  LineChart,
+  ComposedChart,
   Line,
   XAxis,
   YAxis,
+  Bar,
   CartesianGrid,
   Tooltip,
   Legend
@@ -11,54 +12,78 @@ import {
 
 const data = [
   {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
+    name: "2010",
+    가뭄피해건수: 9,
+    탄소농도: 394.870504,
     amt: 2400
   },
   {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
+    name: "2011",
+    가뭄피해건수: 45,
+    탄소농도: 396.748428,
     amt: 2210
   },
   {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
+    name: "2012",
+    가뭄피해건수: 59,
+    탄소농도: 400.388235,
     amt: 2290
   },
   {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
+    name: "2013",
+    가뭄피해건수: 22,
+    탄소농도: 402.106061,
     amt: 2000
   },
   {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
+    name: "2014",
+    가뭄피해건수: 105,
+    탄소농도:  406.603175,
     amt: 2181
   },
   {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
+    name: "2015",
+    가뭄피해건수: 216,
+    탄소농도: 407.560000,
     amt: 2500
   },
   {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
+    name: "2016",
+    가뭄피해건수: 147,
+    탄소농도: 411.411765,
+    amt: 2100
+  },
+  {
+    name: "2017",
+    가뭄피해건수: 372,
+    탄소농도: 411.411765,
+    amt: 2100
+  },
+  {
+    name: "2018",
+    가뭄피해건수: 232,
+    탄소농도: 412.083333,
+    amt: 2100
+  },
+  {
+    name: "2019",
+    가뭄피해건수: 236,
+    탄소농도: 414.566667,
+    amt: 2100
+  },
+  {
+    name: "2020",
+    가뭄피해건수: 120,
+    탄소농도: 417.600000,
     amt: 2100
   }
 ];
 
 export default function CarbonChart1() {
   return (
-    <LineChart
-      width={500}
-      height={300}
+    <ComposedChart
+      width={550}
+      height={400}
       data={data}
       margin={{
         top: 5,
@@ -69,16 +94,17 @@ export default function CarbonChart1() {
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
-      <YAxis />
+      <YAxis yAxisId="left" domain={[390, 420]}/>
+      <YAxis yAxisId="right" orientation="right" domain={[0, 400]}/>      
       <Tooltip />
       <Legend />
-      <Line
+      <Line yAxisId="left"
         type="monotone"
-        dataKey="pv"
-        stroke="#8884d8"
+        dataKey="탄소농도"
+        stroke="#ff8e7f"
         activeDot={{ r: 8 }}
       />
-      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-    </LineChart>
+      <Line yAxisId="right" type="bill" dataKey="가뭄피해건수" stroke="#89a5ea" />
+    </ComposedChart>
   );
 }
