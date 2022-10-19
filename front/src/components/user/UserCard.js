@@ -5,6 +5,10 @@ import './UserCard.css';
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
   console.log(user);
+  console.log(user?.image);
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const domain = protocol + "//" + hostname + ":5001/";
   return (
     <Card
       className="myInfo" 
@@ -23,7 +27,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           <Card.Img
             style={{ width: "10rem"}}
             className="mb-3"
-            src={user?.image}
+            src={domain + user?.image}
             alt="라이언"
           />
         </Row>

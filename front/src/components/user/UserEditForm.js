@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 
+
 function UserEditForm({ user, setIsEditing, setUser }) {
   // useState로 nickName 상태를 생성함.
   const [nickName, setnickName] = useState(user.nickName);
@@ -12,48 +13,39 @@ function UserEditForm({ user, setIsEditing, setUser }) {
   //미리 볼 사진 url 저장할 state
   const [prevImage, setPrevImage] = useState("");
   
-  const setPreviewImage= (e) => {
-    setPrevImage(URL.createObjectURL(e.target.files[0]))
-  };
-
-  const updateImage = async (e) => {
-      
-      const formData = new FormData();
-      formData.append('file', e.target.files[0]);
-      const res = await Api.put(`users/${user.userId}`, formData);
-      const imageUpload = await res;
-      
-      alert("서버에 업로드");
-      console.log(user);
-      setImage(imageUpload);
-      setPreviewImage(e);
-      
-    } 
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const domain = protocol + "//" + hostname + ":5001/";
   
-
+  const setPreviewImage= (target) => {
+    setPrevImage(URL.createObjectURL(target.files[0]))
+    setImage(target);
+  };
+  
   /////////////////////
   const handleSubmit = async (e) => {
     // preventDefault
     e.preventDefault();
     const userId = user.userId;
+    console.log("image : " + user.image);
+    const formData = new FormData();
+    console.log(image.files[0])
+    formData.append('userFile', image.files[0]);
+    formData.append("email", email);
+    formData.append("nickName", nickName);
 
-    // "users/유저id" 엔드포인트로 PUT 요청함.
-    const res = await Api.put(`users/${user.userId}`, {
-      userId: userId,
-      nickName: nickName,
-      email: email,
-      image: image
-    });
+    const res = await Api.put(`users/${userId}`, formData);
+
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
     // 해당 유저 정보로 user을 세팅함.
     setUser(updatedUser);
-    console.log(res.data);
+
     // isEditing을 false로 세팅함.
     setIsEditing(false);
-
+    setPreviewImage(res.data.image);
   };
-  
+
   return (
     <Card 
       className="myInfo"
@@ -80,19 +72,16 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             <Card.Img
               style={{ width: "10rem", height: "8rem" }}
               className="mb-3"
-              src={`${user?.image}`}
+              src={`${domain + image}`}
               />
           )}
           <Form.Group 
           controlId="EditUserImage"
           className="mb-3"
-          > 
+> 
             <Form.Control
               type="file"
-              name="file"
-              method= "put"
-              encType= "multipart/form-data"
-              onChange={(e) => updateImage(e)}
+              onChange={(e) => setPreviewImage(e.target)}
             />
           </Form.Group>
 
