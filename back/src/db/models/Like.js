@@ -3,6 +3,7 @@ import {bicycleLocation} from "./bicycleLocation"
 
 const Like =  {
     create : async ({newLike}) => {
+        console.log(newLike)
         const createdNewLike = await LikeModel.create(newLike);
         return createdNewLike;
     },
@@ -50,8 +51,20 @@ const Like =  {
     findByUser: async (userId, locationId)=> {
         // console.log("userId")
         const likes = await LikeModel.find({userId:userId, locationId: locationId});
-        console.log("likes: ", likes)
-        return likes;
+        console.log(likes[0])
+        console.log("likes: ", likes.length)
+        let like =likes;
+        if(likes.length ==0){
+            console.log("likes in: ",likes)
+
+            like = {userId:userId, locationId:locationId, liked:false }
+        }else{
+            // console.log("likes in: ",likes)
+            like = {userId: likes[0].userId, locationId: likes[0].locationId, liked:true}
+            // console.log("likes out: ", like)
+        }
+        // console.log(like)
+        return like;
     },
     findByLocation: async (locationId)=> {
         console.log("afdf")
