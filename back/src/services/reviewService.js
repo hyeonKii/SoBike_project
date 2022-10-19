@@ -38,7 +38,7 @@ const reviewService = {
         const reviewId = createdNewReview.reviewId
         console.log("reviewId: ", reviewId)
         console.log("fileName: ", fileName)
-        const createdReviewImage = await ReviewImage.create(reviewId, fileName);
+        const createdReviewImage = await ReviewImage.create(reviewId, "/public/reviewImages/" + fileName);
         if(!createdReviewImage) throw new Error("DB에 이미지 생성 실패");
 
         fs.rename(oldPath, newPath, async (err) => {
