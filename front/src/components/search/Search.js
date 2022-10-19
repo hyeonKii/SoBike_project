@@ -37,6 +37,19 @@ function Search(props) {
 
     mapRef.current = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
+    //----------------------------------------------- 검색후 중심좌표 
+    kakao.maps.event.addListener(mapRef.current, "center_changed", function () {
+      // 지도의  레벨을 얻어옵니다
+      const level = mapRef.current.getLevel();
+
+      // 지도의 중심좌표를 얻어옵니다
+      const latlng = mapRef.current.getCenter();
+
+      setLatitude(latlng.getLat());
+
+      setLongitude(latlng.getLng());
+    });
+
     //-------------------------------------------------------------------------- 클러스터(모음)
 
     // 마커 클러스터러를 생성합니다
@@ -55,7 +68,7 @@ function Search(props) {
         setLatitude(lat);
         setLongitude(lon);
 
-        console.log("현재 위치의 위도, 경도", lat, lon);
+        // console.log("현재 위치의 위도, 경도", lat, lon);
 
         // 현재 위치 표시입니다.
         const locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성, 변경
@@ -191,16 +204,14 @@ function Search(props) {
           displayMarker(data[i]);
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
-        console.log("검색 경도 위도: ", data[0].x, data[0].y);
-        setLatitude(place.y);
-        setLongitude(place.x);
+        // console.log("검색 경도 위도: ", data[0].x, data[0].y);
+        // setLatitude(place.y);
+        // setLongitude(place.x);
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정
         mapRef.current.setBounds(bounds);
         // 서버로 데이터 보냄
         currentLocation(data[0].x, data[0].y);
-
-        getInfo();
 
         // 지도에 마커를 표시하는 함수입니다
         function displayMarker(place) {
@@ -222,18 +233,18 @@ function Search(props) {
     Api.get(
       `datas/bicycle/locationsByCurrentLocation?latitude=${lati}&longitude=${long}`
     ).then((res) => setServerData(res.data));
-    console.log("serverData", serverData);
+    console.log("serverData", longitude, latitude);
   };
 
-  function getInfo() {
-    // 지도의 현재 중심좌표를 얻어옵니다
-    const center = mapRef.current.getCenter();
-    // 지도의 현재 영역을 얻어옵니다
-    const bounds = mapRef.current.getBounds();
-    console.log("현재 중심 좌표", bounds);
-  }
+  // function getInfo() {
+  //   // 지도의 현재 중심좌표를 얻어옵니다
+  //   const center = mapRef.current.getCenter();
+  //   // 지도의 현재 영역을 얻어옵니다
+  //   const bounds = mapRef.current.getBounds();
+  //   console.log("현재 중심 좌표", bounds);
+  // }
 
-  console.log("밖의 데이터", serverData);
+  // console.log("밖의 데이터", serverData);
 
   return (
     <>
