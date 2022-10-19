@@ -1,4 +1,4 @@
-const { bicycleLocation} = require("../db")
+import {bicycleLocation} from "../db"
 
 const bicycleLocationService = {
 
@@ -26,9 +26,9 @@ const bicycleLocationService = {
         // console.log("service:" ,locations)
         return locations;
     },
-    getLocationsByCurrentLocations: async ({longitude, latitude})=> {
+    getLocationsByCurrentLocations: async ({userId, longitude, latitude})=> {
         // console.log("1sdfasdf")
-        const locations = await bicycleLocation.findByCurrentLocations({longitude, latitude});
+        const locations = await bicycleLocation.findByCurrentLocations({userId, longitude, latitude});
         // console.log("service:" ,locations)
         return locations;
     },
