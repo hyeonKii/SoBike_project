@@ -1,18 +1,14 @@
 import React, { useState, useContext } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Card, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
-import styled from "styled-components";
 import Information from "../../bikeDatas.json";
 import Select from "react-select";
 import GlobalStyle from "../GlobalStyle";
-
-
-
-function ReviewRegisterForm({ setReviews , handleClose }) {
+import bicycle from "../../images/Bike.jpeg"
+function ReviewRegisterForm({ setReviews, handleClose }) {
   const [show, setShow] = useState(false);
   const userState = useContext(UserStateContext);
- 
 
   const options = Information.map((data) => ({
     value: data.address1,
@@ -26,6 +22,10 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
     title: "",
     contents: "",
   });
+  const [reviewImage,setReviewImage]=useState("");
+  function handleImgChange(e){
+    setReviewImage(e.target.files[0]);
+  }
   function handleOnchange(e) {
     const { name, value } = e.target;
     setReviewForm((prev) => ({
@@ -33,17 +33,26 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
       [name]: value,
     }));
   }
+  console.log("Image",reviewImage)
   const handleSubmit = async (e) => {
     // preventDefault 해주기
     e.preventDefault();
-    const userId = userState.user.userId; //로그인된 사용자 id
+    const userId = userState.user.userId
+    const reviewFile = new FormData();
+    reviewFile.append("reviewFile", reviewImage);
+    reviewFile.append("userId", userId);
+    reviewFile.append("email", reviewForm.email);
+    reviewFile.append("title", reviewForm.title);
+    reviewFile.append("contents", reviewForm.contents);
+    reviewFile.append("locationName", locationName);
+    reviewFile.append("roadAddress", roadAddress);
+    console.log(typeof(reviewImage))
+    ; //로그인된 사용자 id
     try {
-      const res = await Api.post("reviews", {
-        userId,
-        ...reviewForm,
-        locationName,
-        roadAddress,
-      });
+      const res = await Api.post("reviews", 
+        reviewFile
+
+      );
       setReviews((prev) => [...prev, res.data]);
     } catch (err) {
       console.log("review 등록에 실패하였습니다.", err);
@@ -52,20 +61,22 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
   const isSelectLocationName = locationName.length > 0;
   const isWriteTitle = reviewForm.title.length > 0;
   const isWriteCotent = reviewForm.contents.length > 0;
-  const isFormValid = isSelectLocationName&&isWriteTitle&&isWriteCotent
+  const isFormValid = isSelectLocationName && isWriteTitle && isWriteCotent;
   return (
     <>
-    <GlobalStyle/>
-      <Form.Group controlId="userEditProfileImage" className="mb-3">
-        <Form.Control
-          type="file"
-          // name="file"
-          // method="post"
-          // encType="multipart/form-data"
-          // onChange={(e) => upload(e)}
-        />
-      </Form.Group>
+      <GlobalStyle />
       <Form onSubmit={handleSubmit}>
+        {/* <Card.Img
+        src={bicycle}
+        alt="사용자 등록 프로필 이미지"></Card.Img> */}
+        <Form.Group controlId="userEditProfileImage" className="mb-3">
+          <Form.Control
+            type="file"
+            name="reviewFile"
+            onChange={handleImgChange}
+          />
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>제목</Form.Label>
           <Form.Control
@@ -75,11 +86,7 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
             value={reviewForm.title}
             onChange={handleOnchange}
           />
-          {!isWriteTitle && (
-                <p class="inputWarning">
-                  제목을 작성해 주세요.
-                </p>
-              )}
+          {!isWriteTitle && <p class="inputWarning">제목을 작성해 주세요.</p>}
         </Form.Group>
         <Row className="mb-3">
           <fieldset disabled>
@@ -103,10 +110,8 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
               }}
             />
             {!isSelectLocationName && (
-                <p class="inputWarning">
-                  장소를 선택해주세요
-                </p>
-              )}
+              <p class="inputWarning">장소를 선택해주세요</p>
+            )}
           </Form.Group>
         </Row>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
@@ -120,14 +125,15 @@ function ReviewRegisterForm({ setReviews , handleClose }) {
             value={reviewForm.contents}
             onChange={handleOnchange}
           />
-          {!isWriteCotent && (
-                <p class="inputWarning">
-                  본문을 작성해 주세요.
-                </p>
-              )}
+          {!isWriteCotent && <p class="inputWarning">본문을 작성해 주세요.</p>}
         </Form.Group>
         <Form.Group>
-          <Button variant="primary" type="submit" onClick={handleClose} disabled={!isFormValid}>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={handleClose}
+            disabled={!isFormValid}
+          >
             Save
           </Button>{" "}
           <Button variant="secondary" onClick={handleClose}>

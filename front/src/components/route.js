@@ -38,4 +38,9 @@ export const ROUTE = {
     link: '/register',
     element: <RegisterForm />
   },
+  MAINALL: {
+    path: '*',
+    link: '*',
+    element: <Main />,
+  },
 }

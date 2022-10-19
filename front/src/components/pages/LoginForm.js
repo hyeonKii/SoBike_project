@@ -120,7 +120,7 @@ const LoginForm = () => {
       handleClose();
 
       // 기본 페이지로 이동함.
-      navigate("/", { replace: true });
+      // navigate("/", { replace: true });
     } catch (err) {
       setLoginFail(false);
       console.log("로그인에 실패하였습니다.\n", err);
