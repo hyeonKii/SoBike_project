@@ -1,4 +1,5 @@
 import {Router} from "express";
+import { loginRequired } from "../middlewares/loginRequired";
 // const reviewRouter = require("express").Router();
 // const { login_required } = require( "../middlewares/login_required");
 import {bicycleLocationService} from "../services/bicycleLocationService";
@@ -59,16 +60,17 @@ bicycleLocationRouter.get("/bicycle/locations", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:latitude?:longitude", async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:latitude?:longitude", loginRequired, async (req, res, next)=> {
     try{
         // console.log("asfdsf")
+        const userId = req.currentUserId;
         const longitude = parseFloat(req.query.longitude);
         const latitude = parseFloat(req.query.latitude);
         // const locationName = req.body.locationName
         console.log("longitude: ", longitude)
         console.log("latitude: ", latitude)
         // console.log(locationName)
-        const location = await bicycleLocationService.getLocationsByCurrentLocations({longitude, latitude})
+        const location = await bicycleLocationService.getLocationsByCurrentLocations({userId, longitude, latitude})
         res.status(200).send(location);
     }catch(error){
         next(error);
