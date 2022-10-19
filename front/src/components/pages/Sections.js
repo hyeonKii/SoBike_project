@@ -13,15 +13,18 @@ const Sections = () => {
         <div className="wrapper1">
           <div className="text-wrapper1">
             <div className="title1">
-              <span>가장 가까운 대중교통 정류장</span>
+              <span>가장 가까운 대중교통</span>
             </div>
             <div className="content1">
               <p>
-                서울시에 5754개의 자전거 대여소에 <br/>40,500대의 공공 자전거가 있다는 것을 아시나요?<br/>
-                이는 평균 240~350m 마다 <br/>자전거를 대여할 수 있고 반납할 수 있다는 말입니다.
+                서울시에서는 5754개의 자전거 대여소와
+                <br />
+                40,500대의 공공 자전거를 이용할 수 있는 것을 아시나요?
+                <br />
               </p>
               <p>
-                
+                이동시 자전거는 평균 240~350m 거리에서
+                <br /> 쉽고 빠르게 이용할 수 있습니다.
               </p>
             </div>
           </div>
