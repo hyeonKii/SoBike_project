@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import * as Api from "../../api";
-import bikeDatas from "./bikeDatas.json";
+import bikeDatas from "./newBikeDatas.json";
 
 const { kakao } = window; //스크립트로 심은 kakao maps api를 window전역 객체에서 뽑아 사용
 const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭하면 장소명을 표출할 인포윈도우

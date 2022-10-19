@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button, Col, Form, Modal, Row,Card } from "react-bootstrap";
 import * as Api from "../../api";
 import styled from "styled-components";
-import Information from "../../bikeDatas.json";
+import Information from "../../newBikeDatas.json";
 import Select from "react-select";
 const EditButton = styled.button`
   font-size: 8px;
