@@ -79,15 +79,17 @@ const userAuthService = {
         const { email, nickName } = fields;
         const userEmail = await User.findByEmail(email);
         let userInfo;
-        
+        console.log(userEmail);
         if(userEmail) {
-            throw new Error("중복된 이메일입니다.");
+            if(userEmail.email !== email) {
+                throw new Error("중복된 이메일입니다.");
+            }
         }
-
         const userNickName = await User.findByNickName(nickName);
-
         if(userNickName) {
-            throw new Error("중복된 닉네임입니다..");
+            if(userNickName.nickName !== nickName) {
+                throw new Error("중복된 닉네임입니다..");
+            }
         }
 
         if(email && nickName) {
