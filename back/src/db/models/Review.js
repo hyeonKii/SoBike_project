@@ -16,11 +16,23 @@ const Review =  {
 
     findById: async ({reviewId}) => {
         // console.log(reviewId)
-        console.log("a")
+        // console.log("a")
         const review = await ReviewModel.findOne({_id: reviewId});
+        // console.log("findById: ", review)
         const reviewImage = await ReviewImage.findById(reviewId)
-
-        return {reviewId: review._id,
+        // console.log("reviewImage: ", reviewImage)
+        if(!reviewImage){
+            console.log("!23344")
+            const reviewData= {reviewId: reviewId,
+            userId: review.userId,
+            email: review.email,
+            title: review.title,
+            contents: review.contents,
+            locationName: review.locationName,
+            roadAddress: review.roadAddress}
+            console.log("ReviewData: ", reviewData)
+            return reviewData
+        }else { const reviewData =  {reviewId: reviewId,
             userId: review.userId,
             email: review.email,
             title: review.title,
@@ -29,6 +41,8 @@ const Review =  {
             roadAddress: review.roadAddress,
             reviewImageId: reviewImage.reviewImageId,
             reviewImage: reviewImage.reviewImage }
+        console.log("reviewData: ", reviewData)
+        return reviewData}                   
     },
 
     update: async ({reviewId, fieldToUpdate, newValue})=> {
@@ -63,9 +77,26 @@ const Review =  {
             // console.log("review:", review)
             // console.log("reviewId: ", reviewId)
             const reviewImage = getReviewImage.filter(image => image.reviewId === reviewId)
-            // console.log("reviewImage: ", reviewImage)
+            console.log("reviewImage: ", reviewImage)
             // console.log("reviewImageId: ", reviewImage[0].reviewImageId)
-            return {reviewId: review._id,
+            // console.log("findAll: ",{reviewId: review._id,
+            //     userId: review.userId,
+            //     email: review.email,
+            //     title: review.title,
+            //     contents: review.contents,
+            //     locationName: review.locationName,
+            //     roadAddress: review.roadAddress,
+            //     reviewImageId: reviewImage[0].reviewImageId,
+            //     reviewImage: reviewImage[0].reviewImage 
+            // })
+            if(reviewImage.length ===0){return {reviewId: review._id,
+                userId: review.userId,
+                email: review.email,
+                title: review.title,
+                contents: review.contents,
+                locationName: review.locationName,
+                roadAddress: review.roadAddress}
+            }else{ return {reviewId: review._id,
                 userId: review.userId,
                 email: review.email,
                 title: review.title,
@@ -75,7 +106,7 @@ const Review =  {
                 reviewImageId: reviewImage[0].reviewImageId,
                 reviewImage: reviewImage[0].reviewImage 
             }
-        })
+        }})
         return reviewList;
     },
 
