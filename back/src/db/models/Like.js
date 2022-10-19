@@ -1,4 +1,4 @@
-import LikeModel from "../schemas/like";
+import {LikeModel} from "../schemas/like";
 import {bicycleLocation} from "./bicycleLocation"
 
 const Like =  {
