@@ -35,4 +35,4 @@ const bicycleLocationSchema = new Schema(
 )
 
 const bicycleLocationModel = model("BicycleLocation", bicycleLocationSchema)
-module.exports = bicycleLocationModel;
+export {bicycleLocationModel};
