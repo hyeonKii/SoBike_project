@@ -57,10 +57,16 @@ const userAuthService = {
 
         if(getUserInfo) getUserImage = await UserImage.findById(userId);
 
+        // if(getUserImage) {
+        //     getUserInfo.image = "http://localhost:5001/public/images/" + getUserImage.image;
+        // } else {
+        //     getUserInfo.image = "http://localhost:5001/public/images/lion.jpg";
+        // }
+
         if(getUserImage) {
-            getUserInfo.image = "http://localhost:5001/public/images/" + getUserImage.image;
+            getUserInfo.image = "public/images/" + getUserImage.image;
         } else {
-            getUserInfo.image = "http://localhost:5001/public/images/lion.jpg";
+            getUserInfo.image = "public/images/lion.jpg";
         }
         
         getUserInfo.errorMessage = null;
@@ -128,14 +134,14 @@ const userAuthService = {
                     if(err) throw new Error("이미지 업로드 실패");
                 });
 
-                userInfo.image = createUserImage.image
+                userInfo.image = "public/images/" + createUserImage.image
             } else {
                 // DB에 이미가 있으면 업데이트
                 const fieldToUpdate = "image";
                 const newValue = fileName;
                 const updatedUserImage = await UserImage.update(userId, fieldToUpdate, newValue);
                 
-                userInfo.image = updatedUserImage.image;
+                userInfo.image = "public/images/" + updatedUserImage.image;
 
                 fs.unlink(`src/public/images/${currentUserImageInfo.image}`, (err) => {
                     if(err) throw new Error("이미지 삭제 실패");
