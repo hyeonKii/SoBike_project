@@ -37,13 +37,14 @@ const reviewService = {
         console.log("reviewId: ", reviewId)
         console.log("fileName: ", fileName)
         const createdReviewImage = await ReviewImage.create(reviewId, "/public/reviewImages/" + fileName);
+        console.log("createdReviewImage: ", createdReviewImage)
         if(!createdReviewImage) throw new Error("DB에 이미지 생성 실패");
 
         fs.rename(oldPath, newPath, async (err) => {
             if(err) throw new Error("이미지 업로드 실패");
         });
-
-        createdNewReview.image = createdReviewImage.image
+        
+        createdNewReview.reviewImage = createdReviewImage.image
         createdNewReview.errorMessage = null;
 
         console.log("location: ",createdNewReview)
@@ -74,10 +75,10 @@ const reviewService = {
     setReview: async (reviewId, fields, files)=>{
         let review = null;
         const {title, contents, locationName, roadAddress} = fields
-        // console.log("reviewId", reviewId)
-        // console.log("reviewService: ", reviewId )
-        // console.log("reviewService: ", fields )
-        // console.log("reviewService: ", files )
+        console.log("reviewId", reviewId)
+        console.log("reviewService: ", reviewId )
+        console.log("reviewService: ", fields )
+        console.log("reviewService: ", files )
 
         if (title) {
             const fieldToUpdate = "title";
@@ -138,15 +139,15 @@ const reviewService = {
                 if(err) throw new Error("이미지 업로드 실패");
             });
 
-            review.image = createReviewImage.image
+            review.reviewImage = createReviewImage.image
         } else {
             // DB에 이미가 있으면 업데이트
             const fieldToUpdate = "image";
             const newValue = "/public/reviewImages/" + fileName;
             const updatedReviewImage = await ReviewImage.update(reviewId, fieldToUpdate, newValue);
             
-            review.image = updatedReviewImage.image;
-
+            review.reviewImage = updatedReviewImage.image;
+            // console.log("updatedReview: ",review)
             fs.unlink(`src/public/reviewImages/${currentReviewImageInfo.image}`, (err) => {
                 // if(err) throw new Error("이미지 삭제 실패");
                 console.log("이미지 삭제 실패")

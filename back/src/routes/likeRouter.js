@@ -29,12 +29,12 @@ likeRouter.post("/",  loginRequired, async (req, res, next) => {
 
 
 
-likeRouter.get("/:userId/", async (req, res, next)=> {
+likeRouter.get("/", loginRequired, async (req, res, next)=> {
     try{
-        const userId = req.params.userId;
+        const userId = req.currentUserId;
         // const locationId = req.body.locationId;
         // console.log(userId, locationId)
-        const like = await likeService.getLikes({userId});
+        const like = await likeService.getLikes(userId);
         console.log("router:" ,like)
         res.status(200).send(like);
     }catch(error){
@@ -42,26 +42,26 @@ likeRouter.get("/:userId/", async (req, res, next)=> {
     }
 });
 
-likeRouter.put("/:userId/", async (req, res, next)=> {
-    try {
-        const userId = req.params.userId;
-        const locationId = req.body.locationId;
-        const isLike = req.body.isLike;
+// likeRouter.put("/:userId/", async (req, res, next)=> {
+//     try {
+//         const userId = req.params.userId;
+//         const locationId = req.body.locationId;
+//         const isLike = req.body.isLike;
 
-        // console.log("isLike: ",isLike)
-        const toUpdate = {isLike};
-        // console.log(toUpdate)
-        const updatedLike = await likeService.setLike({userId, locationId, toUpdate});
+//         // console.log("isLike: ",isLike)
+//         const toUpdate = {isLike};
+//         // console.log(toUpdate)
+//         const updatedLike = await likeService.setLike({userId, locationId, toUpdate});
 
-        if (updatedLike.errorMessage){
-            throw new Error(updatedLike.errorMessage);
-        }
+//         if (updatedLike.errorMessage){
+//             throw new Error(updatedLike.errorMessage);
+//         }
 
-        res.status(200).json(updatedLike);
-    }catch(err){
-        next(err);
-    }
-});
+//         res.status(200).json(updatedLike);
+//     }catch(err){
+//         next(err);
+//     }
+// });
 
 likeRouter.delete("/:locationId/", loginRequired,  async(req, res, next) => {
     try{

@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {Container} from "react-bootstrap";
-import GlobalStyle from "../GlobalStyle";
+import styled from "styled-components";
 
 import '../css/introduce.css';
 
@@ -13,6 +13,12 @@ import CarbonChart1 from "../chart/CarbonChart1.js";
 import CarbonChart2 from "../chart/CarbonChart2.js";
 import CarbonChart3 from "../chart/CarbonChart3.js";
 
+const RegisterDiv=styled.div `
+  background-color: rgba(1, 1, 1, 0.5);
+  width: 100%;
+  height: 80px;
+  z-index:-1;
+  `
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,9 +62,8 @@ export default function Introduce() {
 
   return (
     <>
-    <GlobalStyle/>
-    <Container fluid className="p-0">
-    <div class="RegisterDiv"></div>
+    <RegisterDiv></RegisterDiv>
+    <Container fluid className="container">
       {/* <Box
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'fixed', height: 224 }}> */}
       <Box sx={{ width: '100%',marginTop: "50px" }}>
@@ -72,15 +77,15 @@ export default function Introduce() {
         aria-label="Vertical tabs example"
         sx={{ borderRight: 1, borderColor: 'divider' }}
       > */}
-              <Tab label="증가하는 탄소배출량" {...a11yProps(0)} />
+              <Tab label="탄소농도로 인한 가뭄피해 증가" {...a11yProps(0)} />
             
 
            
-              <Tab label="탄소로 인한 가뭄과 기온이상" {...a11yProps(1)} />
+              <Tab label="탄소농도로 인한 기온이상" {...a11yProps(1)} />
             
 
             
-            <Tab label="증가하는 탄소농도" {...a11yProps(2)} />
+            <Tab label="교통부문에서의 탄소배출" {...a11yProps(2)} />
            
           </Tabs>
         </Box>
@@ -89,7 +94,7 @@ export default function Introduce() {
             <TabPanel value={value} index={0}>
               <div className='Container'>
                 <div className='textContainer'>
-                  <p className='text1'>증가하는 탄소배출량</p>
+                  <p className='text1'>탄소농도로 인한 가뭄피해 증가</p>
                   <p className='text2'>한국은 2018~2020년 온실가스 감축 목표를 이행하지 못하였습니다.
                   <br/>
                   2018년 배출량이 정점을 찍은데다 
@@ -135,7 +140,7 @@ export default function Introduce() {
           <TabPanel value={value} index={1}>
               <div className='Container'>
                 <div className='textContainer'>
-                  <p className='text1'>탄소로 인한 가뭄과 기온이상</p>
+                  <p className='text1'>탄소농도로 인한 기온이상</p>
                   <p className='text2'>한국은 2018~2020년 온실가스 감축 목표를 이행하지 못하였습니다.
                   <br/>
                   2018년 배출량이 정점을 찍은데다 
@@ -174,7 +179,7 @@ export default function Introduce() {
           <TabPanel value={value} index={2}>
           <div className='Container'>
                 <div className='textContainer'>
-                  <p className='text1'>증가하는 탄소농도</p>
+                  <p className='text1'>교통부문에서의 탄소배출</p>
                   <p className='text2'>한국은 2018~2020년 온실가스 감축 목표를 이행하지 못하였습니다.
                   <br/>
                   2018년 배출량이 정점을 찍은데다 

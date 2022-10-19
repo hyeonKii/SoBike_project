@@ -39,7 +39,8 @@ const Carousel = () => {
   useEffect(() => {
     setStyle({
       marginLeft: `-${currentSlide}00%`,
-      transitionDuration: `${1}s`
+      // 이미지 전환 효과
+      transitionDuration: `${1}s`,
     });
   }, [currentSlide]);
 
@@ -81,6 +82,7 @@ const Carousel = () => {
           ))}
         </div>
       </div>
+      <div className="down"></div>
     </>
   );
 };

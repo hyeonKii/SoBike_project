@@ -3,7 +3,7 @@ import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
 import styled from "styled-components";
-import Information from "../../bikeDatas.json";
+import Information from "../../newBikeDatas.json";
 import Select from "react-select";
 import ReviewRegisterForm from "./ReviewRegisterForm"
 const RegisterReviewBtn = styled.button`

@@ -11,7 +11,7 @@ const bicycleLocationSchema = new Schema(
             required: true
         },
         rentalLocationId:{
-            type: String, 
+            type: Number, 
             required: true,
        },
        locationName:{
