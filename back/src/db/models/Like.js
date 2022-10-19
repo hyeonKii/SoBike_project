@@ -1,5 +1,5 @@
-const LikeModel = require( "../schemas/like");
-const {bicycleLocation} = require( "./bicycleLocation");
+import LikeModel from "../schemas/like";
+import {bicycleLocation} from "./bicycleLocation"
 
 const Like =  {
     create : async ({newLike}) => {
@@ -47,10 +47,10 @@ const Like =  {
         return updatedLike;
     },
 
-    findByUser: async (userId)=> {
-        console.log("afdf")
-        const likes = await LikeModel.find(userId);
-
+    findByUser: async (userId, locationId)=> {
+        // console.log("userId")
+        const likes = await LikeModel.find({userId:userId, locationId: locationId});
+        console.log("likes: ", likes)
         return likes;
     },
     findByLocation: async (locationId)=> {
