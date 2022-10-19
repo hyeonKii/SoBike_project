@@ -1,6 +1,6 @@
 import {Router} from "express"
 // const reviewRouter = require("express").Router();
-const { loginRequired } = require( "../middlewares/loginRequired");
+import {loginRequired } from "../middlewares/loginRequired";
 import {likeService} from "../services/likeService";
 
 const likeRouter = Router();
