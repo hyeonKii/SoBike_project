@@ -1,4 +1,5 @@
-const bicycleLocationModel = require( "../schemas/bicycleLocation");
+import bicycleLocationModel from "../schemas/bicycleLocation"
+import {Like} from "./Like"
 
 const bicycleLocation =  {
     // create : async ({newBicycleLocation}) => {
@@ -31,6 +32,15 @@ const bicycleLocation =  {
         console.log("after: ", bicycleLocation)
         return bicycleLocation},
 
+    findByLocationId: async (locationId) => {
+        // console.log(locationId)
+        // console.log(userId)
+        // console.log(locationId)
+        // const bicycleLocation = await bicycleLocationModel.find({"bicycleLocationName": /.*bicycleLocationName.*/});
+        const bicycleLocation = await bicycleLocationModel.find({rentalLocationId: locationId});
+        // console.log("after: ", bicycleLocation)
+        return bicycleLocation[0]},
+
     findAddressByLocationName: async ({locationName}) => {
         // console.log(locationName)
         // console.log(userId)
@@ -47,12 +57,26 @@ const bicycleLocation =  {
                 roadAdress: bicycleLocation[0].roadAddress
                 }},
 
-    findByCurrentLocations: async ({longitude, latitude}) => {
+    findByCurrentLocations: async ({userId, longitude, latitude}) => {
         // console.log(locationId)
         // console.log(userId)
         console.log("a")
-        const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.0030, $lt:longitude+0.0030}, "latitude":{$gt: latitude-0.0030, $lt:latitude +0.0030}});
-        
+        const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.003, $lt:longitude+0.003}, "latitude":{$gt: latitude-0.0015, $lt:latitude +0.0015}});
+        // console.log("location: ",bicycleLocation[1])
+        const locationIds = [];
+        for (let i = 0;i<bicycleLocation.length;i++){
+            locationIds[i] = bicycleLocation[i].rentalLocationId
+                }
+        // console.log("locationId: ", locationIds)
+        const locationInfo = [];
+        for (let i = 0; i<locationIds.length;i++){
+            console.log(locationIds[i])
+            locationInfo[i] = await Like.findByUser(userId, locationIds[i])
+    
+        }
+
+        console.log("locationInfo: ", locationInfo)
+
         return bicycleLocation},
 
     
