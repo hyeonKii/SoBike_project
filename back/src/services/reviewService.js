@@ -13,8 +13,6 @@ const reviewService = {
         console.log("여기2")
         console.log(createdNewReview)
         // console.log("created: ",createdNewReview.reviewId)
-
-        
         const originalFilename = files.reviewFile.originalFilename;
         const extension = path.extname(originalFilename);
         let fileName;
@@ -132,7 +130,7 @@ const reviewService = {
         
         if(!currentReviewImageInfo) {
             // DB에 저장된 이미지가 없으면 생성
-            const createReviewImage = await ReviewImage.create(reviewId, fileName);
+            const createReviewImage = await ReviewImage.create(reviewId, "/public/reviewImages/" + fileName);
 
             if(!createReviewImage) throw new Error("DB에 이미지 생성 실패");
 
@@ -144,12 +142,12 @@ const reviewService = {
         } else {
             // DB에 이미가 있으면 업데이트
             const fieldToUpdate = "image";
-            const newValue = fileName;
+            const newValue = "/public/reviewImages/" + fileName;
             const updatedReviewImage = await ReviewImage.update(reviewId, fieldToUpdate, newValue);
             
             review.image = updatedReviewImage.image;
 
-            fs.unlink(`src/public/images/${currentReviewImageInfo.image}`, (err) => {
+            fs.unlink(`src/public/reviewImages/${currentReviewImageInfo.image}`, (err) => {
                 // if(err) throw new Error("이미지 삭제 실패");
                 console.log("이미지 삭제 실패")
             })
