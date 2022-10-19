@@ -72,8 +72,8 @@ const Review =  {
                 contents: review.contents,
                 locationName: review.locationName,
                 roadAddress: review.roadAddress,
-                // reviewImageId: reviewImage[0].reviewImageId,
-                // reviewImage: reviewImage[0].reviewImage 
+                reviewImageId: reviewImage[0].reviewImageId,
+                reviewImage: reviewImage[0].reviewImage 
             }
         })
         return reviewList;
