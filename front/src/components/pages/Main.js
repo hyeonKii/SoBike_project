@@ -1,6 +1,7 @@
 import React from "react";
-import Carousel from "../carousel/Carousel"
+import Carousel from "../carousel/Carousel";
 import Sections from "./Sections";
+import BikeAnimation from "./BikeAnimation";
 
 const Main = () => {
   return (
@@ -11,6 +12,9 @@ const Main = () => {
 
       <section>
         <Sections />
+      </section>
+      <section>
+        <BikeAnimation />
       </section>
     </>
   );

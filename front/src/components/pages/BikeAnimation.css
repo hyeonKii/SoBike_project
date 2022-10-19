@@ -1,0 +1,478 @@
+.btn-box {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  top: 570px;
+}
+
+.search-btn {
+  text-decoration: none;
+  color: white;
+  border-radius: 100px;
+  border: 5px solid white;
+  opacity: 0.7;
+  padding: 20px 30px;
+}
+
+.btn-box .search-btn:hover,
+.btn-box .search-btn:active,
+.btn-box .search-btn.active {
+  color: white;
+  opacity: 1;
+}
+
+.sky {
+  background-color: skyblue;
+  all: none;
+}
+.bike {
+  width: 800px;
+  height: 77vh;
+  margin: auto;
+  position: relative;
+  /* background: #fff; */
+  overflow: hidden;
+}
+.bike *,
+.bike *::before,
+.bike *::after {
+  position: absolute;
+  content: "";
+}
+.bike__bike {
+  top: 250px;
+  left: 200px;
+  width: 370px;
+  height: 210px;
+  z-index: 2;
+}
+.bike__bike:before {
+  top: 200px;
+  left: -10px;
+  width: 400px;
+  height: 20px;
+  border-radius: 100%;
+  background: #398ca5;
+}
+.bike__wheel {
+  top: 68px;
+  left: 9px;
+  width: 140px;
+  height: 140px;
+  box-sizing: border-box;
+  border-radius: 100%;
+  border: 5px solid #27292b;
+  box-shadow: inset 0 1px 0 5px green;
+}
+.bike__wheel:after {
+  width: 9px;
+  height: 9px;
+  border-radius: 100%;
+  background: white;
+  z-index: 30;
+}
+.bike__wheel:nth-child(1):after {
+  top: 60px;
+  left: 60px;
+}
+.bike__wheel:nth-child(2):after {
+  top: 63px;
+  left: 59px;
+}
+.bike__wheel:nth-child(1) {
+  animation: 0.8s bike-wheel-1 linear infinite;
+}
+.bike__wheel:nth-child(2) {
+  left: 217px;
+  transform: rotate(220deg);
+  animation: 0.8s bike-wheel-2 linear infinite;
+}
+.bike__wheel .bike__needle:nth-child(1) {
+  top: 18px;
+  left: 16px;
+  height: 42px;
+  width: 42px;
+  border-top: 4px solid white;
+  border-left: 2px solid white;
+  border-radius: 100% 0;
+}
+.bike__wheel .bike__needle:nth-child(1):before {
+  top: -10px;
+  left: 27px;
+  height: 20px;
+  width: 20px;
+  background: #42b0ce;
+  transform: rotate(-20deg);
+}
+.bike__wheel .bike__needle:nth-child(1):after {
+  top: 25px;
+  left: -7px;
+  height: 24px;
+  width: 24px;
+  background: #42b0ce;
+  transform: rotate(20deg);
+}
+.bike__wheel .bike__needle:nth-child(2) {
+  top: 31px;
+  left: 72px;
+  height: 42px;
+  width: 42px;
+  border-top: 4px solid white;
+  border-left: 2px solid white;
+  border-radius: 100% 0;
+  transform: rotate(112deg);
+}
+.bike__wheel .bike__needle:nth-child(2):before {
+  top: -10px;
+  left: 27px;
+  height: 20px;
+  width: 20px;
+  background: #42b0ce;
+  transform: rotate(-20deg);
+}
+.bike__wheel .bike__needle:nth-child(2):after {
+  top: 25px;
+  left: -7px;
+  height: 24px;
+  width: 24px;
+  background: #42b0ce;
+  transform: rotate(20deg);
+}
+.bike__wheel .bike__needle:nth-child(3) {
+  top: 73px;
+  left: 52px;
+  height: 32px;
+  width: 32px;
+  border-top: 4px solid white;
+  border-left: 2px solid white;
+  border-radius: 100% 0;
+  transform: rotate(-148deg);
+}
+.bike__wheel .bike__needle:nth-child(3):before {
+  top: -10px;
+  left: 37px;
+  height: 20px;
+  width: 20px;
+  background: #42b0ce;
+  transform: rotate(-20deg);
+}
+.bike__wheel .bike__needle:nth-child(3):after {
+  top: 31px;
+  left: -7px;
+  height: 24px;
+  width: 24px;
+  background: #42b0ce;
+  transform: rotate(20deg);
+}
+.bike__top-tube {
+  top: 34px;
+  left: 124px;
+  width: 130px;
+  height: 25px;
+  box-sizing: border-box;
+  border-radius: 0 100%;
+  border-bottom: 7px solid white;
+  border-left: 3px solid white;
+  transform: rotate(4deg);
+  animation: 0.8s bike-top-tube linear infinite;
+}
+.bike__down-tube {
+  top: 62px;
+  left: 189px;
+  width: 64px;
+  height: 100px;
+  box-sizing: border-box;
+  border-radius: 0 100%;
+  border-left: 7px solid white;
+  border-bottom: 7px solid white;
+  transform: rotate(67deg);
+  animation: 0.8s bike-down-tube linear infinite;
+}
+.bike__down-tube:after {
+  top: 50px;
+  left: 9px;
+  width: 2px;
+  height: 15px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  background: white;
+  transform: rotate(-26deg);
+}
+.bike__seat-tube {
+  top: 32px;
+  left: 77px;
+  width: 6px;
+  height: 115px;
+  background: white;
+  transform: rotate(-21deg);
+  box-shadow: inset 2px 0 0 0 white;
+}
+.bike__seat-stays {
+  top: 32px;
+  left: 31px;
+  width: 4px;
+  height: 115px;
+  background: white;
+  transform: rotate(28deg);
+}
+.bike__chain-stays {
+  top: 99px;
+  left: 51px;
+  width: 4px;
+  height: 90px;
+  background: white;
+  transform: rotate(98deg);
+}
+.bike__star {
+  top: 137px;
+  left: 89px;
+  width: 28px;
+  height: 28px;
+  background: #27292b;
+  transform: rotate(45deg);
+  border-radius: 2px;
+  animation: 0.8s bike-star linear infinite;
+  z-index: 3;
+}
+.bike__star:before {
+  width: 28px;
+  height: 28px;
+  background: #27292b;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.bike__star:after {
+  width: 28px;
+  height: 28px;
+  background: #27292b;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.bike__pedal {
+  top: 11px;
+  left: 12px;
+  width: 42px;
+  height: 2px;
+  background: #27292b;
+  transform-origin: left center;
+  transform: rotate(59deg);
+  z-index: 10;
+}
+.bike__pedal:before {
+  top: -2px;
+  left: 30px;
+  width: 24px;
+  height: 5px;
+  background: #27292b;
+  transform-origin: center center;
+  transform: rotate(-94deg);
+  animation: 0.8s bike-pedal linear infinite;
+}
+.bike__chain {
+  top: 130px;
+  left: 2px;
+  width: 100px;
+  height: 28px;
+  box-sizing: border-box;
+  transform: rotate(9deg);
+  border-radius: 100% 0 0 100%;
+  border: 3px solid #f9d276;
+}
+.bike__fo {
+  top: 90px;
+  left: 235px;
+  width: 70px;
+  height: 30px;
+  box-sizing: border-box;
+  border-radius: 100% 0;
+  border-left: 4px solid white;
+  border-top: 4px solid white;
+  transform: rotate(-95deg);
+  animation: 0.8s bike-fo linear infinite;
+}
+.bike__head-tube {
+  top: 47px;
+  left: 246px;
+  width: 6px;
+  border-style: solid;
+  border-color: white transparent;
+  border-width: 27px 3px 0;
+  transform: rotate(-10deg);
+  box-shadow: 0 3px 0 0 white;
+  animation: 0.8s bike-head-tube linear infinite;
+}
+.bike__head-tube:before {
+  top: -31px;
+  left: -5px;
+  width: 15px;
+  height: 4px;
+  background: white;
+}
+.bike__head-tube:after {
+  top: -23px;
+  left: 0px;
+  width: 9px;
+  height: 16px;
+  box-sizing: border-box;
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  background: white;
+}
+.bike__helm {
+  top: 22px;
+  left: 242px;
+  width: 7px;
+  height: 20px;
+  background: #27292b;
+  transform: rotate(-15deg);
+  animation: 0.8s bike-helm linear infinite;
+}
+.bike__helm:before {
+  top: -10px;
+  left: 1px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100% 0 0 0;
+  border-top: 5px solid #27292b;
+  border-left: 5px solid #27292b;
+  transform: rotate(54deg);
+}
+.bike__helm:after {
+  top: -6.5px;
+  left: 26px;
+  width: 30px;
+  height: 30px;
+  border-radius: 0 0 100% 0;
+  border-bottom: 5px solid #27292b;
+  border-right: 5px solid #27292b;
+  transform: rotate(54deg);
+}
+.bike__seat {
+  top: 18px;
+  left: 54px;
+  width: 5px;
+  height: 20px;
+  background: #27292b;
+  transform: rotate(-21deg);
+}
+.bike__seat:before {
+  top: -16px;
+  left: -13px;
+  width: 40px;
+  height: 24px;
+  box-sizing: border-box;
+  border-bottom: 4px solid #27292b;
+  border-left: 4px solid #27292b;
+  border-radius: 0 100%;
+  transform: rotate(0deg);
+}
+.bike__seat:after {
+  top: -13px;
+  left: -7px;
+  width: 36px;
+  height: 16px;
+  background: #27292b;
+  border-radius: 0 100% 0 100%;
+  transform: rotate(10deg);
+}
+.bike__tubes {
+  top: 0px;
+  left: 70px;
+  width: 124px;
+  height: 170px;
+  transform: rotate(0deg);
+  animation: 0.8s bike-tubes linear infinite;
+}
+
+.bike__cloud-1 {
+  top: 70px;
+  left: 300px;
+  width: 60px;
+  height: 60px;
+  border-radius: 100% 100% 0 100%;
+  background: white;
+  animation: 7s bike-cloud linear infinite;
+  animation-delay: -0.2s;
+  opacity: 0.6;
+}
+.bike__cloud-1:before {
+  bottom: 0;
+  left: 54px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100% 100% 0 0;
+  background: white;
+}
+.bike__cloud-1:after {
+  bottom: 0;
+  left: 90px;
+  width: 30px;
+  height: 30px;
+  border-radius: 100% 100% 100% 0;
+  background: white;
+}
+.bike__cloud-2 {
+  top: 172px;
+  left: 110px;
+  width: 34px;
+  height: 34px;
+  border-radius: 100% 100% 100% 0;
+  background: white;
+  animation: 6s bike-cloud linear infinite;
+  animation-delay: -0.5s;
+  opacity: 0.6;
+}
+.bike__cloud-2:before {
+  bottom: 0;
+  left: -15px;
+  width: 24px;
+  height: 24px;
+  border-radius: 100% 100% 0 0;
+  background: white;
+}
+.bike__cloud-2:after {
+  bottom: 0;
+  left: -30px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100% 100% 0 100%;
+  background: white;
+}
+.bike__cloud-3 {
+  top: 172px;
+  left: 630px;
+  width: 34px;
+  height: 34px;
+  border-radius: 100% 100% 100% 0;
+  background: white;
+  animation: 5s bike-cloud linear infinite;
+  animation-delay: -0.8s;
+  opacity: 0.6;
+}
+.bike__cloud-3:before {
+  bottom: 0;
+  left: -15px;
+  width: 24px;
+  height: 24px;
+  border-radius: 100% 100% 0 0;
+  background: white;
+}
+.bike__cloud-3:after {
+  bottom: 0;
+  left: -30px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100% 100% 0 100%;
+  background: white;
+}
+
+@keyframes bike-cloud {
+  0% {
+    left: 800px;
+  }
+  100% {
+    left: -100px;
+  }
+}
