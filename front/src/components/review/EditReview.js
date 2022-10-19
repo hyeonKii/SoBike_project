@@ -1,9 +1,6 @@
-import React, { useState, useContext } from "react";
-import { Button, Col, Form, Modal, Row,Card } from "react-bootstrap";
-import * as Api from "../../api";
+import React, { useState} from "react";
+import {Modal } from "react-bootstrap";
 import styled from "styled-components";
-import Information from "../../newBikeDatas.json";
-import Select from "react-select";
 import ReviewEditForm from "./ReviewEditForm";
 const EditButton = styled.button`
   font-size: 8px;
@@ -12,7 +9,7 @@ const EditButton = styled.button`
   cursor: pointer;
 `;
 
-function EditReview({ review, setIsEditing, setReviews }) {
+function EditReview({ review,setReviews }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

@@ -44,7 +44,7 @@ async function post(endpoint, data) {
 }
 
 async function put(endpoint, data) {
-
+  console.log(`데이터 위치는 api: `, data);
   if (Object.keys(data).length) {
     const bodyData = JSON.stringify(data);
     console.log(`%cPUT 요청: ${serverUrl + endpoint}`, "color: #059c4b;");

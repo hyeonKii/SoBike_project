@@ -3,8 +3,24 @@ import { Card, Form, Col, Row } from "react-bootstrap";
 import { MdRoom } from "react-icons/md";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
+import { FiHeart, FiMessageCircle } from "react-icons/fi";
+import styled from "styled-components";
+import Accordion from "react-bootstrap/Accordion";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
+import ReviewDetail from "../review/ReviewDetail";
+const BottomLine = styled.div`
+  margin: 10px 0;
+`;
 function StorePlace({ serverData }) {
+  function CustomToggle({ children, eventKey }) {
+    const decoratedOnClick = useAccordionButton(eventKey, () =>
+      console.log("totally custom!")
+    );
+
+    return <FiMessageCircle onClick={decoratedOnClick} />;
+  }
   const userState = useContext(UserStateContext);
+  const [reviews, setReviews] = useState([]);
   const [likeToggle, setLikeToggle] = useState(true);
   const handleclick = async (e) => {
     e.preventDefault();
@@ -28,30 +44,79 @@ function StorePlace({ serverData }) {
       }
     }
   };
+  function CardCount({ count }) {
+    return <div style={{ float: "left", marginLeft: "5px" }}>{count}</div>;
+  }
+  useEffect(() => {
+    Api.get("reviews").then((res) => {
+      setReviews(res.data);
+    });
+  }, []);
   return (
-    <>
-      <Row className="align-items-center mb-2">
-        <Col>
-          <div>{serverData.locationName}</div>
-          {userState.user && (
-            <button
-              onClick={handleclick}
-              style={
-                likeToggle
-                  ? { backgroundColor: "white" }
-                  : { backgroundColor: "gray" }
-              }
-            >
-              좋아요
-            </button>
-          )}
-          <div className="text-muted">
-            <MdRoom />
-            {serverData.roadAddress}
-          </div>
-        </Col>
-      </Row>
-    </>
+    <Accordion defaultActiveKey="0">
+      <Card>
+        <Card.Header>
+          <BottomLine>
+            <Row>
+              <div style={{ flex: "2" }}>{serverData.locationName}</div>
+              <div style={{ flex: "1" }}>
+                {userState.user && (
+                  <FiHeart
+                    onClick={handleclick}
+                    style={
+                      likeToggle
+                        ? { backgroundColor: "white" }
+                        : { backgroundColor: "pink" }
+                    }
+                  />
+                )}
+              </div>
+            </Row>
+            <div>
+              <div className="text-muted">
+                <MdRoom />
+                {serverData.roadAddress}
+              </div>
+              <CustomToggle
+                eventKey="1"
+                style={{ float: "left" }}
+              ></CustomToggle>
+              <CardCount
+                count={
+                  reviews.filter((data) => {
+                    if (data.locationName === serverData.locationName)
+                      return data;
+                  }).length
+                }
+              />
+            </div>
+          </BottomLine>
+        </Card.Header>
+        <Accordion.Collapse eventKey="1">
+          <Card.Body>
+            {reviews
+              .filter((data) => {
+                if (data.locationName === serverData.locationName) return data;
+              })
+              .map((data) => {
+                return (
+                  <Card>
+                    <Card.Body>
+                      <div>{data?.title}</div>
+                      <div>
+                        <ReviewDetail
+                          review={data}
+                          style={{ float: "right" }}
+                        />
+                      </div>
+                    </Card.Body>
+                  </Card>
+                );
+              })}
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </Accordion>
   );
 }
 
