@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row,Card } from "react-bootstrap";
 import * as Api from "../../api";
 import styled from "styled-components";
 import Information from "../../bikeDatas.json";
 import Select from "react-select";
-const EditButton =styled.button`
-    font-size: 8px;
-    border: dotted 0.5px;
-    background-color:transparent;
-    cursor:pointer;
-`
+const EditButton = styled.button`
+  font-size: 8px;
+  border: dotted 0.5px;
+  background-color: transparent;
+  cursor: pointer;
+`;
 
 function EditReview({ review, setIsEditing, setReviews }) {
   const [show, setShow] = useState(false);
@@ -19,7 +19,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
   //   const userState = useContext(UserStateContext);
   const [reviewForm, setReviewForm] = useState({
     reviewId: review.reviewId,
-    email:review.email,
+    email: review.email,
     title: review.title,
     contents: review.contents,
   });
@@ -37,6 +37,19 @@ function EditReview({ review, setIsEditing, setReviews }) {
       [name]: value,
     }));
   }
+
+  //image
+  const [image, setImage] = useState(review.image);
+  const [prevImage, setPrevImage] = useState("");
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const domain = protocol + "//" + hostname + ":5001";
+
+  const setPreviewImage = (target) => {
+    setPrevImage(URL.createObjectURL(target.files[0]));
+    setImage(target);
+  };
+
   //console.log(review)
   const handleSubmit = async (e) => {
     // preventDefault 해주기
@@ -46,6 +59,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
       ///reviews/:reviewId
       const new_review = {
         userId: userId,
+        image: image,
         reviewId: reviewForm.reviewId,
         email: reviewForm.email,
         title: reviewForm.title,
@@ -53,20 +67,29 @@ function EditReview({ review, setIsEditing, setReviews }) {
         locationName: locationName,
         roadAddress: roadAddress,
       };
-      await Api.put(`reviews/${review.reviewId}`, {
-        userId,
-        ...reviewForm,
-        locationName,
-        roadAddress,
+      const reviewFile = new FormData();
+      reviewFile.append("reviewFile", image.files[0]);
+      reviewFile.append("userId", userId);
+      reviewFile.append("email", reviewForm.email);
+      reviewFile.append("title", reviewForm.title);
+      reviewFile.append("contents", reviewForm.contents);
+      reviewFile.append("locationName", locationName);
+      reviewFile.append("roadAddress", roadAddress);
+      const res=await Api.put(`reviews/${review.reviewId}`, {
+        // userId,
+        // ...reviewForm,
+        // locationName,
+        // roadAddress,
+        reviewFile,
       });
-
+      setPreviewImage(res.data.image);
       setReviews((prev) => {
         return prev.map((el) => {
           if (el.reviewId === new_review.reviewId) return new_review;
           else return el;
         });
       });
-    //   setIsEditing((prev) => !prev);
+      //   setIsEditing((prev) => !prev);
     } catch (err) {
       console.log("review 편집에 실패하였습니다.", err);
     }
@@ -76,7 +99,7 @@ function EditReview({ review, setIsEditing, setReviews }) {
   //삭제 기능
   async function handleDelete() {
     try {
-      await Api.delete(`reviews/${review.reviewId}`);  //왜 reviewId 말고 _id가 인식?
+      await Api.delete(`reviews/${review.reviewId}`); //왜 reviewId 말고 _id가 인식?
       setReviews((arr) => {
         const newArr = arr.filter((obj) => {
           if (obj.reviewId === review.reviewId) return false;
@@ -91,22 +114,33 @@ function EditReview({ review, setIsEditing, setReviews }) {
   return (
     <>
       <EditButton onClick={handleShow}>편집</EditButton>
-      <Modal show={show} onHide={handleClose} style={{zIndex:100000}}>
+      <Modal show={show} onHide={handleClose} style={{ zIndex: 100000 }}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Group controlId="userEditProfileImage" className="mb-3">
-            <Form.Control
-              type="file"
-              // name="file"
-              // method="post"
-              // encType="multipart/form-data"
-              // onChange={(e) => upload(e)}
-            />
-          </Form.Group>
-
           <Form onSubmit={handleSubmit}>
+            {prevImage ? (
+              <Card.Img
+                style={{ width: "10rem", height: "8rem" }}
+                className="mb-3"
+                src={`${prevImage}`}
+                alt="사용자 업로드 이미지"
+              />
+            ) : (
+              <Card.Img
+                style={{ width: "10rem", height: "8rem" }}
+                className="mb-3"
+                src={`${domain + image}`}
+              />
+            )}
+            <Form.Group controlId="userEditProfileImage" className="mb-3">
+              <Form.Control
+                type="file"
+                name="reviewFile"
+                onChange={(e) => setPreviewImage(e.target)}
+              />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>제목</Form.Label>
               <Form.Control
@@ -158,10 +192,10 @@ function EditReview({ review, setIsEditing, setReviews }) {
             <Form.Group>
               <Button variant="primary" type="submit" onClick={handleClose}>
                 Save
-              </Button>{' '}
+              </Button>{" "}
               <Button variant="secondary" onClick={handleClose}>
                 Close
-              </Button>{' '}
+              </Button>{" "}
               <Button variant="danger" onClick={handleDelete}>
                 Delete
               </Button>

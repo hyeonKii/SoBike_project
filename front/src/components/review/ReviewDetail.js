@@ -1,6 +1,4 @@
 import React, { useState, useContext } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { MdRoom } from "react-icons/md";
 import Comments from "../comment/Comments";
@@ -18,6 +16,7 @@ function ReviewDetail({ review }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
   const userState = useContext(UserStateContext);
   return (
     <>
