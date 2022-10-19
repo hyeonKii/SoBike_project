@@ -1,4 +1,5 @@
 const LikeModel = require( "../schemas/like");
+const {bicycleLocation} = require( "./bicycleLocation");
 
 const Like =  {
     create : async ({newLike}) => {
@@ -6,13 +7,30 @@ const Like =  {
         return createdNewLike;
     },
 
-    findById: async ({userId}) => {
+    findById: async (userId) => {
         // console.log(locationId)
         // console.log(userId)
-        console.log("a")
+        // console.log("a")
         const like = await LikeModel.find({userId:userId, isLike: true});
-        
-        return like},
+    
+        const locationIds = [];
+        for (let i=0; i<like.length ;i++){
+            locationIds[i] = like[i].locationId
+        }
+        // console.log()
+      
+        // console.log("locationId: ", locationIds)
+        const likedBicycleInfo = [];
+        for (let i = 0; i<like.length; i++){
+            // console.log("for 안: ", locationIds[i])
+            likedBicycleInfo[i] = await bicycleLocation.findByLocationId(locationIds[i])
+            console.log(likedBicycleInfo[i])
+        }
+        // const bicycleInfo = await bicycleLocation.findByLocationId(locationId)
+
+        // console.log("bicycleInfo: ", likedBicycleInfo) 
+
+        return likedBicycleInfo},
 
     update: async ({userId, locationId, fieldToUpdate, newValue})=> {
         // console.log("likeId: ", likeId)
