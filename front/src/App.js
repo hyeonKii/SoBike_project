@@ -9,6 +9,7 @@ import "./App.css";
 import Header from "./components/Header";
 import LoginForm from "./components/pages/LoginForm";
 import { ROUTE } from './components/route'
+import BikeAnimation from "./components/pages/BikeAnimation";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
