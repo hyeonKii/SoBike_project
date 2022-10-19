@@ -24,4 +24,4 @@ const LikeSchema = new Schema(
 )
 
 const LikeModel = model("Like", LikeSchema)
-module.exports = LikeModel;
+export {LikeModel};
