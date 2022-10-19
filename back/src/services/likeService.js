@@ -1,4 +1,4 @@
-const { Like} = require("../db")
+import { Like} from "../db"
 
 const likeService = {
      addLike: async ({locationId, userId}) => {
