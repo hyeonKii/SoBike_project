@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Api from "../../api";
-import bikeDatas from "./bikeDatas.json";
+import bikeDatas from "./newBikeDatas.json";
 import StorePlaces from "./StorePlaces";
 import {
   Container,
