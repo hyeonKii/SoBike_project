@@ -37,7 +37,7 @@ function Search(props) {
 
     mapRef.current = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-    //----------------------------------------------- 검색후 중심좌표 
+    //----------------------------------------------- 검색후 중심좌표
     kakao.maps.event.addListener(mapRef.current, "center_changed", function () {
       // 지도의  레벨을 얻어옵니다
       const level = mapRef.current.getLevel();
@@ -200,7 +200,7 @@ function Search(props) {
         // LatLngBounds 객체에 좌표를 추가
         let bounds = new kakao.maps.LatLngBounds();
 
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < 1; i++) {
           displayMarker(data[i]);
           bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }
@@ -212,6 +212,7 @@ function Search(props) {
         mapRef.current.setBounds(bounds);
         // 서버로 데이터 보냄
         currentLocation(data[0].x, data[0].y);
+
 
         // 지도에 마커를 표시하는 함수입니다
         function displayMarker(place) {
@@ -225,6 +226,14 @@ function Search(props) {
       }
     }
   };
+
+  // function setCenter(x, y) {
+  //   // 이동할 위도 경도 위치를 생성합니다
+  //   var moveLatLon = new kakao.maps.LatLng(x, y);
+
+  //   // 지도 중심을 이동 시킵니다
+  //   mapRef.current.setCenter(moveLatLon);
+  // }
 
   const currentLocation = async (longitude, latitude) => {
     const long = String(longitude);
