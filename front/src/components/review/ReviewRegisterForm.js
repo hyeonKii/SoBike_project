@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button, Col, Form, Card, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
-\
+
 import Information from "../../newBikeDatas.json";
 import Select from "react-select";
 import GlobalStyle from "../GlobalStyle";
