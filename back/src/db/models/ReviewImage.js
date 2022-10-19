@@ -8,7 +8,7 @@ const ReviewImage = {
     },
     findById: async (reviewId) => {
         const getReviewImage = await ReviewImageModel.findOne({ reviewId });
-
+        if(getReviewImage === null){return }
         return {reviewImageId: getReviewImage._id,
                 reviewId: getReviewImage.reviewId,
                 reviewImage: getReviewImage.image,}
