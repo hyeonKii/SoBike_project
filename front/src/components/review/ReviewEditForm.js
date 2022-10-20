@@ -1,13 +1,10 @@
-import React, { useState, useContext } from "react";
-import { Button, Col, Form, Modal, Row, Card } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Col, Form, Row, Card } from "react-bootstrap";
 import * as Api from "../../api";
-import styled from "styled-components";
 import Information from "../../bikeDatas.json";
 import Select from "react-select";
 
 function ReviewEditForm({ review, setReviews, handleClose }) {
-  const [show, setShow] = useState(false);
-
   //   const userState = useContext(UserStateContext);
   const [reviewForm, setReviewForm] = useState({
     reviewId: review.reviewId,
@@ -29,37 +26,26 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
       [name]: value,
     }));
   }
-
   //image
-  const [image, setImage] = useState(review.reviewImage);
-  const [prevImage, setPrevImage] = useState("");
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   const domain = protocol + "//" + hostname + ":5001";
-  console.log("리뷰 수정전 이미지 reviewImage", review.reviewImage);
-  console.log("리뷰 수정전 이미지 image", image);
+  const [prevImage, setPrevImage] = useState("");
+  const [image, setImage] = useState(review?.reviewImage);
+
   const setPreviewImage = (target) => {
+    console.log("target",target)
+    console.log("target.files",target.files)
     setPrevImage(URL.createObjectURL(target.files[0]));
     setImage(target);
   };
-
+  console.log(typeof(review.reviewImage))
   const handleSubmit = async (e) => {
-    // preventDefault 해주기
+
     e.preventDefault();
     const userId = review.userId; //로그인된 사용자 id
     try {
-      ///reviews/:reviewId
-      // if(image.files[0])
-      const new_review = {
-        userId: userId,
-        reviewImage: image,
-        reviewId: reviewForm.reviewId,
-        email: reviewForm.email,
-        title: reviewForm.title,
-        contents: reviewForm.contents,
-        locationName: locationName,
-        roadAddress: roadAddress,
-      };
+
       const reviewFile = new FormData();
       reviewFile.append("reviewFile", image.files[0]);
       reviewFile.append("userId", userId);
@@ -68,23 +54,28 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
       reviewFile.append("contents", reviewForm.contents);
       reviewFile.append("locationName", locationName);
       reviewFile.append("roadAddress", roadAddress);
-      console.log(locationName);
-      console.log("리뷰 수정후 이미지", image);
       const res = await Api.put(`reviews/${review.reviewId}`, reviewFile);
-      setPreviewImage(res.data.image);
+      const new_review = {
+        userId: userId,
+        reviewImage: res.data.reviewImage,
+        reviewId: reviewForm.reviewId,
+        email: reviewForm.email,
+        title: reviewForm.title,
+        contents: reviewForm.contents,
+        locationName: locationName,
+        roadAddress: roadAddress,
+      };
       setReviews((prev) => {
         return prev.map((el) => {
           if (el.reviewId === new_review.reviewId) return new_review;
           else return el;
         });
       });
-      //   setIsEditing((prev) => !prev);
+      handleClose();
     } catch (err) {
       console.log("review 편집에 실패하였습니다.", err);
     }
   };
-  //console.log("review_id",review._id)
-  //console.log("review reviewId",review.reviewId)
   //삭제 기능
   async function handleDelete() {
     try {
@@ -171,7 +162,7 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
           />
         </Form.Group>
         <Form.Group>
-          <Button variant="primary" type="submit" onClick={handleClose}>
+          <Button variant="primary" type="submit">
             Save
           </Button>{" "}
           <Button variant="secondary" onClick={handleClose}>
