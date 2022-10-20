@@ -13,8 +13,11 @@
 
 .wrapper .text-wrapper1 {
   width: 45%;
-  text-align: left;
   padding: 15% 5%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .wrapper .text-wrapper1 .title1 {
@@ -81,7 +84,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 50px;
-  width: 30vw;
+  width: 40vw;
   height: 50vh;
   background-color: gainsboro;
 }
@@ -121,6 +124,9 @@
   width: 45%;
   text-align: left;
   padding: 15% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .wrapper .text-wrapper2 .title2 {
@@ -145,7 +151,6 @@
   top: 37vh;
   font-size: 1.3vw;
   color: #3a3a3a;
-  margin-top: 10%;
 }
 
 
@@ -153,6 +158,9 @@
   width: 40%;
   text-align: left;
   padding: 20% 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .wrapper .text-wrapper3 .title3 {
@@ -194,7 +202,7 @@
   height: auto;  
   max-height: 90%;
   max-width: 90%;
-  margin-top: 20%;
+  margin-top: 5%;
   border-radius: 2%;
   background-size: cover;
 }
