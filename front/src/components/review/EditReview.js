@@ -1,5 +1,5 @@
-import React, { useState} from "react";
-import {Modal } from "react-bootstrap";
+import React, { useState } from "react";
+import { Modal } from "react-bootstrap";
 import styled from "styled-components";
 import ReviewEditForm from "./ReviewEditForm";
 const EditButton = styled.button`
@@ -9,7 +9,7 @@ const EditButton = styled.button`
   cursor: pointer;
 `;
 
-function EditReview({ review,setReviews }) {
+function EditReview({ review, setReviews }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -22,11 +22,11 @@ function EditReview({ review,setReviews }) {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <ReviewEditForm
-             review={review}
-             setReviews={setReviews}
-             handleClose={handleClose}
-         />
+          <ReviewEditForm
+            review={review}
+            setReviews={setReviews}
+            handleClose={handleClose}
+          />
         </Modal.Body>
       </Modal>
     </>

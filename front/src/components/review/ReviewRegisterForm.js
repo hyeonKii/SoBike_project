@@ -1,14 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Button, Col, Form, Card, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
-
 import Information from "../../json/newBikeDatas.json";
 import Select from "react-select";
 import GlobalStyle from "../GlobalStyle";
 
 function ReviewRegisterForm({ setReviews, handleClose }) {
-  const [show, setShow] = useState(false);
   const userState = useContext(UserStateContext);
 
   const options = Information.map((data) => ({
@@ -23,8 +21,8 @@ function ReviewRegisterForm({ setReviews, handleClose }) {
     title: "",
     contents: "",
   });
-  const [reviewImage,setReviewImage]=useState("");
-  function handleImgChange(e){
+  const [reviewImage, setReviewImage] = useState("");
+  function handleImgChange(e) {
     setReviewImage(e.target.files[0]);
   }
   function handleOnchange(e) {
@@ -34,11 +32,10 @@ function ReviewRegisterForm({ setReviews, handleClose }) {
       [name]: value,
     }));
   }
-  console.log("Image",reviewImage)
+  console.log("Image", reviewImage);
   const handleSubmit = async (e) => {
-    // preventDefault 해주기
     e.preventDefault();
-    const userId = userState.user.userId
+    const userId = userState.user.userId;
     const reviewFile = new FormData();
     reviewFile.append("reviewFile", reviewImage);
     reviewFile.append("userId", userId);
@@ -47,14 +44,9 @@ function ReviewRegisterForm({ setReviews, handleClose }) {
     reviewFile.append("contents", reviewForm.contents);
     reviewFile.append("locationName", locationName);
     reviewFile.append("roadAddress", roadAddress);
-    console.log(typeof(reviewImage))
-    console.log("reviewImage",reviewImage)
-    ; //로그인된 사용자 id
-    try {
-      const res = await Api.post("reviews", 
-        reviewFile
 
-      );
+    try {
+      const res = await Api.post("reviews", reviewFile);
       setReviews((prev) => [...prev, res.data]);
     } catch (err) {
       console.log("review 등록에 실패하였습니다.", err);
@@ -68,9 +60,6 @@ function ReviewRegisterForm({ setReviews, handleClose }) {
     <>
       <GlobalStyle />
       <Form onSubmit={handleSubmit}>
-        {/* <Card.Img
-        src={bicycle}
-        alt="사용자 등록 프로필 이미지"></Card.Img> */}
         <Form.Group controlId="userEditProfileImage" className="mb-3">
           <Form.Control
             type="file"

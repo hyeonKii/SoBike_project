@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
-import {Container,Row,Form,ButtonGroup,Button,Col,Table,ProgressBar,} from "react-bootstrap";
-import {TbLayoutGrid,TbMenu2,TbTriangle,TbTriangleInverted,} from "react-icons/tb";
+import {Container,Row,Form,ButtonGroup,Button,Col,Table,ProgressBar} from "react-bootstrap";
+import {TbLayoutGrid,TbMenu2,TbTriangle,TbTriangleInverted} from "react-icons/tb";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
 import ReviewCard from "./ReviewCard";
 import ReviewTable from "./ReviewTable";
-import "./Network.css";
 import RegisterReview from "./RegisterReview";
 import GlobalStyle from "../GlobalStyle";
-import bicycle from "../../images/Bike.jpeg"
+import bicycle from "../../images/Bike.jpeg";
+
 function Review() {
   //const navigate = useNavigate();
   const userState = useContext(UserStateContext);
@@ -17,7 +17,7 @@ function Review() {
   const [reviews, setReviews] = useState([]);
   const [search, setSearch] = useState("");
   const [showCard, setShowCard] = useState(true);
-   
+
   function toggleShow() {
     setShowCard(!showCard);
   }
@@ -38,30 +38,32 @@ function Review() {
   function CardCount({ count }) {
     return (
       <div className="Text">
-        <div className="mt-4" style={{float:"left"}}>
-        전체 {count}개 
+        <div className="mt-4" style={{ float: "left" }}>
+          전체 {count}개
         </div>
-        <div style={{width:"80%",margin:"auto"}}>
-        <img style={{width:"30px"}} src={bicycle}></img>
-        <ProgressBar variant="success" now={reviews.length} label={`${reviews.length}%`} />
+        <div style={{ width: "80%", margin: "auto" }}>
+          <img style={{ width: "30px" }} src={bicycle}></img>
+          <ProgressBar
+            variant="success"
+            now={reviews.length}
+            label={`${reviews.length}%`}
+          />
         </div>
       </div>
     );
   }
-  
+
   useEffect(() => {
-   
     Api.get("reviews").then((res) => {
       setReviews(res.data);
     });
   }, []);
   console.log("reviews.userId", reviews);
-  //console.log(userState.user.userId)
   return (
     <>
       <GlobalStyle />
-      <Container fluid className="p-0">
-        <div class="RegisterDiv"></div>
+      <div class="RegisterDiv"></div>
+      <Container fluid className="container">
         <Row className="justify-content-md-center mt-5">
           <Col md={{ span: 1, offset: 4 }}>
             <Form className="mb-3">
@@ -109,7 +111,7 @@ function Review() {
         </Row>
       </Container>
       {showCard ? (
-        <Container fluid="md">
+        <Container fluid="md" className="container">
           <CardCount
             count={
               reviews.filter((data) => {
@@ -141,7 +143,7 @@ function Review() {
           </Row>
         </Container>
       ) : (
-        <Container fluid="md">
+        <Container fluid="md" className="container">
           <CardCount
             count={
               reviews.filter((data) => {
