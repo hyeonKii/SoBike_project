@@ -9,47 +9,37 @@ const Like =  {
     },
 
     findById: async (userId) => {
-        // console.log(locationId)
-        // console.log(userId)
-        // console.log("a")
+
         const like = await LikeModel.find({userId:userId, isLike: true});
     
         const locationIds = [];
         for (let i=0; i<like.length ;i++){
             locationIds[i] = like[i].locationId
         }
-        // console.log()
-      
-        // console.log("locationId: ", locationIds)
         const likedBicycleInfo = [];
         for (let i = 0; i<like.length; i++){
-            // console.log("for 안: ", locationIds[i])
             likedBicycleInfo[i] = await bicycleLocation.findByLocationId(locationIds[i])
             console.log(likedBicycleInfo[i])
         }
-        // const bicycleInfo = await bicycleLocation.findByLocationId(locationId)
-
-        // console.log("bicycleInfo: ", likedBicycleInfo) 
 
         return likedBicycleInfo},
 
     update: async ({userId, locationId, fieldToUpdate, newValue})=> {
-        // console.log("likeId: ", likeId)
+
         const filter = {userId: userId, locaitonId:locationId};
         const update = {[fieldToUpdate]: newValue};
         const option = {returnOriginal : false};
-        // console.log("{reveiwId, fieldToUpdate, newValue}: ", {likeId, fieldToUpdate, newValue})
+
         const updatedLike = await LikeModel.findOneAndUpdate(
             filter,
             update,
             option
         );
-        // console.log(updatedLeview)
         return updatedLike;
     },
 
     findByUser: async (userId, locationId)=> {
-        // console.log("userId")
+
         const likes = await LikeModel.find({userId:userId, locationId: locationId});
         console.log(likes[0])
         console.log("likes: ", likes.length)
@@ -59,11 +49,9 @@ const Like =  {
 
             like = {userId:userId, locationId:locationId, liked:false }
         }else{
-            // console.log("likes in: ",likes)
             like = {userId: likes[0].userId, locationId: likes[0].locationId, liked:true}
-            // console.log("likes out: ", like)
         }
-        // console.log(like)
+
         return like;
     },
     findByLocation: async (locationId)=> {
