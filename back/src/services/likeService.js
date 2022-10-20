@@ -39,7 +39,7 @@ const likeService = {
             likeLocation.forEach((data) => {
                 likes.forEach((location) => {
                     if(data.rentalLocationId === location.locationId) {
-                        likeLocations.push({loadAddress: data.rentalLocationId, locationName: data.locationName})
+                        likeLocations.push({loadAddress: data.roadAddress, locationName: data.locationName})
                     }
                 })
                 
