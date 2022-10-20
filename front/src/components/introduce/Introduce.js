@@ -69,11 +69,11 @@ export default function Introduce() {
         <Box sx={{ borderBottom: 1, borderColor: '#999' }}>
           <Tabs value={value} onChange={handleChange} centered >
           
-              <Tab label="탄소농도로 인한 가뭄피해 증가" {...a11yProps(0)} style={{color: "#83b493"}}/>
+              <Tab label="탄소농도로 인한 가뭄피해 증가" {...a11yProps(0)} style={{color: "black"}}/>
             
 
            
-              <Tab label="교통부문에서의 탄소배출" {...a11yProps(1)} style={{color: "#83b493"}}/>
+              <Tab label="교통부문에서의 탄소배출" {...a11yProps(1)} style={{color: "black"}}/>
             
 
             
