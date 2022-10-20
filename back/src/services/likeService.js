@@ -17,21 +17,15 @@ const likeService = {
     getLikeByLocation: async (userId)=> {
         const likes = await Like.findAll(userId);
         let likeLocations = [];
-
+        
         if(likes) {
-            const likeLocation = await bicycleLocation.findByRentalLocation();
-            likeLocation.forEach((data) => {
-                likes.forEach((location) => {
-                    if(data.rentalLocationId === location.locationId) {
-                        likeLocations.push({loadAddress: data.roadAddress, locationName: data.locationName})
-                    }
-                })
-                
-            });
+            for(let i = 0; i < likes.length; i++) {
+                const likeLocation = await bicycleLocation.findByRentalLocation(likes[i].locationId);
+                likeLocations[i] = likeLocation;
+            }
+            likeLocations.errorMessage = null;
         }
         console.log(likeLocations)
-        likeLocations.errorMessage = null;
-        
         return likeLocations;
     },
  
