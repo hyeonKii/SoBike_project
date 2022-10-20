@@ -4,7 +4,7 @@ import { MdRoom } from "react-icons/md";
 import Comments from "../comment/Comments";
 import { UserStateContext } from "../../App";
 import styled from "styled-components";
-import { Container, Col, Row } from "react-bootstrap";
+import { Container, Col, Row,Card } from "react-bootstrap";
 import GlobalStyle from "../GlobalStyle";
 const ShowMore =styled.button`
     font-size: 8px;
@@ -16,7 +16,9 @@ function ReviewDetail({ review }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const domain = protocol + "//" + hostname + ":5001";
   const userState = useContext(UserStateContext);
   return (
     <>
@@ -28,8 +30,13 @@ function ReviewDetail({ review }) {
         </Modal.Header>
           <div class="locationbox"><MdRoom/>{review?.locationName}</div>
           <div class="emailbox">작성자: {review?.email}</div>
+          <img
+            style={{ width: "13rem", height: "13rem",display: "block",margin:"auto" }}
+            className="mb-3"
+            src={domain+review?.reviewImage}
+            alt="사용자 등록 이미지"
+          />
           <div class="contentbox">{review?.contents}</div>
-        
         <Modal.Footer>
           <Container fluid>
             <Row>

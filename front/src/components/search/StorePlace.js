@@ -58,7 +58,7 @@ function StorePlace({ serverData }) {
         <Card.Header>
           <BottomLine>
             <Row>
-              <div style={{ flex: "2" }}>{serverData.locationName}</div>
+              <div style={{ flex: "4" }}>{serverData.locationName}</div>
               <div style={{ flex: "1" }}>
                 {userState.user && (
                   <FiHeart

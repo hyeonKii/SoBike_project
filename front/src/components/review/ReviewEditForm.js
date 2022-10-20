@@ -36,7 +36,8 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   const domain = protocol + "//" + hostname + ":5001";
-  console.log(review.reviewImage);
+  console.log("리뷰 수정전 이미지 reviewImage", review.reviewImage);
+  console.log("리뷰 수정전 이미지 image", image);
   const setPreviewImage = (target) => {
     setPrevImage(URL.createObjectURL(target.files[0]));
     setImage(target);
@@ -48,6 +49,7 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
     const userId = review.userId; //로그인된 사용자 id
     try {
       ///reviews/:reviewId
+      // if(image.files[0])
       const new_review = {
         userId: userId,
         reviewImage: image,
@@ -67,7 +69,7 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
       reviewFile.append("locationName", locationName);
       reviewFile.append("roadAddress", roadAddress);
       console.log(locationName);
-      console.log(image);
+      console.log("리뷰 수정후 이미지", image);
       const res = await Api.put(`reviews/${review.reviewId}`, reviewFile);
       setPreviewImage(res.data.image);
       setReviews((prev) => {
@@ -119,6 +121,7 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
           <Form.Control
             type="file"
             name="reviewFile"
+            // value={image}
             onChange={(e) => setPreviewImage(e.target)}
           />
         </Form.Group>

@@ -6,7 +6,7 @@ import { UserStateContext } from "../../App";
 import Information from "../../newBikeDatas.json";
 import Select from "react-select";
 import GlobalStyle from "../GlobalStyle";
-import bicycle from "../../images/Bike.jpeg"
+
 function ReviewRegisterForm({ setReviews, handleClose }) {
   const [show, setShow] = useState(false);
   const userState = useContext(UserStateContext);
@@ -48,6 +48,7 @@ function ReviewRegisterForm({ setReviews, handleClose }) {
     reviewFile.append("locationName", locationName);
     reviewFile.append("roadAddress", roadAddress);
     console.log(typeof(reviewImage))
+    console.log("reviewImage",reviewImage)
     ; //로그인된 사용자 id
     try {
       const res = await Api.post("reviews", 

@@ -327,10 +327,20 @@ function Search() {
                 borderRadius: "20px",
               }}
             >
-              <Card.Body>
-                <Row className="justify-content-md-left">
-                  <h3 style={{ fontWeight: "bold" }}>검색 결과</h3>
-                </Row>
+              <Card.Header>
+                  <h3 style={{ fontWeight: "bold"}}>검색 결과</h3>
+                </Card.Header>
+              <Card.Body
+              style={{
+                width: "20rem",
+                border: "none",
+                // borderStyle: "dashed",
+                // borderColor: "#9966FF",
+                borderRadius: "20px",
+                height: "300px",
+                overflow:"auto",
+              }}>
+                
                 {serverData.length > 0 && (
                   <StorePlaces serverData={serverData} />
                 )}
