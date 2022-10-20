@@ -3,7 +3,6 @@ import {bicycleLocation} from "./bicycleLocation"
 
 const Like =  {
     create : async ({newLike}) => {
-        console.log(newLike)
         const createdNewLike = await LikeModel.create(newLike);
         return createdNewLike;
     },
@@ -19,7 +18,6 @@ const Like =  {
         const likedBicycleInfo = [];
         for (let i = 0; i<like.length; i++){
             likedBicycleInfo[i] = await bicycleLocation.findByLocationId(locationIds[i])
-            console.log(likedBicycleInfo[i])
         }
 
         return likedBicycleInfo},
@@ -38,25 +36,9 @@ const Like =  {
         return updatedLike;
     },
 
-    // findByUser: async (userId, locationId)=> {
 
-    //     const likes = await LikeModel.find({userId:userId, locationId: locationId});
-    //     console.log(likes[0])
-    //     console.log("likes: ", likes.length)
-    //     let like =likes;
-    //     if(likes.length ==0){
-    //         console.log("likes in: ",likes)
-
-    //         like = {userId:userId, locationId:locationId, liked:false }
-    //     }else{
-    //         like = {userId: likes[0].userId, locationId: likes[0].locationId, liked:true}
-    //     }
-
-    //     return like;
-    // },
     findByUser: async ({userId, locationId})=> {
         const likes = await LikeModel.find({userId:userId, locationId: locationId});
-        // console.log(likes);
         let isLike;
         if(likes.length > 0){
             isLike = true;
@@ -67,9 +49,7 @@ const Like =  {
         return isLike;
     },
     findByLocation: async (locationId)=> {
-        console.log("afdf")
         const likes = await LikeModel.find({ locationId });
-        console.log(likes);
         return likes;
     },
     findAll: async (userId) => {
@@ -80,7 +60,6 @@ const Like =  {
 
     delete: async ({ userId, locationId })=> {
         const filter = { userId: userId, locaitonId: locationId };
-        // console.log(Id)
         const deleteLike = await LikeModel.deleteOne(filter);
         return deleteLike;
       }
