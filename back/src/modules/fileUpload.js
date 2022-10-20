@@ -57,7 +57,7 @@ export const uploadFile = async (userId, files, fileLocation) => {
         }
     }
 
-    if(dbConnted === "reviewImage") {
+    if(fileLocation === "reviewImage") {
 
     }
     

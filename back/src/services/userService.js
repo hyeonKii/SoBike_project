@@ -95,7 +95,11 @@ const userAuthService = {
                 userInfo.image = await uploadFile(userId, files, "userImage");
             } else {
                 const userImage = await UserImage.findById(userId);
-                userInfo.image = "public/userImage/" + userImage.image;
+                if(userImage) {
+                    userInfo.image = "public/userImage/" + userImage.image;
+                } else {
+                    userInfo.image = "public/userImage/lion.jpg";
+                }
             }
         }
         
