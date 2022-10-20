@@ -38,21 +38,33 @@ const Like =  {
         return updatedLike;
     },
 
-    findByUser: async (userId, locationId)=> {
+    // findByUser: async (userId, locationId)=> {
 
+    //     const likes = await LikeModel.find({userId:userId, locationId: locationId});
+    //     console.log(likes[0])
+    //     console.log("likes: ", likes.length)
+    //     let like =likes;
+    //     if(likes.length ==0){
+    //         console.log("likes in: ",likes)
+
+    //         like = {userId:userId, locationId:locationId, liked:false }
+    //     }else{
+    //         like = {userId: likes[0].userId, locationId: likes[0].locationId, liked:true}
+    //     }
+
+    //     return like;
+    // },
+    findByUser: async ({userId, locationId})=> {
         const likes = await LikeModel.find({userId:userId, locationId: locationId});
-        console.log(likes[0])
-        console.log("likes: ", likes.length)
-        let like =likes;
-        if(likes.length ==0){
-            console.log("likes in: ",likes)
-
-            like = {userId:userId, locationId:locationId, liked:false }
-        }else{
-            like = {userId: likes[0].userId, locationId: likes[0].locationId, liked:true}
+        // console.log(likes);
+        let isLike;
+        if(likes.length > 0){
+            isLike = true;
+        } else {
+            isLike = false;
         }
 
-        return like;
+        return isLike;
     },
     findByLocation: async (locationId)=> {
         console.log("afdf")

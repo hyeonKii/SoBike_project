@@ -36,32 +36,52 @@ const bicycleLocation =  {
                 roadAdress: bicycleLocation[0].roadAddress
                 }},
 
+    // findByCurrentLocations: async ({userId, longitude, latitude}) => {
+
+    //     console.log("a")
+    //     const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.0049, $lt:longitude+0.0049}, "latitude":{$gt: latitude-0.0049, $lt:latitude +0.0049}});
+
+    //     const likedLocation = [];
+    //     const locationInfo = [];
+    //     for (let i = 0;i<bicycleLocation.length;i++){
+    //         const locationId = bicycleLocation[i].rentalLocationId
+    //         likedLocation[i] = await Like.findByUser(userId, locationId)
+    //         console.log("likedLocation[i]: ", likedLocation[i])
+    //         console.log("bicycledata: ", bicycleLocation[i])
+    //         locationInfo[i] = {
+    //             rentalLocationId: bicycleLocation[i].rentalLocationId,
+    //             roadAddress: bicycleLocation[i].roadAddress,
+    //             locationName: bicycleLocation[i].locationName,
+    //             latitude: bicycleLocation[i].latitude,
+    //             longitude: bicycleLocation[i].longitude,
+    //             userId: userId, 
+    //             liked: likedLocation[i].liked
+    //         }
+    //         console.log("locaitonInfo[i]: ", locationInfo[i])
+    //             }
+
+
+    //     return locationInfo},
     findByCurrentLocations: async ({userId, longitude, latitude}) => {
+        let bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.0049, $lt:longitude+0.0049}, "latitude":{$gt: latitude-0.0049, $lt:latitude +0.0049}});
 
-        console.log("a")
-        const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.0049, $lt:longitude+0.0049}, "latitude":{$gt: latitude-0.0049, $lt:latitude +0.0049}});
+        if(userId) {
+            for (let i = 0;i<bicycleLocation.length;i++){
+                const locationId = bicycleLocation[i].rentalLocationId;
+                const isLike = await Like.findByUser({userId, locationId});
 
-        const likedLocation = [];
-        const locationInfo = [];
-        for (let i = 0;i<bicycleLocation.length;i++){
-            const locationId = bicycleLocation[i].rentalLocationId
-            likedLocation[i] = await Like.findByUser(userId, locationId)
-            console.log("likedLocation[i]: ", likedLocation[i])
-            console.log("bicycledata: ", bicycleLocation[i])
-            locationInfo[i] = {
-                rentalLocationId: bicycleLocation[i].rentalLocationId,
-                roadAddress: bicycleLocation[i].roadAddress,
-                locationName: bicycleLocation[i].locationName,
-                latitude: bicycleLocation[i].latitude,
-                longitude: bicycleLocation[i].longitude,
-                userId: userId, 
-                liked: likedLocation[i].liked
+                bicycleLocation[i]._doc.isLike = isLike;
+                bicycleLocation[i]._doc.userId = userId;
             }
-            console.log("locaitonInfo[i]: ", locationInfo[i])
-                }
+        } else {
+            for (let i = 0;i<bicycleLocation.length;i++){
+                bicycleLocation[i]._doc.isLike = false;
+            }
+        }
+        // console.log("bicycleLocation: " + bicycleLocation)
+        return bicycleLocation
+    },
 
-
-        return locationInfo},
 
     findByRentalLocation: async (locationId) => {
         const RentalLocation = await bicycleLocationModel.find({RentalLocationId: locationId});
