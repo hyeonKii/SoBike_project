@@ -75,7 +75,6 @@ userAuthRouter.get("/:userId", loginRequired, async (req, res, next) => {
 userAuthRouter.get("/likes/:userId", async (req, res, next) => {
     try {
         const { userId } = req.params;
-        console.log("dd");
         const likesLocation = await likeService.getLikeByLocation(userId);
 
         if(likesLocation.errorMessage) {
