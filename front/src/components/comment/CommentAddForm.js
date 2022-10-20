@@ -21,19 +21,19 @@ function AwardAddForm({ reviewId,userId,nickName, setComments, setIsAdding }) {
     e.preventDefault();
     try {
       ///reviews/:reviewId/comment/:userId
-      const res = await Api.post(`reviews/${reviewId}/comment/${userId}`, {
+      const res = await Api.post(`reviews/${reviewId}/comments`, {
         ...commentForm,
       });
       setComments((prev) => [...prev, res.data]);
       setIsAdding((prev) => !prev);
     } catch (err) {
-      console.log("등록에 실패하였습니다.", err);
+      console.log("comment 등록에 실패하였습니다.", err);
     }
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="awardAddTitle">
+      <Form.Group controlId="commentAdd" style={{marginTop:"8px"}}>
         <Form.Control
           type="text"
           placeholder="댓글"

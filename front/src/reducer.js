@@ -16,3 +16,5 @@ export function loginReducer(userState, action) {
       return userState;
   }
 }
+
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'

@@ -25,7 +25,7 @@ const UserImage = {
     delete: async (userId) => {
         const deletedUserInfo = await UserImageModel.findOneAndDelete({ userId });
 
-        return deletedUserInfo.image;
+        return deletedUserInfo;
     }
 }
 

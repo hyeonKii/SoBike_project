@@ -1,10 +1,10 @@
 import { UserModel } from "../schemas/user";
 
 const User = {
-    create: async (newUserInfo) => {
-        const createdNewUserInfo = await UserModel.create(newUserInfo);
-        
-        return createdNewUserInfo;
+    create: async (newUser) => {
+        const createdNewUser = await UserModel.create(newUser);
+
+        return createdNewUser;
     },
     findById: async (userId) => {
         let userInfo = await UserModel.findById({ _id: userId });
@@ -32,7 +32,20 @@ const User = {
         }
         
         return userInfo;
+    },
+    findByNickName: async (nickName) => {
+        let userInfo = await UserModel.findOne({ nickName });
+
+        if(userInfo) {
+            userInfo = {
+                userId: userInfo._id,
+                email: userInfo.email,
+                password: userInfo.password,
+                nickName: userInfo.nickName
+            }
+        }
         
+        return userInfo;
     },
     update: async (userId, fieldToUpdate, newValue) => {
         const filter = { _id: userId };

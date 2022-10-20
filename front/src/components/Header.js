@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { UserStateContext, DispatchContext, LoginContext } from "../App";
+import { UserStateContext, DispatchContext, LoginModalContext } from "../App";
 
 import { throttle } from "lodash";
 
 import classes from "./Header.css";
+import { ROUTE } from './route';
 
 function Header() {
   const navigate = useNavigate();
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
-  const { setShow } = useContext(LoginContext);
+  const { setShow } = useContext(LoginModalContext);
 
   //모달창 열림
   const handleShow = () => {
@@ -25,29 +26,31 @@ function Header() {
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
+    // localStorage 에 저장했던 JWT 토큰을 삭제함.
+    localStorage.removeItem("LS_KEY_LOGIN");
     // dispatch 함수를 이용해 로그아웃함.
     dispatch({ type: "LOGOUT" });
     // 기본 페이지로 돌아감.
     navigate("/");
   };
-  //-----------------------------------------------------
+ 
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
   useEffect(() => {
-    window.addEventListener("scroll", throttle(updateScroll, 300));
+    window.addEventListener("scroll", throttle(updateScroll, 100));
     return () => {
-      window.removeEventListener("scroll", throttle(updateScroll, 300));
+      window.removeEventListener("scroll", throttle(updateScroll, 100));
     };
   }, []);
-  //--------------------------------------------
+  
   return (
-    <header className={scrollPosition < 60 ? "header" : "header-opacity"}>
+    <header className={scrollPosition < 25 ? "header" : "header-opacity"}>
       <div className="logo">
         <NavLink
           className={(navData) => (navData.isActive ? classes.active : "")}
-          to="/"
+          to={ ROUTE.MAIN.link }
         >
           So Bike
         </NavLink>
@@ -57,7 +60,7 @@ function Header() {
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
-              to="/introduce"
+              to={ ROUTE.INTRODUCE.link }
             >
               서비스 소개
             </NavLink>
@@ -65,7 +68,7 @@ function Header() {
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
-              to="/search"
+              to={ ROUTE.SEARCH.link }
             >
               대여소 검색
             </NavLink>
@@ -73,7 +76,7 @@ function Header() {
           <li>
             <NavLink
               className={(navData) => (navData.isActive ? classes.active : "")}
-              to="/review"
+              to={ ROUTE.REVIEW.link }
             >
               리뷰
             </NavLink>
@@ -85,7 +88,7 @@ function Header() {
                   className={(navData) =>
                     navData.isActive ? classes.active : ""
                   }
-                  to="/mypage"
+                  to={ ROUTE.MYPAGE.link }
                 >
                   내정보
                 </NavLink>
@@ -118,7 +121,7 @@ function Header() {
                   className={(navData) =>
                     navData.isActive ? classes.active : ""
                   }
-                  to="/register"
+                  to={ ROUTE.REGISTER.link }
                 >
                   회원가입
                 </NavLink>

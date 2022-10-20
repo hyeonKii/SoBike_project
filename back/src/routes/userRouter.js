@@ -3,6 +3,7 @@ import formidable from "formidable";
 
 import { loginRequired } from "../middlewares/loginRequired";
 import { userAuthService } from "../services/userService";
+import { likeService } from "../services/likeService";
 
 const userAuthRouter = Router();
 
@@ -16,7 +17,7 @@ userAuthRouter.post("/", async (req, res, next) => {
             throw new Error("회원가입 실패");
         }
 
-        res.status(201).json({message: "회원가입에 성공하였습니다."});
+        res.status(201).json(userInfo);
     } catch(err) {
         next(err);
     }
@@ -26,7 +27,7 @@ userAuthRouter.post("/", async (req, res, next) => {
 userAuthRouter.post("/login", async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const userLoginInfo = await userAuthService.getUser(email, password);
+        const userLoginInfo = await userAuthService.login(email, password);
 
         if(userLoginInfo.errorMessage) {
             throw new Error("로그인실패");
@@ -57,7 +58,7 @@ userAuthRouter.get("/current", loginRequired, async (req, res, next) => {
 // 회원(내) 정보 가져오기
 userAuthRouter.get("/:userId", loginRequired, async (req, res, next) => {
     try {
-        const userId = req.params.userId;
+        const { userId } = req.params;
         const currentUserInfo = await userAuthService.getUserInfo(userId);
 
         if(currentUserInfo.errorMessage) {
@@ -70,15 +71,35 @@ userAuthRouter.get("/:userId", loginRequired, async (req, res, next) => {
     }
 });
 
+// 관심 대여소 가져오기
+userAuthRouter.get("/likes/:userId", async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        const likesLocation = await likeService.getLikeByLocation(userId);
+
+        if(likesLocation.errorMessage) {
+            throw new Error("회원 정보 불러오기 실패");
+        }
+
+        res.status(200).send(likesLocation);
+    } catch(err) {
+        next(err);
+    }
+});
+
 // 회원 정보 수정 기능
 userAuthRouter.put("/:userId", loginRequired, async (req, res, next) => {
     try {
-        const userId = req.params.userId;
+        const { userId } = req.params;
         const form = new formidable.IncomingForm();
 
         form.parse(req, async (err, fields, files) => {
             const updatedUser = await userAuthService.setUser(userId, fields, files);
 
+            if(updatedUser.errorMessage) {
+                throw new Error("회원 정보 수정 실패");
+            }
+            
             res.status(201).json(updatedUser);
         });
     } catch(err) {
@@ -89,7 +110,7 @@ userAuthRouter.put("/:userId", loginRequired, async (req, res, next) => {
 // 회원 정보 삭제 기능
 userAuthRouter.delete("/:userId", loginRequired, async (req, res, next) => {
     try {
-        const userId = req.params.userId;
+        const { userId } = req.params;
         const deleteUser = await userAuthService.delUser(userId);
 
         if (deleteUser.errorMessage) {

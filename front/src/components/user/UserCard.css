@@ -1,0 +1,10 @@
+.myInfo {
+    box-shadow: 2px 2px 10px rgba(201, 201, 201, 1);
+}
+
+
+
+.myInfo:hover {
+    transform: scale(1.04);
+    transition: transform 1s;
+}

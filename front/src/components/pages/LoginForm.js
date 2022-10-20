@@ -1,16 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
-import { LoginContext, DispatchContext } from "../../App";
+import { LoginModalContext, DispatchContext, AutoLoginContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 import { Modal, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
+import { LOGIN_SUCCESS } from "../../reducer";
+import { validateEmail } from "../validate/Validate";
 
 const LoginForm = () => {
   const navigate = useNavigate();
 
   const dispatch = useContext(DispatchContext);
-  const { show, setShow } = useContext(LoginContext);
+  const { show, setShow } = useContext(LoginModalContext);
+  const { LS_KEY_LOGIN, LS_KEY_SAVE_LOGIN } = useContext(AutoLoginContext);
 
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -29,9 +32,11 @@ const LoginForm = () => {
 
   //아이디 저장 체크박스 컨트롤
   const [saveID, setSaveID] = useState(false);
+  //로그인 저장 체크박스 컨트롤
+  const [saveLogin, setSaveLogin] = useState(false);
   //local storage에 사용할 key(이메일을 값으로)
   const LS_KEY_ID = "LS_KEY_ID";
-  //local storage에 사용할 key(체크박스 true, false를 값으로)
+  //local storage에 사용할 key(아이디 저장 체크박스 true, false를 값으로)
   const LS_KEY_SAVE_ID = "LS_KEY_SAVE_ID";
 
   useEffect(() => {
@@ -42,25 +47,37 @@ const LoginForm = () => {
     //체그가 안되어 있다면 저장된 아이디를 빈칸으로 교체
     if (idFlag === false) localStorage.setItem(LS_KEY_ID, "");
     //저장된 아이디 값을 email 값으로 설정
-    let data = localStorage.getItem(LS_KEY_ID);
-    if (data !== null) setEmail(data);
-    console.log(`email 확인:`, email);
+    let idData = localStorage.getItem(LS_KEY_ID);
+    if (idData !== null) setEmail(idData);
+
+    //체크박스 정보 변수에 초기화, 체크라면 true
+    let loginSaveFlag = JSON.parse(localStorage.getItem(LS_KEY_SAVE_LOGIN));
+    //체크박스 불린값을 setSaveLogin에 초기화
+    if (loginSaveFlag !== null) setSaveLogin(loginSaveFlag);
+    //체그가 안되어 있다면 저장된 아이디를 빈칸으로 교체
+    if (loginSaveFlag === false) localStorage.setItem(LS_KEY_LOGIN, "");
   }, []);
 
-  //아이디 저장 체크시
+  //아이디 저장 체크 정보
   const handleSaveID = () => {
     localStorage.setItem(LS_KEY_SAVE_ID, !saveID);
     setSaveID(!saveID);
   };
+  //자동 로그인 체크 정보
+  const handleSaveLogin = () => {
+    localStorage.setItem(LS_KEY_SAVE_LOGIN, !saveLogin);
+    setSaveLogin(!saveLogin);
+  };
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
+  // const validateEmail = (email) => {
+  //   return email
+  //     .toLowerCase()
+  //     .match(
+  //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //     );
+  // };
+  
 
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
@@ -87,12 +104,15 @@ const LoginForm = () => {
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: user,
       });
 
       //아이디 저장 체크시 LS_KEY_ID에 email 저장
       if (saveID) localStorage.setItem(LS_KEY_ID, email);
+
+      //로그인 저장 체크시 LS_KEY_LOGIN에 jwtToken 저장
+      if (saveLogin) localStorage.setItem(LS_KEY_LOGIN, jwtToken);
 
       //input 정보 초기화
       setEmail("");
@@ -100,7 +120,7 @@ const LoginForm = () => {
       handleClose();
 
       // 기본 페이지로 이동함.
-      navigate("/", { replace: true });
+      // navigate("/", { replace: true });
     } catch (err) {
       setLoginFail(false);
       console.log("로그인에 실패하였습니다.\n", err);
@@ -173,6 +193,8 @@ const LoginForm = () => {
                   type="checkbox"
                   id="login-checkbox"
                   label={`자동 로그인`}
+                  checked={saveLogin}
+                  onChange={handleSaveLogin}
                 />
               </div>
             </Form.Group>

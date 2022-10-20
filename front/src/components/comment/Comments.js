@@ -8,7 +8,7 @@ function Comments({ reviewId, userId,nickName, isUser }) {
   const [isAdding, setIsAdding] = useState(false);
   ///reviews/:reviewId/comment
   useEffect(() => {
-    Api.get(`reviews/${reviewId}/comment`).then((res) => {
+    Api.get(`reviews/${reviewId}/comments`).then((res) => {
       if (!Array.isArray(res.data)) {
         console.log("res.data(comment) is not array");
         return;
@@ -16,11 +16,12 @@ function Comments({ reviewId, userId,nickName, isUser }) {
       setComments(res.data);
     });
   }, [reviewId]);
+  //console.log(reviewId)
   return (
     <>
       {comments.map((comment) => (
         <Comment
-          key={comment._id}
+          key={comment.commentId}
           comment={comment}
           isEditable={isUser?.userId===comment.userId}
           setComments={setComments}

@@ -10,6 +10,10 @@ const ReviewSchema = new Schema(
             type: String,
             required: true
         },
+        email: {
+            type: String,
+            required: true
+        },
         title: {
             type: String, 
             required: true, 
@@ -22,15 +26,11 @@ const ReviewSchema = new Schema(
             type: String, 
             required: true
         },
-        landAddress:{
-            type: String, 
-            required: true,
-        },
         roadAddress: {
             type: String, 
             required: true
         }
-    }
+    }, {timestamps: true}
 )
 
 const ReviewModel = model("Review", ReviewSchema);

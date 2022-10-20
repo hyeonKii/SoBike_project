@@ -1,47 +1,72 @@
 import { CommentModel } from "../schemas/comment";
 
+const responseCommentInfo = (commentInfo) => {
+    const comment = { commentId: commentInfo._id, ...commentInfo };
+
+    delete comment._id;
+
+    return comment;
+}
+
 const Comment = {
     create: async (newComment) => {
-        const user = await CommentModel.create(newComment);
+        const createdComment = await CommentModel.create(newComment);
+        
+        if(createdComment) {
+            return responseCommentInfo(createdComment._doc);
+        }
 
-        return user;
+        return createdComment;
     },
     findAll: async (reviewId) => {
-        const user = await CommentModel.find({ reviewId });
+        let comments = await CommentModel.find({ reviewId });
+        
+        if(comments) {
+            comments = comments.map((data) => {
+                return responseCommentInfo(data._doc);
+            })
+        }
 
-        const responseUserInfo = user.map(data => {
-            return {
-                commentId: data._id,
-                reviewId: data.reviewId,
-                userId: data.userId,
-                nickName: data.nickName,
-                contents: data.contents
-            }
-        })
-
-        return responseUserInfo;
+        return comments;
     },
-    findById: async (commentId) => {
-        const user = await CommentModel.find({ _id: commentId });
+    findById: async (reviewId, commentId) => {
+        const comment = await CommentModel.findById({ _id: commentId, reviewId });
 
-        return user;
+        if(comment) {
+            return responseCommentInfo(comment._doc);
+        }
+
+        return comment;
     },
-    update: async (commentId, fieldToUpdate, newValue) => {
-        const filter = { _id: commentId };
+    update: async (reviewId, commentId, fieldToUpdate, newValue) => {
+        const filter = { _id: commentId, reviewId };
         const update = { [fieldToUpdate] : newValue };
         const option = { returnOriginal: false };
-        const user = await CommentModel.findOneAndUpdate(
+        const updatedComment = await CommentModel.findOneAndUpdate(
             filter,
             update,
             option
         );
 
-        return user;
-    },
-    delete: async (commentId) => {
-        const user = await CommentModel.deleteOne({ _id: commentId });
+        if(updatedComment) {
+            return responseCommentInfo(updatedComment._doc);
+        }
 
-        return user;
+        return updatedComment;
+    },
+    delete: async (reviewId, commentId) => {
+        const deletedComment = await CommentModel.findOneAndDelete({ _id: commentId, reviewId });
+
+        if(deletedComment) {
+            return responseCommentInfo(deletedComment._doc);
+        }
+        
+        return deletedComment;
+    },
+    deleteAll: async ({reviewId}) => {
+        const deletedComments = await CommentModel.deleteMany({reviewId:reviewId} );
+
+        return deletedComments;
     }
 };
 

@@ -1,72 +1,69 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Form,
-  ButtonGroup,
-  Button,
-  Col,
-  Table,
-} from "react-bootstrap";
-import {
-  TbLayoutGrid,
-  TbMenu2,
-  TbTriangle,
-  TbTriangleInverted,
-} from "react-icons/tb";
+import {Container,Row,Form,ButtonGroup,Button,Col,Table,ProgressBar,} from "react-bootstrap";
+import {TbLayoutGrid,TbMenu2,TbTriangle,TbTriangleInverted,} from "react-icons/tb";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
 import ReviewCard from "./ReviewCard";
 import ReviewTable from "./ReviewTable";
 import "./Network.css";
 import RegisterReview from "./RegisterReview";
+import GlobalStyle from "../GlobalStyle";
+import bicycle from "../../images/Bike.jpeg"
 function Review() {
   //const navigate = useNavigate();
   const userState = useContext(UserStateContext);
+  const isLogin = !!userState.user;
   // useState 훅을 통해 users 상태를 생성함.
   const [reviews, setReviews] = useState([]);
-  const [isAdding, setIsAdding] = useState(false);
   const [search, setSearch] = useState("");
   const [showCard, setShowCard] = useState(true);
-
+   
   function toggleShow() {
     setShowCard(!showCard);
   }
   function sortByNameAsc() {
     let newUserNameArray = [...reviews];
     newUserNameArray = newUserNameArray.sort(
-      (a, b) => -a.name.localeCompare(b.name)
+      (a, b) => -a.title.localeCompare(b.title)
     );
     setReviews(newUserNameArray);
   }
   function sortByNameDesc() {
     let newUserNameArray = [...reviews];
     newUserNameArray = newUserNameArray.sort((a, b) =>
-      a.name.localeCompare(b.name)
+      a.title.localeCompare(b.title)
     );
     setReviews(newUserNameArray);
   }
   function CardCount({ count }) {
-    return <p className="Text">전체 {count}개</p>;
+    return (
+      <div className="Text">
+        <div className="mt-4" style={{float:"left"}}>
+        전체 {count}개 
+        </div>
+        <div style={{width:"80%",margin:"auto"}}>
+        <img style={{width:"30px"}} src={bicycle}></img>
+        <ProgressBar variant="success" now={reviews.length} label={`${reviews.length}%`} />
+        </div>
+      </div>
+    );
   }
+  
   useEffect(() => {
-    if (!userState.user) {
-      setIsAdding(false);
-    } else {
-      setIsAdding(true);
-    }
+   
     Api.get("reviews").then((res) => {
       setReviews(res.data);
     });
   }, []);
-  //console.log("reviews.userId",reviews)
+  console.log("reviews.userId", reviews);
   //console.log(userState.user.userId)
   return (
     <>
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col md={{ span: 1, offset: 5 }}>
+      <GlobalStyle />
+      <Container fluid className="p-0">
+        <div class="RegisterDiv"></div>
+        <Row className="justify-content-md-center mt-5">
+          <Col md={{ span: 1, offset: 4 }}>
             <Form className="mb-3">
               <input
                 className="search-name"
@@ -74,10 +71,11 @@ function Review() {
                 value={search}
                 placeholder="검색"
                 onChange={(e) => setSearch(e.target.value)}
+                style={{ width: "200px" }}
               />
             </Form>
           </Col>
-          <Col md={{ span: 1, offset: 5 }}>
+          <Col md={{ span: 1, offset: 4 }}>
             <ButtonGroup aria-label="Basic example">
               <Button
                 variant="secondary"
@@ -106,7 +104,7 @@ function Review() {
                 />
               </Button>
             </ButtonGroup>
-            {isAdding && <RegisterReview setReviews={setReviews} />}
+            <div>{isLogin && <RegisterReview setReviews={setReviews} />}</div>
           </Col>
         </Row>
       </Container>
@@ -155,7 +153,7 @@ function Review() {
             <thead className="table-header">
               <tr>
                 <th>
-                  Name
+                  title
                   <span style={{ marginLeft: "10px" }}>
                     <TbTriangle
                       className="triangle-btn-asc"
@@ -167,7 +165,7 @@ function Review() {
                     />
                   </span>
                 </th>
-                <th>title</th>
+                <th>email</th>
                 <th>리뷰</th>
               </tr>
             </thead>

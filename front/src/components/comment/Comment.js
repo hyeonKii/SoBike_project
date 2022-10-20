@@ -13,7 +13,7 @@ function Comment({ comment,isEditable, setComments }) {
         <CommentEditForm
           Currentcomment={comment}
           setComments={setComments}
-          setIsEditing={toggleEdit}
+          editComments={toggleEdit}
         />
       ) : (
         <CommentCard

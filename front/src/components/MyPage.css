@@ -1,6 +1,4 @@
-.rentalOffice {
-    background-color: lightblue;
-    font-size: 20px;
-    font-weight: bold;
-    border-radius: 3px;
-}
+.rentalCard:hover {
+    transform: scale(1.04);
+    transition: transform 1s;
+} 

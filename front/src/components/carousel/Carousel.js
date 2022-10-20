@@ -39,7 +39,8 @@ const Carousel = () => {
   useEffect(() => {
     setStyle({
       marginLeft: `-${currentSlide}00%`,
-      transitionDuration: `${1}s`
+      // 이미지 전환 효과
+      transitionDuration: `${1}s`,
     });
   }, [currentSlide]);
 
@@ -52,7 +53,9 @@ const Carousel = () => {
             onClick={() => {
               moveSlide(-1);
             }}
-          >&lt;</button>
+          >
+            &lt;
+          </button>
           <div className="carousel-content-wrapper">
             <div className="carousel-content" style={style}>
               {imagesRef.current.map((image, index) => (
@@ -69,7 +72,9 @@ const Carousel = () => {
             onClick={() => {
               moveSlide(1);
             }}
-          >&gt;</button>
+          >
+            &gt;
+          </button>
         </div>
 
         <div className="position">
@@ -80,6 +85,7 @@ const Carousel = () => {
             ></div>
           ))}
         </div>
+        <div className="down"></div>
       </div>
     </>
   );
