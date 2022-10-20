@@ -53,7 +53,9 @@ const Carousel = () => {
             onClick={() => {
               moveSlide(-1);
             }}
-          >&lt;</button>
+          >
+            &lt;
+          </button>
           <div className="carousel-content-wrapper">
             <div className="carousel-content" style={style}>
               {imagesRef.current.map((image, index) => (
@@ -70,7 +72,9 @@ const Carousel = () => {
             onClick={() => {
               moveSlide(1);
             }}
-          >&gt;</button>
+          >
+            &gt;
+          </button>
         </div>
 
         <div className="position">
@@ -81,8 +85,8 @@ const Carousel = () => {
             ></div>
           ))}
         </div>
+        <div className="down"></div>
       </div>
-      <div className="down"></div>
     </>
   );
 };

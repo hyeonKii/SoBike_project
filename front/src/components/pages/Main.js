@@ -9,7 +9,6 @@ const Main = () => {
       <section>
         <Carousel />
       </section>
-
       <section>
         <Sections />
       </section>
