@@ -11,13 +11,7 @@ const reviewRouter = Router();
 reviewRouter.post("/",  loginRequired, async (req, res, next) => {
     try{
         const userId = req.currentUserId;
-        // const email = req.body.email??null;
-        // const title = req.body.title ?? null;
-        // const contents = req.body.contents??null;
-        // const locationName = req.body.locationName??null;
-        // const roadAddress = req.body.roadAddress??null;
-        // const fileName = req.body.fileName??null;
-
+ 
         const form = new formidable.IncomingForm()
         let newReview;
         form.parse(req, async(err, fields, files) =>{
@@ -40,11 +34,7 @@ reviewRouter.post("/",  loginRequired, async (req, res, next) => {
 
 reviewRouter.get("/",  async (req, res, next)=> {
     try{
-        // console.log("ㅇㄴㅁㄹㄴㅇ")
         const reviews = await reviewService.getReviews();
-        // const reviewImages = await reviewService.getReviewImage();
-        // console.log("router:" ,reviews)
-        // console.log("router:" ,reviews)
         res.status(200).send(reviews);
     }catch(error){
         next(error);
@@ -71,9 +61,7 @@ reviewRouter.get("/:reviewId", async (req, res, next) => {
 reviewRouter.put("/:reviewId",  async (req, res, next)=> {
     try {
         const {reviewId} = req.params;
-        // const title = req.body.title?? null;
-        // const contents = req.body.contents??null;
-        // const locationName = req.body.locationName??null;
+   
         const form = new formidable.IncomingForm();
 
         form.parse(req, async(err, fields, files)=>{
@@ -96,7 +84,7 @@ reviewRouter.delete("/:reviewId",  async(req, res, next) => {
         console.log("reviewId: ", reviewId)
         const deletedReview = await reviewService.delReview({reviewId});
         const deletedComments = await commentService.delComments({reviewId});
-        // console.log(deletedReview)
+
         
         if(deletedReview.errorMessage) {
             throw new Error(deletedReview.errorMessage);
