@@ -4,7 +4,6 @@ import { ReviewImage } from "./ReviewImage";
 const Review =  {
     create : async (newReview) => {
         const createdNewReview = await ReviewModel.create(newReview);
-        console.log("createdNewReview : ", createdNewReview)
         return {reviewId: createdNewReview._id,
             userId: createdNewReview.userId,
             email: createdNewReview.email,
@@ -20,7 +19,6 @@ const Review =  {
         const reviewImage = await ReviewImage.findById(reviewId)
  
         if(!reviewImage){
-            console.log("!23344")
             const reviewData= {reviewId: reviewId,
             userId: review.userId,
             email: review.email,
@@ -64,7 +62,6 @@ const Review =  {
     },
 
     findAll: async ()=> {
-        console.log("afdf")
         const reviews = await ReviewModel.find();
      
         const getReviewImage = await ReviewImage.findAll();
@@ -73,8 +70,6 @@ const Review =  {
             const reviewId = review._id;
            
             const reviewImage = getReviewImage.filter(image => image.reviewId === reviewId)
-            console.log("reviewImage: ", reviewImage)
-         
             if(reviewImage.length ===0){return {reviewId: review._id,
                 userId: review.userId,
                 email: review.email,
@@ -98,10 +93,8 @@ const Review =  {
 
     delete: async ({ reviewId })=> {
         const filter = { _id: reviewId };
-        console.log(reviewId)
         const deleteReview = await ReviewModel.findOneAndDelete(filter);
         const deletingImage = await ReviewImage.findById(reviewId)
-        console.log("deletingImage: ", deletingImage)
         return {deleteReview, deletingImage};
       }
 
