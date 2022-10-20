@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Card, Button, Col, Row } from "react-bootstrap";
+import React from "react";
 import StorePlace from "./StorePlace"
 function StorePlaces({ serverData,addLike}) {
   return (

@@ -139,7 +139,6 @@ function Search() {
         makeOutListener(infowindow)
       );
     }
-
     //-------------------------------------------------------------------------- 클러스터(모음)
 
     // 마커 클러스터러를 생성
@@ -200,6 +199,7 @@ function Search() {
   };
   const userState = useContext(UserStateContext);
   const userId = userState.user ? userState.user.userId : null;
+  const isLogin = !!userState.user;
   //서버로 지도 중심좌표 전달
   const currentLocation = async (longitude, latitude) => {
     // console.log('서버로 보낼 좌표', longitude, latitude);
@@ -227,51 +227,20 @@ function Search() {
               <Card.Body>
                 <Row className="justify-content-md-left">
                   <h3 style={{ fontWeight: "bold" }}>검색</h3>
-                  {/* <DropdownButton 
-                            id="dropdown-basic-button" 
-                            title="분류별 검색"          
-                        >
-                            <Dropdown.Item href="#/action-1">대여소 검색</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">보관소 검색</Dropdown.Item>
-                        </DropdownButton> */}
                 </Row>
               </Card.Body>
             </Card>
-
             <Card
               className="searchCard"
               style={{
                 width: "20rem",
                 marginBottom: "10px",
                 border: "none",
-                // borderStyle: "dashed",
-                // borderColor: "#9966FF",
                 borderRadius: "20px",
               }}
             >
               <Card.Body>
                 <Row className="justify-content-md-left">
-                  {/* <Col>
-                        <span>지역</span>
-                        <input
-                            className="search-name"
-                            type="text"
-                            value={search}
-                            placeholder="검색"
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        </Col>
-
-                        <Col>
-                        <span>상세검색</span>    
-                        <input
-                            className="search-name"
-                            type="text"
-                            value={search}
-                            placeholder="상세검색"
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        </Col> */}
                   <Col>
                     <form
                       className="inputForm"
@@ -317,14 +286,11 @@ function Search() {
                 </Row>
               </Card.Body>
             </Card>
-
             <Card
               className="searchResult"
               style={{
                 width: "20rem",
                 border: "none",
-                // borderStyle: "dashed",
-                // borderColor: "#9966FF",
                 borderRadius: "20px",
               }}
             >
@@ -335,22 +301,18 @@ function Search() {
               style={{
                 width: "20rem",
                 border: "none",
-                // borderStyle: "dashed",
-                // borderColor: "#9966FF",
                 borderRadius: "20px",
                 height: "300px",
                 overflow:"auto",
               }}>
-                
                 {serverData.length > 0 && (
                   <StorePlaces 
                   serverData={serverData}
-                  addLike={(userState.user)} />
+                  addLike={isLogin} />
                 )}
               </Card.Body>
             </Card>
           </Col>
-
           <Col style={{ marginTop: "35px" }}>
             <div
               className="rentalLocation"
@@ -391,7 +353,6 @@ function Search() {
                   alignItems: "center",
                   boxShadow: "7px 7px 39px rgba(243, 228, 246, 1)",
                   border: "none",
-                  // borderColor: "lightgray",
                   borderRadius: "20px",
                 }}
               >
@@ -399,7 +360,6 @@ function Search() {
                   <Card.Title style={{ fontWeight: "bold" }}>
                     대여소 위치
                   </Card.Title>
-
                   <div
                     ref={myMap}
                     id="map"

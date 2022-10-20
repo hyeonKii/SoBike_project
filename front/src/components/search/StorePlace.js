@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Card, Form, Col, Row } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import { MdRoom } from "react-icons/md";
 import * as Api from "../../api";
 import { UserStateContext } from "../../App";
-import { FiHeart, FiMessageCircle } from "react-icons/fi";
+import { BsHeartFill, BsHeart, BsChat, BsChatFill } from "react-icons/bs";
 import styled from "styled-components";
 import Accordion from "react-bootstrap/Accordion";
 import { useAccordionButton } from "react-bootstrap/AccordionButton";
@@ -11,19 +11,55 @@ import ReviewDetail from "../review/ReviewDetail";
 const BottomLine = styled.div`
   margin: 10px 0;
 `;
-function StorePlace({ serverData,addLike }) {
-  console.log(serverData)
+const ReveiwTotal = styled.div`
+  .chat,
+  .chatfill {
+    cursor: pointer;
+  }
+  .chat:hover {
+    color: gray;
+  }
+`;
+const Hearts = styled.div`
+    flex: 1;
+    .heartfill,.heart{
+      cursor: pointer;
+    }
+    .heart:hover{
+     color:pink;
+    }
+    .heartfill{
+      color:pink;
+    }
+`;
+function StorePlace({ serverData, addLike }) {
+  console.log(serverData);
   function CustomToggle({ children, eventKey }) {
-    const decoratedOnClick = useAccordionButton(eventKey, () =>
-      console.log("totally custom!")
-    );
+    const [seeReview, setSeeReview] = useState(false);
+    const decoratedOnClick = useAccordionButton(eventKey, () => {
+      console.log("totally custom!");
+      setSeeReview(!seeReview);
+    });
 
-    return <FiMessageCircle onClick={decoratedOnClick} />;
+    return (
+      <>
+        {seeReview ? (
+          <BsChatFill
+            className="chatfill"
+            onClick={decoratedOnClick}
+            color="gray"
+          />
+        ) : (
+          <BsChat className="chat" onClick={decoratedOnClick} />
+        )}
+      </>
+    );
   }
   const userState = useContext(UserStateContext);
   const [reviews, setReviews] = useState([]);
-  console.log("serverData.islike",serverData.isLike)
+  console.log("serverData.islike", serverData.isLike);
   const [likeToggle, setLikeToggle] = useState(serverData.isLike);
+
   const handleclick = async (e, isLike) => {
     e.preventDefault();
     //const userId = userState.user.userId; //로그인된 사용자 id
@@ -31,19 +67,20 @@ function StorePlace({ serverData,addLike }) {
     setLikeToggle(!isLike);
     if (likeToggle) {
       try {
-        const res = await Api.delete(`datas/bicycle/location/likes/${locationId}`);
-        setLikeToggle(res.data.isLike)
+        const res = await Api.delete(
+          `datas/bicycle/location/likes/${locationId}`
+        );
+        setLikeToggle(res.data.isLike);
       } catch (error) {
         console.log("관심 삭제에 실패했습니다.", error);
       }
-      
     } else {
       try {
         const res = await Api.post(`datas/bicycle/location/likes/`, {
           locationId,
         });
         console.log(res.data);
-        setLikeToggle(res.data.isLike)
+        setLikeToggle(res.data.isLike);
       } catch (err) {
         console.log("관심 등록에 실패하였습니다.", err);
       }
@@ -65,20 +102,12 @@ function StorePlace({ serverData,addLike }) {
           <BottomLine>
             <Row>
               <div style={{ flex: "4" }}>{serverData.locationName}</div>
-              <div style={{ flex: "1" }}>
-                {addLike && (
-                  <FiHeart
-                    onClick={(e) => handleclick(e, likeToggle)}
-                    style={
-                      likeToggle
-                        ? { backgroundColor: "pink" }
-                        : { backgroundColor: "white" }
-                    }
-                  />
-                )}
-              </div>
+              <Hearts onClick={(e) => handleclick(e, likeToggle)}>
+                {addLike &&
+                  (likeToggle ? <BsHeartFill className="heartfill" /> : <BsHeart className="heart"/>)}
+              </Hearts>
             </Row>
-            <div>
+            <ReveiwTotal>
               <div className="text-muted">
                 <MdRoom />
                 {serverData.roadAddress}
@@ -95,7 +124,7 @@ function StorePlace({ serverData,addLike }) {
                   }).length
                 }
               />
-            </div>
+            </ReveiwTotal>
           </BottomLine>
         </Card.Header>
         <Accordion.Collapse eventKey="1">
