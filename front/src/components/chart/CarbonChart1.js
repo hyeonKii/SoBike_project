@@ -82,8 +82,8 @@ const data = [
 export default function CarbonChart1() {
   return (
     <ComposedChart
-      width={550}
-      height={400}
+      width={500}
+      height={320}
       data={data}
       margin={{
         top: 5,
