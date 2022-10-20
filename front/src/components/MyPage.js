@@ -5,6 +5,7 @@ import { Container, Col, Row, Card, Button } from "react-bootstrap";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
+import UserLikeList from "./user/UserLikeList";
 
 import "./MyPage.css";
 import styled from "styled-components";
@@ -80,7 +81,7 @@ function MyPage() {
             />
           </Col>
 
-          <Col style={{marginTop: "100px"}}>
+          <Col style={{marginTop: "70px"}}>
               <div
                 className="rentalLocation" 
                 style={{
@@ -112,7 +113,7 @@ function MyPage() {
                 justifyContent: "center",
               }}
             >
-              <Card 
+              {/* <Card 
                 className="rentalCard"
                 style={{ 
                   width: '800px', 
@@ -128,7 +129,11 @@ function MyPage() {
                   </Card.Text>
                   <Button variant="primary">리뷰</Button>
                 </Card.Body>
-              </Card>
+              </Card> */}
+              
+              <UserLikeList
+                portfolioOwnerId={portfolioOwner.userId}
+              />
             </Col>
 
             
