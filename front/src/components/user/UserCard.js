@@ -43,8 +43,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                   size="20px"
                   style={{
                     backgroundColor: "white",
-                    borderColor:"#9966FF",borderRadius: "50px",
-                    color: "#9966FF"
+                    borderColor:"#79c994",borderRadius: "50px",
+                    color: "#79c994"
                   }}
                   onClick={() => setIsEditing(true)}
                 >
