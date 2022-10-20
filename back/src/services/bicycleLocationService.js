@@ -3,9 +3,7 @@ import {bicycleLocation} from "../db"
 const bicycleLocationService = {
 
     getByLocation: async ({longitude, latitude})=> {
-        // console.log("1sdfasdf")
         const locations = await bicycleLocation.findByLocation({longitude, latitude});
-        // console.log("service:" ,likes)
         return locations;
     },
     getByLocationName: async ({locationName})=> {
@@ -21,15 +19,11 @@ const bicycleLocationService = {
         return locations;
     },
     getLocations: async ()=> {
-        // console.log("1sdfasdf")
         const locations = await bicycleLocation.findAll({});
-        // console.log("service:" ,locations)
         return locations;
     },
     getLocationsByCurrentLocations: async ({userId, longitude, latitude})=> {
-        // console.log("1sdfasdf")
         const locations = await bicycleLocation.findByCurrentLocations({userId, longitude, latitude});
-        // console.log("service:" ,locations)
         return locations;
     },
 }
