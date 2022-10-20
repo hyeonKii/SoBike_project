@@ -24,7 +24,6 @@ bicycleLocationRouter.get("/bicycle/locationName", async (req, res, next)=> {
 
         const locationName = req.body.locationName
 
-        console.log(locationName)
         const location = await bicycleLocationService .getByLocationName({locationName});
         res.status(200).send(location);
     }catch(error){
@@ -35,7 +34,6 @@ bicycleLocationRouter.get("/bicycleAddress", async (req, res, next)=> {
     try{
         const locationName = req.body.locationName
 
-        console.log(locationName)
         const location = await bicycleLocationService .getAddressByLocationName({locationName});
         res.status(200).send(location);
     }catch(error){
@@ -52,13 +50,9 @@ bicycleLocationRouter.get("/bicycle/locations", async (req, res, next)=> {
 });
 bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:userId?:latitude?:longitude", async (req, res, next)=> {
     try{
-        console.log("asfdsf")
         const userId = req.query.userId
-        console.log("userId: ",userId)
         const longitude = parseFloat(req.query.longitude);
         const latitude = parseFloat(req.query.latitude);
-        console.log("longitude: ", longitude)
-        console.log("latitude: ", latitude)
         const location = await bicycleLocationService.getLocationsByCurrentLocations({userId, longitude, latitude})
         res.status(200).send(location);
     }catch(error){
