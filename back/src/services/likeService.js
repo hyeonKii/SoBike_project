@@ -35,14 +35,17 @@ const likeService = {
         let likeLocations = [];
 
         if(likes) {
-            likeLocations = likes.filter(async (data) => {
-                const locationInfo = await bicycleLocation.findByRentalLocation(data.locationId);
-                if(locationInfo) {
-                    return locationInfo;
-                }
-            })
+            const likeLocation = await bicycleLocation.findByRentalLocation();
+            likeLocation.forEach((data) => {
+                likes.forEach((location) => {
+                    if(data.rentalLocationId === location.locationId) {
+                        likeLocations.push({loadAddress: data.rentalLocationId, locationName: data.locationName})
+                    }
+                })
+                
+            });
         }
-        
+        console.log(likeLocations)
         likeLocations.errorMessage = null;
         
         return likeLocations;
