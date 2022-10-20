@@ -3,6 +3,7 @@ import formidable from "formidable";
 
 import { loginRequired } from "../middlewares/loginRequired";
 import { userAuthService } from "../services/userService";
+import { likeService } from "../services/likeService";
 
 const userAuthRouter = Router();
 
@@ -65,6 +66,23 @@ userAuthRouter.get("/:userId", loginRequired, async (req, res, next) => {
         }
 
         res.status(200).send(currentUserInfo);
+    } catch(err) {
+        next(err);
+    }
+});
+
+// 관심 대여소 가져오기
+userAuthRouter.get("/likes/:userId", async (req, res, next) => {
+    try {
+        const { userId } = req.params;
+        console.log("dd");
+        const likesLocation = await likeService.getLikeByLocation(userId);
+
+        if(likesLocation.errorMessage) {
+            throw new Error("회원 정보 불러오기 실패");
+        }
+
+        res.status(200).send(likesLocation);
     } catch(err) {
         next(err);
     }

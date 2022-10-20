@@ -1,4 +1,5 @@
-import { Like} from "../db"
+import { Like } from "../db";
+import { bicycleLocation } from "../db";
 
 const likeService = {
      addLike: async ({locationId, userId}) => {
@@ -28,7 +29,24 @@ const likeService = {
 
         return like;
     },
-    
+    getLikeByLocation: async (userId)=> {
+        // console.log("1sdfasdf")
+        const likes = await Like.findAll(userId);
+        let likeLocations = [];
+
+        if(likes) {
+            likeLocations = likes.filter(async (data) => {
+                const locationInfo = await bicycleLocation.findByRentalLocation(data.locationId);
+                if(locationInfo) {
+                    return locationInfo;
+                }
+            })
+        }
+        
+        likeLocations.errorMessage = null;
+        
+        return likeLocations;
+    },
     // setLike: async ({userId, locationId, toUpdate})=>{
     //     let like = null;
     //     console.log("isLike", toUpdate.isLike)
