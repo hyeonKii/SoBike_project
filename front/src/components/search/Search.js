@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext } from "react";
 import * as Api from "../../api";
 import bikeDatas from "./newBikeDatas.json";
 import StorePlaces from "./StorePlaces";
 import { Container, Row, Button, Card, Col } from "react-bootstrap";
-
+import { UserStateContext } from "../../App";
 import "./Search.css";
 
 const { kakao } = window; //스크립트로 심은 kakao maps api를 window전역 객체에서 뽑아 사용
@@ -198,15 +198,16 @@ function Search() {
       }
     }
   };
-
+  const userState = useContext(UserStateContext);
+  const userId = userState.user ? userState.user.userId : null;
   //서버로 지도 중심좌표 전달
   const currentLocation = async (longitude, latitude) => {
     // console.log('서버로 보낼 좌표', longitude, latitude);
     const long = String(longitude);
     const lati = String(latitude);
     Api.get(
-      `datas/bicycle/locationsByCurrentLocation?latitude=${lati}&longitude=${long}`
-    ).then((res) => setServerData(res.data));
+        `datas/bicycle/locationsByCurrentLocation?userId=${userId}&latitude=${lati}&longitude=${long}`
+        ).then((res) => setServerData(res.data));
   };
 
   return (
@@ -342,7 +343,9 @@ function Search() {
               }}>
                 
                 {serverData.length > 0 && (
-                  <StorePlaces serverData={serverData} />
+                  <StorePlaces 
+                  serverData={serverData}
+                  addLike={(userState.user)} />
                 )}
               </Card.Body>
             </Card>

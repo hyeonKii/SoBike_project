@@ -11,8 +11,8 @@ import ReviewDetail from "../review/ReviewDetail";
 const BottomLine = styled.div`
   margin: 10px 0;
 `;
-function StorePlace({ serverData }) {
-  // console.log(serverData)
+function StorePlace({ serverData,addLike }) {
+  console.log(serverData)
   function CustomToggle({ children, eventKey }) {
     const decoratedOnClick = useAccordionButton(eventKey, () =>
       console.log("totally custom!")
@@ -22,7 +22,8 @@ function StorePlace({ serverData }) {
   }
   const userState = useContext(UserStateContext);
   const [reviews, setReviews] = useState([]);
-  const [likeToggle, setLikeToggle] = useState(serverData.islike);
+  console.log("serverData.islike",serverData.isLike)
+  const [likeToggle, setLikeToggle] = useState(serverData.isLike);
   const handleclick = async (e, isLike) => {
     e.preventDefault();
     //const userId = userState.user.userId; //로그인된 사용자 id
@@ -63,9 +64,9 @@ function StorePlace({ serverData }) {
         <Card.Header>
           <BottomLine>
             <Row>
-              <div style={{ flex: "2" }}>{serverData.locationName}</div>
+              <div style={{ flex: "4" }}>{serverData.locationName}</div>
               <div style={{ flex: "1" }}>
-                {userState.user && (
+                {addLike && (
                   <FiHeart
                     onClick={(e) => handleclick(e, likeToggle)}
                     style={
