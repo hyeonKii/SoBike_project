@@ -61,7 +61,7 @@ const bicycleLocation =  {
         // console.log(locationId)
         // console.log(userId)
         console.log("a")
-        const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.003, $lt:longitude+0.003}, "latitude":{$gt: latitude-0.0015, $lt:latitude +0.0015}});
+        const bicycleLocation = await bicycleLocationModel.find({"longitude":{$gt:longitude-0.0049, $lt:longitude+0.0049}, "latitude":{$gt: latitude-0.0049, $lt:latitude +0.0049}});
         // console.log("location: ",bicycleLocation[1])
         // const locationInfo = [];
         const likedLocation = [];
