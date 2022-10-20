@@ -7,7 +7,6 @@ import { Container, Row, Button, Card, Col } from "react-bootstrap";
 import "./Search.css";
 
 const { kakao } = window; //스크립트로 심은 kakao maps api를 window전역 객체에서 뽑아 사용
-const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭하면 장소명을 표출할 인포윈도우
 
 function Search() {
   const myMap = useRef("");
@@ -39,7 +38,7 @@ function Search() {
         setLatitude(currentPositionLatitude);
         setLongitude(currentPositionLonitude);
 
-        currentLocation(currentPositionLonitude, currentPositionLatitude)
+        currentLocation(currentPositionLonitude, currentPositionLatitude);
 
         // 현재 위치 표시입니다.
         const locPosition = new kakao.maps.LatLng(
@@ -153,13 +152,16 @@ function Search() {
     // 클러스터러에 마커들을 추가합니다
     clusterer.addMarkers(markers);
 
-    //---------------------------------------------------------------------- 클릭시 위도, 경도
-    // kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-    //   // 클릭한 위도, 경도 정보를 가져옵니다
-    //   const latlng = mouseEvent.latLng;
-    //   setLatlng(latlng);
-    //   console.log("클릭한 위도와 경도", latlng.getLat(), latlng.getLng());
-    // });
+    // ---------------------------------------------------------------------- 클릭시 위도, 경도
+    kakao.maps.event.addListener(
+      mapRef.current,
+      "click",
+      function (mouseEvent) {
+        // 클릭한 위도, 경도 정보를 가져옵니다
+        const latlng = mouseEvent.latLng;
+        currentLocation(latlng.getLng(), latlng.getLat())
+      }
+    );
   }, []);
 
   const [inputText, setInputText] = useState("");
@@ -189,7 +191,6 @@ function Search() {
         // 맵 레벨을 4로 조정
         mapRef.current.setLevel(4);
 
-
         // 서버로 데이터 보냄
         currentLocation(data[0].x, data[0].y);
 
@@ -197,14 +198,15 @@ function Search() {
       }
     }
   };
+
+  //서버로 지도 중심좌표 전달
   const currentLocation = async (longitude, latitude) => {
+    // console.log('서버로 보낼 좌표', longitude, latitude);
     const long = String(longitude);
     const lati = String(latitude);
-    // console.log(`확인용:`,long)
     Api.get(
       `datas/bicycle/locationsByCurrentLocation?latitude=${lati}&longitude=${long}`
     ).then((res) => setServerData(res.data));
-    console.log("serverData", longitude, latitude);
   };
 
   return (
