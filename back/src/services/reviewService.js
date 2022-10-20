@@ -130,7 +130,6 @@ const reviewService = {
                 
                 review.reviewImage = updatedReviewImage.image;
                 fs.unlink(`src/public/reviewImages/${currentReviewImageInfo.image}`, (err) => {
-                    // if(err) throw new Error("이미지 삭제 실패");
                 })
     
                 fs.rename(oldPath, newPath, (err) => {
@@ -153,7 +152,6 @@ const reviewService = {
             
             if(deletedReviewImage) {
                 fs.unlink(`src/public/images/${deletedReviewImage.image}`, (err) => {
-                    // if(err) throw new Error("이미지 삭제 실패");
                 });
             } else {
                 return deletedReviewImage;
