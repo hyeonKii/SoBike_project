@@ -1,5 +1,4 @@
 import {Router} from "express"
-// const reviewRouter = require("express").Router();
 import {loginRequired } from "../middlewares/loginRequired";
 import {likeService} from "../services/likeService";
 
@@ -10,7 +9,6 @@ likeRouter.post("/",  loginRequired, async (req, res, next) => {
     try{
         const userId = req.currentUserId ;
         const locationId = req.body.locationId ?? null;
-        // const isLike = req.body.isLike??null;
 
         const newLike = await likeService.addLike({
             userId, 
@@ -32,8 +30,6 @@ likeRouter.post("/",  loginRequired, async (req, res, next) => {
 likeRouter.get("/", loginRequired, async (req, res, next)=> {
     try{
         const userId = req.currentUserId;
-        // const locationId = req.body.locationId;
-        // console.log(userId, locationId)
         const like = await likeService.getLikes(userId);
         console.log("router:" ,like)
         res.status(200).send(like);
@@ -42,36 +38,13 @@ likeRouter.get("/", loginRequired, async (req, res, next)=> {
     }
 });
 
-// likeRouter.put("/:userId/", async (req, res, next)=> {
-//     try {
-//         const userId = req.params.userId;
-//         const locationId = req.body.locationId;
-//         const isLike = req.body.isLike;
-
-//         // console.log("isLike: ",isLike)
-//         const toUpdate = {isLike};
-//         // console.log(toUpdate)
-//         const updatedLike = await likeService.setLike({userId, locationId, toUpdate});
-
-//         if (updatedLike.errorMessage){
-//             throw new Error(updatedLike.errorMessage);
-//         }
-
-//         res.status(200).json(updatedLike);
-//     }catch(err){
-//         next(err);
-//     }
-// });
-
 likeRouter.delete("/:locationId/", loginRequired,  async(req, res, next) => {
     try{
         const userId = req.currentUserId;
         const locationId = req.params.locationId;
         console.log("userId:",userId)
         console.log("locationId:",locationId)
-        // console.log("reviewId: ", reviewId)
         const deletedLike = await likeService.delLike({userId, locationId});
-        // console.log(deletedReview)
         if(deletedLike.errorMessage){
             throw new Error(deletedLike.errorMessage);
         }
