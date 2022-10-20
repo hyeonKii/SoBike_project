@@ -32,7 +32,7 @@ const Sections = () => {
                 <br /> 쉽고 빠르게 이용할 수 있습니다.
               </p>
               <p className="quotation" style={{ textAlign: "left" }}>
-                (대략 버스 정거장 보다 150m, 지하철 정거장 보다 1.5km 가까움)
+                (버스 정류장 500m, 지하철역 1.5km 보다 가까움)
               </p>
             </div>
           </div>
