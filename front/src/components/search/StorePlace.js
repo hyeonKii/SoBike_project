@@ -12,6 +12,7 @@ const BottomLine = styled.div`
   margin: 10px 0;
 `;
 function StorePlace({ serverData }) {
+  // console.log(serverData)
   function CustomToggle({ children, eventKey }) {
     const decoratedOnClick = useAccordionButton(eventKey, () =>
       console.log("totally custom!")
@@ -21,26 +22,29 @@ function StorePlace({ serverData }) {
   }
   const userState = useContext(UserStateContext);
   const [reviews, setReviews] = useState([]);
-  const [likeToggle, setLikeToggle] = useState(true);
-  const handleclick = async (e) => {
+  const [likeToggle, setLikeToggle] = useState(serverData.islike);
+  const handleclick = async (e, isLike) => {
     e.preventDefault();
     //const userId = userState.user.userId; //로그인된 사용자 id
     const locationId = serverData.rentalLocationId;
-    setLikeToggle(!likeToggle);
+    setLikeToggle(!isLike);
     if (likeToggle) {
+      try {
+        const res = await Api.delete(`datas/bicycle/location/likes/${locationId}`);
+        setLikeToggle(res.data.isLike)
+      } catch (error) {
+        console.log("관심 삭제에 실패했습니다.", error);
+      }
+      
+    } else {
       try {
         const res = await Api.post(`datas/bicycle/location/likes/`, {
           locationId,
         });
         console.log(res.data);
+        setLikeToggle(res.data.isLike)
       } catch (err) {
         console.log("관심 등록에 실패하였습니다.", err);
-      }
-    } else {
-      try {
-        await Api.delete(`datas/bicycle/location/likes/${locationId}`);
-      } catch (error) {
-        console.log("관심 삭제에 실패했습니다.", error);
       }
     }
   };
@@ -52,21 +56,22 @@ function StorePlace({ serverData }) {
       setReviews(res.data);
     });
   }, []);
+  // console.log(userState)
   return (
     <Accordion defaultActiveKey="0">
       <Card>
         <Card.Header>
           <BottomLine>
             <Row>
-              <div style={{ flex: "4" }}>{serverData.locationName}</div>
+              <div style={{ flex: "2" }}>{serverData.locationName}</div>
               <div style={{ flex: "1" }}>
                 {userState.user && (
                   <FiHeart
-                    onClick={handleclick}
+                    onClick={(e) => handleclick(e, likeToggle)}
                     style={
                       likeToggle
-                        ? { backgroundColor: "white" }
-                        : { backgroundColor: "pink" }
+                        ? { backgroundColor: "pink" }
+                        : { backgroundColor: "white" }
                     }
                   />
                 )}
