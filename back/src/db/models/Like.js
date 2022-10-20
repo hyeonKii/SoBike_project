@@ -68,7 +68,12 @@ const Like =  {
     },
     findByLocation: async (locationId)=> {
         console.log("afdf")
-        const likes = await LikeModel.find(locationId);
+        const likes = await LikeModel.find({ locationId });
+        console.log(likes);
+        return likes;
+    },
+    findAll: async (userId) => {
+        const likes = await LikeModel.find({userId});
 
         return likes;
     },

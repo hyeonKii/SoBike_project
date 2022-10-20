@@ -94,7 +94,11 @@ const bicycleLocation =  {
 
         return locationInfo},
 
-    
+    findByRentalLocation: async (locationId) => {
+        const RentalLocation = await bicycleLocationModel.find({RentalLocationId: locationId});
+        
+        return RentalLocation;
+    },
     findAll: async ()=> {
         console.log("afdf")
         const bicycleLocation = await bicycleLocationModel.find();
