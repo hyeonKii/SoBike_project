@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { LoginModalContext, DispatchContext, AutoLoginContext } from "../../App";
-import { useNavigate } from "react-router-dom";
 
 import { Modal, Form, Button } from "react-bootstrap";
 
@@ -9,8 +8,6 @@ import { LOGIN_SUCCESS } from "../../reducer";
 import { validateEmail } from "../validate/Validate";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-
   const dispatch = useContext(DispatchContext);
   const { show, setShow } = useContext(LoginModalContext);
   const { LS_KEY_LOGIN, LS_KEY_SAVE_LOGIN } = useContext(AutoLoginContext);
@@ -69,16 +66,6 @@ const LoginForm = () => {
     setSaveLogin(!saveLogin);
   };
 
-  //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  // const validateEmail = (email) => {
-  //   return email
-  //     .toLowerCase()
-  //     .match(
-  //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  //     );
-  // };
-  
-
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
@@ -119,8 +106,6 @@ const LoginForm = () => {
       setPassword("");
       handleClose();
 
-      // 기본 페이지로 이동함.
-      // navigate("/", { replace: true });
     } catch (err) {
       setLoginFail(false);
       console.log("로그인에 실패하였습니다.\n", err);
@@ -133,7 +118,7 @@ const LoginForm = () => {
         show={show}
         onHide={handleClose}
         onSubmit={handleSubmit}
-        style={{ zIndex: 99999 }}
+        style={{ zIndex: 99999, marginTop:"100px" }}
       >
         <Modal.Header closeButton>
           <Modal.Title>로그인</Modal.Title>
