@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Card } from "react-bootstrap";
 import * as Api from "../../api";
-import Information from "../../bikeDatas.json";
+import Information from "../../json/newBikeDatas.json";
 import Select from "react-select";
 
 function ReviewEditForm({ review, setReviews, handleClose }) {
