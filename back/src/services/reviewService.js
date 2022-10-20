@@ -150,10 +150,10 @@ const reviewService = {
                     if(err) throw new Error("이미지 업로드 실패");
                 });  
             }
+        }else {
+            const reviewImage = await ReviewImage.findById(reviewId);
+            review.reviewImage = reviewImage.reviewImage;
         }
-
-       
-
         review.errorMessage = null;
 
         return review;
