@@ -22,10 +22,13 @@ export const uploadFile = async (userId, files, fileLocation) => {
     fileName = fileName + "-" + Date.now() + extension;
 
     const oldPath = files.userFile.filepath;
-    const newPath = __dirname + `/${fileLocation}/` + fileName;
-    const currentUserImageInfo = await UserImage.findById(userId);
+
+    const newPath = __dirname + `/../public/${fileLocation}/` + fileName;
     
-    if(currentUserImageInfo) {
+    if(fileLocation === "userImage") {
+        const currentUserImageInfo = await UserImage.findById(userId);
+    
+        if(currentUserImageInfo) {
             // DB에 이미가 있으면 업데이트
             const fieldToUpdate = "image";
             const newValue = fileName;
@@ -39,20 +42,25 @@ export const uploadFile = async (userId, files, fileLocation) => {
 
             fs.rename(oldPath, newPath, (err) => {
                 if(err) throw new Error("이미지 업로드 실패");
-            });  
-    } else {
-        // DB에 저장된 이미지가 없으면 생성
-        const createUserImage = await UserImage.create(userId, fileName);
+            });
+        } else {
+            // DB에 저장된 이미지가 없으면 생성
+            const createUserImage = await UserImage.create(userId, fileName);
 
-        if(!createUserImage) throw new Error("DB에 이미지 생성 실패");
+            if(!createUserImage) throw new Error("DB에 이미지 생성 실패");
 
-        fs.rename(oldPath, newPath, async (err) => {
-            if(err) throw new Error("이미지 업로드 실패");
-        });
+            fs.rename(oldPath, newPath, async (err) => {
+                if(err) throw new Error("이미지 업로드 실패");
+            });
 
-        imageFilename = `public/${fileLocation}/` + createUserImage.image;
+            imageFilename = `public/${fileLocation}/` + createUserImage.image;
+        }
     }
 
+    if(dbConnted === "reviewImage") {
+
+    }
+    
     return imageFilename;
 }
 
