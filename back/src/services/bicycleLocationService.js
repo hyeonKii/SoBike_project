@@ -7,15 +7,11 @@ const bicycleLocationService = {
         return locations;
     },
     getByLocationName: async ({locationName})=> {
-        console.log("1sdfasdf")
         const locations = await bicycleLocation.findByLocationName({locationName});
-        console.log("service:" ,locations)
         return locations;
     },
     getAddressByLocationName: async ({locationName})=> {
-        console.log("1sdfasdf")
         const locations = await bicycleLocation.findAddressByLocationName({locationName});
-        console.log("service:" ,locations)
         return locations;
     },
     getLocations: async ()=> {
