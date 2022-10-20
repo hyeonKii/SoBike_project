@@ -14,8 +14,8 @@ function ReviewCard({ review, isEditable, setReviews, isNetwork }) {
   const hostname = window.location.hostname;
   const domain = protocol + "//" + hostname + ":5001";
   //console.log("isEditable",isEditable)
-  console.log("review.image",review.reviewImage);
-  console.log("review",review)
+  //console.log("review.image",review.reviewImage);
+ //console.log("review",review)
   return (
     <Card className="mb-2 ms-3 mr-5 profile-card" style={{ width: "18rem" }}>
       <Card.Body>

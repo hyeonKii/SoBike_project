@@ -34,8 +34,6 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
   const [image, setImage] = useState(review?.reviewImage);
 
   const setPreviewImage = (target) => {
-    console.log("target",target)
-    console.log("target.files",target.files)
     setPrevImage(URL.createObjectURL(target.files[0]));
     setImage(target);
   };
@@ -45,9 +43,11 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
     e.preventDefault();
     const userId = review.userId; //로그인된 사용자 id
     try {
-
       const reviewFile = new FormData();
-      reviewFile.append("reviewFile", image.files[0]);
+      if(image?.files){
+        reviewFile.append("reviewFile", image.files[0]);
+        //console.log(image.files[0]);
+      }
       reviewFile.append("userId", userId);
       reviewFile.append("email", reviewForm.email);
       reviewFile.append("title", reviewForm.title);
@@ -55,6 +55,7 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
       reviewFile.append("locationName", locationName);
       reviewFile.append("roadAddress", roadAddress);
       const res = await Api.put(`reviews/${review.reviewId}`, reviewFile);
+      console.log("res.data",res.data)
       const new_review = {
         userId: userId,
         reviewImage: res.data.reviewImage,

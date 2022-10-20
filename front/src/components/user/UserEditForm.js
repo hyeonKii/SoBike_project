@@ -29,8 +29,9 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     const userId = user.userId;
     console.log("image : " + user.image);
     const formData = new FormData();
-    console.log(image.files[0])
-    formData.append('userFile', image.files[0]);
+    if(image?.files){
+      formData.append('userFile', image.files[0]);
+    }
     formData.append("email", email);
     formData.append("nickName", nickName);
 
@@ -43,7 +44,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
 
     // isEditing을 false로 세팅함.
     setIsEditing(false);
-    setPreviewImage(res.data.image);
+    //setPreviewImage(res.data.image);
   };
 
   return (
