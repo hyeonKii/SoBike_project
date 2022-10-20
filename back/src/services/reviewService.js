@@ -8,11 +8,11 @@ const reviewService = {
         const newReview = {userId, email, title, contents, locationName, roadAddress}
         console.log(userId)
         console.log(fields)
-        // console.log(files)
+ 
         const createdNewReview = await Review.create(newReview);
         console.log("여기2")
         console.log(createdNewReview)
-        // console.log("created: ",createdNewReview.reviewId)
+       
         if(files.reviewFile) {const originalFilename = files.reviewFile.originalFilename;
             const extension = path.extname(originalFilename);
             let fileName;
@@ -31,7 +31,7 @@ const reviewService = {
     
             const oldPath = files.reviewFile.filepath;
             const newPath = __dirname + "/../public/reviewImages/" + fileName;
-            // const currentReviewImageInfo = await ReviewImage.findById(reviewId);
+       
     
             const reviewId = createdNewReview.reviewId
             console.log("reviewId: ", reviewId)
@@ -54,23 +54,17 @@ const reviewService = {
     },
 
     getReviews: async ()=> {
-        // console.log("1sdfasdf")
+
         const reviews = await Review.findAll();
         console.log("service:" ,reviews)
         return reviews;
     },
-    // getReviewImage: async ()=> {
-    //     // console.log("1sdfasdf")
-    //     const reviewImage = await ReviewImage.findAll();
-    //     console.log("service:" ,reviewImage)
-    //     return reviewImage;
-    // },
+
 
     getReview: async ({reviewId})=>{
-        // console.log("reviewId: ", reviewId)
-        const review = await Review.findById({reviewId});
-        // console.log(review)
 
+        const review = await Review.findById({reviewId});
+ 
         return review;
     },
     
@@ -85,7 +79,6 @@ const reviewService = {
         if (title) {
             const fieldToUpdate = "title";
             const newValue = title;
-            // console.log(newValue)
             review = await Review.update({ reviewId, fieldToUpdate, newValue });
             console.log(review)
          }
@@ -93,21 +86,18 @@ const reviewService = {
         if (contents) {
             const fieldToUpdate = "contents";
             const newValue = contents;
-            // console.log(newValue)
             review = await Review.update({ reviewId, fieldToUpdate, newValue });
         }
 
         if (locationName) {
             const fieldToUpdate = "locationName";
             const newValue = locationName;
-            // console.log(newValue)
             review = await Review.update({ reviewId, fieldToUpdate, newValue });
         }
 
         if (roadAddress) {
             const fieldToUpdate = "roadAddress";
             const newValue = roadAddress;
-            // console.log(newValue)
             review = await Review.update({ reviewId, fieldToUpdate, newValue });
         }
 
@@ -171,8 +161,7 @@ const reviewService = {
 
     delReview: async ({ reviewId }) => {
         const deletedReview = await Review.delete({ reviewId });
-        
-        if(deletedReview) {
+        if(deletedReview.deletingImage) {
             const deletedReviewImage = await ReviewImage.delete(reviewId);
             
             if(deletedReviewImage) {
