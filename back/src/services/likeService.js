@@ -25,13 +25,11 @@ const likeService = {
             }
             likeLocations.errorMessage = null;
         }
-        console.log(likeLocations)
         return likeLocations;
     },
  
     delLike: async ({ userId, locationId }) => {
-        console.log("userId:",userId)
-        console.log("locationId:",locationId)
+
         const deletedlike = await Like.delete({ userId, locationId });
 
         return deletedlike;
