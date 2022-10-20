@@ -60,10 +60,13 @@ bicycleLocationRouter.get("/bicycle/locations", async (req, res, next)=> {
         next(error);
     }
 });
-bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:latitude?:longitude", loginRequired, async (req, res, next)=> {
+bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:userId?:latitude?:longitude", async (req, res, next)=> {
     try{
-        // console.log("asfdsf")
-        const userId = req.currentUserId;
+        console.log("asfdsf")
+        // const userId = req.currentUserId;
+        const userId = req.query.userId
+        console.log("userId: ",userId)
+        // console.log("req: ", req)
         const longitude = parseFloat(req.query.longitude);
         const latitude = parseFloat(req.query.latitude);
         // const locationName = req.body.locationName
