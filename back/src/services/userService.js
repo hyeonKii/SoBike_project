@@ -49,8 +49,8 @@ const userAuthService = {
 
         if(getUserInfo) getUserImage = await UserImage.findById(userId);
 
-        if(getUserImage) getUserInfo.image = "public/userImage/" + getUserImage.image;
-        else getUserInfo.image = "public/userImage/lion.jpg";
+        if(getUserImage) getUserInfo.image = "uploads/userImage/" + getUserImage.image;
+        else getUserInfo.image = "uploads/userImage/lion.jpg";
         
         getUserInfo.errorMessage = null;
         
@@ -96,9 +96,9 @@ const userAuthService = {
             } else {
                 const userImage = await UserImage.findById(userId);
                 if(userImage) {
-                    userInfo.image = "public/userImage/" + userImage.image;
+                    userInfo.image = "uploads/userImage/" + userImage.image;
                 } else {
-                    userInfo.image = "public/userImage/lion.jpg";
+                    userInfo.image = "uploads/userImage/lion.jpg";
                 }
             }
         }
