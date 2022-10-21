@@ -65,14 +65,16 @@ const userAuthService = {
 
         const userCheck = (userInfo, newValue, Contents) => {
             if(userInfo) {
-                if(newValue === "email") {
-                    if(userInfo.email !== newValue) {
-                        throw new Error(Contents);
-                    }
-                } else if(newValue ==="nickName") {
-                    if(userInfo.nickName !== newValue) {
-                        throw new Error(Contents);
-                    }
+                switch(newValue) {
+                    case "email": {
+                        if(userInfo.email !== newValue) {
+                            throw new Error(Contents);
+                        } break;
+                    } case "nickName": {
+                        if(userInfo.nickName !== newValue) {
+                            throw new Error(Contents);
+                        }
+                    } break;
                 }
             }
         }
