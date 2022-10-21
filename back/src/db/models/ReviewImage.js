@@ -11,7 +11,8 @@ const ReviewImage = {
         if(getReviewImage === null){return }
         return {reviewImageId: getReviewImage._id,
                 reviewId: getReviewImage.reviewId,
-                reviewImage: getReviewImage.image,}
+                reviewImage: getReviewImage.image
+                }
                 },
     findAll: async () => {
         const getReviewImage = await ReviewImageModel.find();
@@ -19,7 +20,8 @@ const ReviewImage = {
         const reviewImageList = getReviewImage.map((getReviewImage)=>{
             return {reviewImageId: getReviewImage._id,
                 reviewId: getReviewImage.reviewId,
-                reviewImage: getReviewImage.image,}
+                reviewImage: getReviewImage.image
+                }
         }) ;
         return reviewImageList
     },
