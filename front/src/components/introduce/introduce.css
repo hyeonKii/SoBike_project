@@ -41,6 +41,12 @@
 .chartDeliver1 {
   display: flex;
   align-items: center;
+}
+
+
+.chartDeliver2 {
+  display: flex;
+  align-items: center;
   margin-top: 85px;
   margin-left: 120px;
 }

@@ -300,10 +300,10 @@ export default function Introduce() {
                 
                 <Row>
                   <Col>
-                    <div className='chartDeliver1'>
+                    <div className='chartDeliver2'>
                       <CarbonChart4 />
                     </div>
-                    <div className='chartDeliver1'>
+                    <div className='chartDeliver2'>
                       <img src={Bike_introduce} 
                       style={{
                         width: "250px",
