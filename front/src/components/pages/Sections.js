@@ -87,13 +87,13 @@ const Sections = () => {
             </div>
             <div className="content-wrappe3">
               <p className="content5">
-                검색을 통해 주변 대여소를 확인해 보세요.
+                검색과 지도를 클릭하여 주변 대여소를 확인해 보세요.
                 <br />
                 가까운 위치의 대여소가 지도에 마커로 표시됩니다.
               </p>
 
               <p className="content6">
-                자전거 대여소를 이용하고 리뷰를 남기면
+                자전거 대여소를 이용하고 글을 남기시면
                 <br />
                 다른 사람들과 정보를 주고 받을 수 있습니다.
               </p>

@@ -78,7 +78,7 @@ function Header() {
               className={(navData) => (navData.isActive ? classes.active : "")}
               to={ ROUTE.REVIEW.link }
             >
-              리뷰
+              게시판
             </NavLink>
           </li>
           {isLogin ? (

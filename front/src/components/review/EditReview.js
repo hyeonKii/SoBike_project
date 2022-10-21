@@ -19,7 +19,7 @@ function EditReview({ review, setReviews }) {
       <EditButton onClick={handleShow}>편집</EditButton>
       <Modal show={show} onHide={handleClose} style={{ zIndex: 100000 }}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>글 편집</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ReviewEditForm
