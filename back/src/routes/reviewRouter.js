@@ -16,8 +16,6 @@ reviewRouter.post("/",  loginRequired, async (req, res, next) => {
         let newReview;
         form.parse(req, async(err, fields, files) =>{
             newReview = await reviewService.addReview(userId, fields, files);
-            // console.log("위치: reviewRouter1", newReview)
-            // console.log("sdafasdf")
             if (newReview.errorMessage){
                 throw new Error("리뷰 정보 등록 실패")
             }
@@ -70,7 +68,6 @@ reviewRouter.put("/:reviewId",  async (req, res, next)=> {
             if (updatedReview.errorMessage){
                 throw new Error(updatedReview.errorMessage);
             }
-            console.log("데이터 위치는 라우터: ", updatedReview)
             res.status(201).json(updatedReview);
         })
     }catch(err){
@@ -81,7 +78,6 @@ reviewRouter.put("/:reviewId",  async (req, res, next)=> {
 reviewRouter.delete("/:reviewId",  async(req, res, next) => {
     try{
         const reviewId = req.params.reviewId;
-        console.log("reviewId: ", reviewId)
         const deletedReview = await reviewService.delReview({reviewId});
         const deletedComments = await commentService.delComments({reviewId});
 
