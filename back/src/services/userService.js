@@ -5,7 +5,6 @@ import { User, UserImage } from "../db";
 import { uploadFile, deleteFile } from "../modules/fileUpload";
 
 const userAuthService = {
-    // 회원 가입
     addUser: async (newUser) => {
         const SALT_ROUND = 10;
         const userEmail = await User.findByEmail(newUser.email);
@@ -22,7 +21,7 @@ const userAuthService = {
         
         return createdNewUser;
     },
-    // 로그인
+
     login: async (email, password) => {
         const userInfo = await User.findByEmail(email);
 
@@ -42,83 +41,83 @@ const userAuthService = {
 
         return loginUser;
     },
-    // 회원(내) 정보 불러오기
+
     getUserInfo: async (userId) => {
         const getUserInfo = await User.findById(userId);
         let getUserImage;
 
         if(getUserInfo) getUserImage = await UserImage.findById(userId);
-
-        if(getUserImage) getUserInfo.image = "uploads/userImage/" + getUserImage.image;
-        else getUserInfo.image = "uploads/userImage/lion.jpg";
+        
+        getUserInfo.image = "uploads/userImage/" + (getUserImage ? getUserImage.image: "lion.jpg");
+        
+        // if(getUserImage) getUserInfo.image = "uploads/userImage/" + getUserImage.image;
+        // else getUserInfo.image = "uploads/userImage/lion.jpg";
         
         getUserInfo.errorMessage = null;
         
         return getUserInfo;
     },
-    // 회원(내) 정보 수정
+
     setUser: async (userId, fields, files) => {
         const { email, nickName } = fields;
         const userEmail = await User.findByEmail(email);
-        let userInfo;
+        let updatedUser;
 
-        if(userEmail) {
-            if(userEmail.email !== email) {
-                throw new Error("중복된 이메일입니다.");
-            }
-        }
-
-        const userNickName = await User.findByNickName(nickName);
-
-        if(userNickName) {
-            if(userNickName.nickName !== nickName) {
-                throw new Error("중복된 닉네임입니다..");
-            }
-        }
-
-        if(email) {
-            const fieldToUpdate = "email";
-            const newValue = email;
-            
-            userInfo = await User.update(userId, fieldToUpdate, newValue);
-        }
-
-        if(nickName) {
-            const fieldToUpdate = "nickName";
-            const newValue = nickName;
-            
-            userInfo = await User.update(userId, fieldToUpdate, newValue);
-        }
-
-        if(userInfo) {
-            if(files.userFile) {
-                userInfo.image = await uploadFile(userId, files, "userImage");
-            } else {
-                const userImage = await UserImage.findById(userId);
-                if(userImage) {
-                    userInfo.image = "uploads/userImage/" + userImage.image;
-                } else {
-                    userInfo.image = "uploads/userImage/lion.jpg";
+        const userCheck = (userInfo, newValue, Contents) => {
+            if(userInfo) {
+                if(newValue === "email") {
+                    if(userInfo.email !== newValue) {
+                        throw new Error(Contents);
+                    }
+                } else if(newValue ==="nickName") {
+                    if(userInfo.nickName !== newValue) {
+                        throw new Error(Contents);
+                    }
                 }
             }
         }
-        
-        userInfo.errorMessage = null;
 
-        return userInfo;
+        const update = async (userId, newInfo, field) => {
+            const fieldToUpdate = field;
+            const newValue = newInfo;
+
+            return await User.update(userId, fieldToUpdate, newValue);
+        }
+
+        if(email && nickName) {
+            userCheck(userEmail, email, "중복된 이메일입니다.");
+
+            const userNickName = await User.findByNickName(nickName);
+    
+            userCheck(userNickName, nickName, "중복된 닉네임입니다.");
+        }
+       
+        updatedUser = await update(userId, email, "email");
+        updatedUser = await update(userId, nickName, "nickName");
+
+        if(updatedUser) {
+            if(files.userFile) {
+                updatedUser.image = await uploadFile(userId, files, "userImage");
+            } else {
+                const user = await UserImage.findById(userId);
+                // if(user) {
+                    updatedUser.image = "uploads/userImage/" + (user ? user.image : "lion.jpg");
+                // }
+            }
+        }
+        
+        updatedUser.errorMessage = null;
+
+        return updatedUser;
     },
-    // 회원(내) 정보 삭제
+
     delUser: async (userId) => {
         const deletedUser = await User.delete(userId);
 
         if(deletedUser) {
-            const deletedUserImage = await UserImage.delete(userId);
-            
-            if(deletedUserImage) {
-                deleteFile("userImage",deletedUserImage.image);
-            }
+            const user = await UserImage.delete(userId);
 
-            return deletedUserImage;
+            if(user) deleteFile("userImage", user.image);
         }
         
         deletedUser.errorMessage = null;

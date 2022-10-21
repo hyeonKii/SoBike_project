@@ -1,72 +1,69 @@
 import { UserModel } from "../schemas/user";
 
+const responseInfo = (userInfo) => {
+    if(userInfo) {
+        const user = {userId: userInfo._id, ... userInfo };
+
+        delete user._id;
+
+        return user;
+    }
+}
+
 const User = {
     create: async (newUser) => {
-        const createdNewUser = await UserModel.create(newUser);
+        let createdNewUser = await UserModel.create(newUser);
+
+        if(createdNewUser) createdNewUser = responseInfo(createdNewUser._doc);
 
         return createdNewUser;
     },
+
     findById: async (userId) => {
-        let userInfo = await UserModel.findById({ _id: userId });
+        let user = await UserModel.findById({ _id: userId }, '_id email nickName').lean();
 
-        if(userInfo) {
-            userInfo = {
-                userId: userInfo._id,
-                email: userInfo.email,
-                nickName: userInfo.nickName
-            }
-        }
+        if(user) user = responseInfo(user);
 
-        return userInfo;
+        return user;
     },
+
     findByEmail: async (email) => {
-        let userInfo = await UserModel.findOne({ email });
-
-        if(userInfo) {
-            userInfo = {
-                userId: userInfo._id,
-                email: userInfo.email,
-                password: userInfo.password,
-                nickName: userInfo.nickName
-            }
-        }
+        let user = await UserModel.findOne({ email }, '_id email password nickName').lean();
         
-        return userInfo;
+        if(user) user = responseInfo(user);
+
+        return user;
     },
+
     findByNickName: async (nickName) => {
-        let userInfo = await UserModel.findOne({ nickName });
+        let user = await UserModel.findOne({ nickName }, '_id email password nickName').lean();
 
-        if(userInfo) {
-            userInfo = {
-                userId: userInfo._id,
-                email: userInfo.email,
-                password: userInfo.password,
-                nickName: userInfo.nickName
-            }
-        }
+        if(user) user = responseInfo(user);
         
-        return userInfo;
+        return user;
     },
+
     update: async (userId, fieldToUpdate, newValue) => {
         const filter = { _id: userId };
         const update = { [fieldToUpdate]: newValue };
         const option = { returnOriginal: false };
-        let userInfo = await UserModel.findOneAndUpdate(
+        let user = await UserModel.findOneAndUpdate(
             filter,
             update,
-            option
-        );
+            option,
+        ).lean();
 
-        if(userInfo) {
-            userInfo = {
-                userId: userInfo._id,
-                email: userInfo.email,
-                nickName: userInfo.nickName
+        if(user) {
+            user = {
+                userId: user._id,
+                email: user.email,
+                nickName: user.nickName
             }
         }
         
-        return userInfo;
+        return user;
     },
+
     delete: async (userId) => {
         const deletedUserInfo = await UserModel.findOneAndDelete({ _id: userId });
         

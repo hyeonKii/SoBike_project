@@ -6,11 +6,13 @@ const UserImage = {
         
         return userImage;
     },
-    findById: async (userId) => {
-        const getUserImage = await UserImageModel.findOne({ userId });
 
+    findById: async (userId) => {
+        const getUserImage = await UserImageModel.findOne({ userId }, 'userId image').lean();
+        console.log(getUserImage)
         return getUserImage;
     },
+
     update: async (userId, fieldToUpdate, newValue) => {
         const filter = { userId };
         const update = { [fieldToUpdate]: newValue};
@@ -19,9 +21,11 @@ const UserImage = {
             filter,
             update,
             option
-        );
+        ).lean();
+
         return setUserImage;
     },
+
     delete: async (userId) => {
         const deletedUserInfo = await UserImageModel.findOneAndDelete({ userId });
 

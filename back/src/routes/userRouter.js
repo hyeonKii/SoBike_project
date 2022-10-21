@@ -7,7 +7,6 @@ import { likeService } from "../services/likeService";
 
 const userAuthRouter = Router();
 
-// 회원가입 기능
 userAuthRouter.post("/", async (req, res, next) => {
     try {
         const { email, password, nickName, firstName, lastName } = req.body;
@@ -23,7 +22,6 @@ userAuthRouter.post("/", async (req, res, next) => {
     }
 });
 
-// 회원 로그인 기능
 userAuthRouter.post("/login", async (req, res, next) => {
     try {
         const { email, password } = req.body;
@@ -39,7 +37,6 @@ userAuthRouter.post("/login", async (req, res, next) => {
     }
 });
 
-// 자동 로그인
 userAuthRouter.get("/current", loginRequired, async (req, res, next) => {
     try {
         const userId = req.currentUserId;
@@ -55,7 +52,6 @@ userAuthRouter.get("/current", loginRequired, async (req, res, next) => {
     }
 });
 
-// 회원(내) 정보 가져오기
 userAuthRouter.get("/:userId", loginRequired, async (req, res, next) => {
     try {
         const { userId } = req.params;
@@ -71,8 +67,7 @@ userAuthRouter.get("/:userId", loginRequired, async (req, res, next) => {
     }
 });
 
-// 관심 대여소 가져오기
-userAuthRouter.get("/likes/:userId", async (req, res, next) => {
+userAuthRouter.get("/likes/:userId", loginRequired, async (req, res, next) => {
     try {
         const { userId } = req.params;
         const likesLocation = await likeService.getLikeByLocation(userId);
@@ -87,7 +82,6 @@ userAuthRouter.get("/likes/:userId", async (req, res, next) => {
     }
 });
 
-// 회원 정보 수정 기능
 userAuthRouter.put("/:userId", loginRequired, async (req, res, next) => {
     try {
         const { userId } = req.params;
@@ -107,7 +101,6 @@ userAuthRouter.put("/:userId", loginRequired, async (req, res, next) => {
     }
 });
 
-// 회원 정보 삭제 기능
 userAuthRouter.delete("/:userId", loginRequired, async (req, res, next) => {
     try {
         const { userId } = req.params;
