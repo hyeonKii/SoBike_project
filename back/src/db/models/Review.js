@@ -6,12 +6,13 @@ const Review =  {
         const createdNewReview = await ReviewModel.create(newReview);
         console.log("createdNewReview : ", createdNewReview)
         return {reviewId: createdNewReview._id,
-            userId: createdNewReview.userId,
-            email: createdNewReview.email,
-            title: createdNewReview.title,
-            contents: createdNewReview.contents,
-            locationName: createdNewReview.locationName,
-            roadAddress: createdNewReview.roadAddress};
+                userId: createdNewReview.userId,
+                email: createdNewReview.email,
+                title: createdNewReview.title,
+                contents: createdNewReview.contents,
+                locationName: createdNewReview.locationName,
+                roadAddress: createdNewReview.roadAddress
+                };
     },
 
     findById: async ({reviewId}) => {
@@ -21,24 +22,28 @@ const Review =  {
  
         if(!reviewImage){
             console.log("!23344")
-            const reviewData= {reviewId: reviewId,
-            userId: review.userId,
-            email: review.email,
-            title: review.title,
-            contents: review.contents,
-            locationName: review.locationName,
-            roadAddress: review.roadAddress}
+            const reviewData= {
+                reviewId: reviewId,
+                userId: review.userId,
+                email: review.email,
+                title: review.title,
+                contents: review.contents,
+                locationName: review.locationName,
+                roadAddress: review.roadAddress
+                }
 
             return reviewData
-        }else { const reviewData =  {reviewId: reviewId,
-            userId: review.userId,
-            email: review.email,
-            title: review.title,
-            contents: review.contents,
-            locationName: review.locationName,
-            roadAddress: review.roadAddress,
-            reviewImageId: reviewImage.reviewImageId,
-            reviewImage: reviewImage.reviewImage }
+        }else { const reviewData =  {
+                    reviewId: reviewId,
+                    userId: review.userId,
+                    email: review.email,
+                    title: review.title,
+                    contents: review.contents,
+                    locationName: review.locationName,
+                    roadAddress: review.roadAddress,
+                    reviewImageId: reviewImage.reviewImageId,
+                    reviewImage: reviewImage.reviewImage 
+                    }
         return reviewData}                   
     },
 
@@ -55,12 +60,13 @@ const Review =  {
         );
 
         return {reviewId: updatedReview._id,
-            userId: updatedReview.userId,
-            email: updatedReview.email,
-            title: updatedReview.title,
-            contents: updatedReview.contents,
-            locationName: updatedReview.locationName,
-            roadAddress: updatedReview.roadAddress };
+                userId: updatedReview.userId,
+                email: updatedReview.email,
+                title: updatedReview.title,
+                contents: updatedReview.contents,
+                locationName: updatedReview.locationName,
+                roadAddress: updatedReview.roadAddress 
+            };
     },
 
     findAll: async ()=> {
@@ -76,21 +82,22 @@ const Review =  {
             console.log("reviewImage: ", reviewImage)
          
             if(reviewImage.length ===0){return {reviewId: review._id,
-                userId: review.userId,
-                email: review.email,
-                title: review.title,
-                contents: review.contents,
-                locationName: review.locationName,
-                roadAddress: review.roadAddress}
+                                                userId: review.userId,
+                                                email: review.email,
+                                                title: review.title,
+                                                contents: review.contents,
+                                                locationName: review.locationName,
+                                                roadAddress: review.roadAddress
+                }
             }else{ return {reviewId: review._id,
-                userId: review.userId,
-                email: review.email,
-                title: review.title,
-                contents: review.contents,
-                locationName: review.locationName,
-                roadAddress: review.roadAddress,
-                reviewImageId: reviewImage[0].reviewImageId,
-                reviewImage: reviewImage[0].reviewImage 
+                            userId: review.userId,
+                            email: review.email,
+                            title: review.title,
+                            contents: review.contents,
+                            locationName: review.locationName,
+                            roadAddress: review.roadAddress,
+                            reviewImageId: reviewImage[0].reviewImageId,
+                            reviewImage: reviewImage[0].reviewImage 
             }
         }})
         return reviewList;
