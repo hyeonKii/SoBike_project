@@ -22,29 +22,25 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     setImage(target);
   };
   
-  /////////////////////
+
   const handleSubmit = async (e) => {
-    // preventDefault
     e.preventDefault();
+
     const userId = user.userId;
-    console.log("image : " + user.image);
     const formData = new FormData();
+
     if(image?.files){
       formData.append('userFile', image.files[0]);
     }
+    
     formData.append("email", email);
     formData.append("nickName", nickName);
 
     const res = await Api.put(`users/${userId}`, formData);
-
-    // 유저 정보는 response의 data임.
     const updatedUser = res.data;
-    // 해당 유저 정보로 user을 세팅함.
+    
     setUser(updatedUser);
-
-    // isEditing을 false로 세팅함.
     setIsEditing(false);
-    //setPreviewImage(res.data.image);
   };
 
   return (
@@ -55,8 +51,6 @@ function UserEditForm({ user, setIsEditing, setUser }) {
         height:"450px",
         marginTop: "10rem",
         border: "none",
-        // borderStyle: "dashed",
-        // borderColor: "#9966FF",
         borderRadius: "20px"
       }}
     >

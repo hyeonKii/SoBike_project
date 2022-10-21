@@ -124,10 +124,7 @@ export default function CarbonChart3() {
         fill="#89a5ea"
         dataKey="value"
         onMouseEnter={onPieEnter}
-        // label={renderCustomizedLabel}
         labelLine={false}
-        // label={({payload}) => { if(payload.name == "Car") {return ""} else return `${payload.name} ${payload.value}${"%"}`}}
-        
       />
     </PieChart>
   );

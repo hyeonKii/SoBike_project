@@ -3,9 +3,8 @@ import { Card, Row, Button, Col } from "react-bootstrap";
 import './UserCard.css';
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+  
   const navigate = useNavigate();
-  console.log(user);
-  console.log(user?.image);
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   const domain = protocol + "//" + hostname + ":5001/";
@@ -17,8 +16,6 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         width: "20rem",
         marginTop: "10rem",
         border: "none",
-        // borderStyle: "dashed",
-        // borderColor: "#9966FF",
         borderRadius: "20px"
       }} 
       >

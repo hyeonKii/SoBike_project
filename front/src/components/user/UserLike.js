@@ -55,13 +55,3 @@ function UserLike({locationId, roadAddress, locationName, setUserLikes}) {
 
 
 export default UserLike;
-
-
-
-// 좋아요 관심목록으로 불러오기
-// method: get
-// URL: /users/likes/:userId
-
-// 좋아요 삭제
-// method: delete
-// URL: /datas/bicycle/location/likes/:userId

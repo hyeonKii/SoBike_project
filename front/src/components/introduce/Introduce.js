@@ -5,7 +5,6 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {Container, Row, Col} from "react-bootstrap";
-import styled from "styled-components";
 import Bike_introduce from "./Bike_introduce.png";
 
 import './introduce.css';
@@ -14,13 +13,8 @@ import CarbonChart1 from "../chart/CarbonChart1.js";
 import CarbonChart2 from "../chart/CarbonChart2.js";
 import CarbonChart3 from "../chart/CarbonChart3.js";
 import CarbonChart4 from "../chart/CarbonChart4.js";
+import GlobalStyle from "../GlobalStyle";
 
-const RegisterDiv=styled.div `
-  background-color: rgba(1, 1, 1, 0.5);
-  width: 100%;
-  height: 80px;
-  z-index:-1;
-  `
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -64,7 +58,8 @@ export default function Introduce() {
 
   return (
     <>
-    <RegisterDiv></RegisterDiv>
+    <GlobalStyle />
+    <div class="RegisterDiv"></div>
     <Container fluid className="container">
       
       <Box sx={{ width: '100%',marginTop: "50px"}}>
