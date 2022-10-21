@@ -1,4 +1,4 @@
-import { UserImageModel } from "../schemas/UserImage";
+import { UserImageModel } from "../schemas/userImage";
 
 const UserImage = {
     create: async (userId, fileName) => {
