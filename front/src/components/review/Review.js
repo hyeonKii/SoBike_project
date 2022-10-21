@@ -168,7 +168,7 @@ function Review() {
                   </span>
                 </th>
                 <th>email</th>
-                <th>리뷰</th>
+                <th>더보기</th>
               </tr>
             </thead>
             {reviews

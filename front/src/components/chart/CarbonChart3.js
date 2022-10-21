@@ -117,8 +117,8 @@ export default function CarbonChart3() {
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
         data={data}
-        cx={350}
-        cy={250}
+        cx={330}
+        cy={210}
         innerRadius={90}
         outerRadius={130}
         fill="#89a5ea"

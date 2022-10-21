@@ -18,7 +18,7 @@ function RegisterReview({ setReviews }) {
   const handleShow = () => setShow(true);
   return (
     <>
-      <RegisterReviewBtn onClick={handleShow}>리뷰등록</RegisterReviewBtn>
+      <RegisterReviewBtn onClick={handleShow}>글쓰기</RegisterReviewBtn>
       <Modal show={show} onHide={handleClose} style={{ zIndex: 100000 }}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
