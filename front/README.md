@@ -21,6 +21,7 @@
 
 - 웹페이지의 스타일을 위해 `CSS`를 주로 사용하고 `bootstrap`과 `styled-components`을 보조로 사용
 - 그래프의 시각화를 위해 `recharts` 사용
+- response timeout처리를 해주고 promise기반이로 만들어져 데이터를 다루는 것이 편리하여 `axios`를 사용 
 
 <br/>
 
