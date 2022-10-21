@@ -9,7 +9,7 @@ const UserImage = {
 
     findById: async (userId) => {
         const getUserImage = await UserImageModel.findOne({ userId }, 'userId image').lean();
-        console.log(getUserImage)
+        
         return getUserImage;
     },
 
