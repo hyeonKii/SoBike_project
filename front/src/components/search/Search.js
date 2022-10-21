@@ -323,7 +323,7 @@ function Search() {
                 justifyContent: "center",
                 backgroundColor: "#83b493",
                 borderRadius: "10px",
-                boxShadow: "7px 7px 39px rgba(200, 214, 199, 1)",
+                boxShadow: "7px 7px 39px rgba(226, 238, 227, 1)",
               }}
             >
               <div
@@ -351,7 +351,7 @@ function Search() {
                 style={{
                   width: "50rem",
                   alignItems: "center",
-                  boxShadow: "7px 7px 39px rgba(243, 228, 246, 1)",
+                  boxShadow: "7px 7px 39px rgba(226, 238, 227, 1)",
                   border: "none",
                   borderRadius: "20px",
                 }}
