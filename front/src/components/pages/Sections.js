@@ -87,7 +87,7 @@ const Sections = () => {
             </div>
             <div className="content-wrappe3">
               <p className="content5">
-                검색을 통해 주변 대여소를 확인해 보세요.
+                검색과 지도를 클릭하여 주변 대여소를 확인해 보세요.
                 <br />
                 가까운 위치의 대여소가 지도에 마커로 표시됩니다.
               </p>
