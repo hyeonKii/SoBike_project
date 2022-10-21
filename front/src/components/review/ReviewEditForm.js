@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Card } from "react-bootstrap";
 import * as Api from "../../api";
-import Information from "../../bikeDatas.json";
+import Information from "../../json/newBikeDatas.json";
 import Select from "react-select";
 
 function ReviewEditForm({ review, setReviews, handleClose }) {
-  //   const userState = useContext(UserStateContext);
   const [reviewForm, setReviewForm] = useState({
     reviewId: review.reviewId,
     email: review.email,
@@ -37,16 +36,15 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
     setPrevImage(URL.createObjectURL(target.files[0]));
     setImage(target);
   };
-  console.log(typeof(review.reviewImage))
+  
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    const userId = review.userId; //로그인된 사용자 id
+    const userId = review.userId; 
     try {
       const reviewFile = new FormData();
       if(image?.files){
         reviewFile.append("reviewFile", image.files[0]);
-        //console.log(image.files[0]);
       }
       reviewFile.append("userId", userId);
       reviewFile.append("email", reviewForm.email);
@@ -55,7 +53,7 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
       reviewFile.append("locationName", locationName);
       reviewFile.append("roadAddress", roadAddress);
       const res = await Api.put(`reviews/${review.reviewId}`, reviewFile);
-      console.log("res.data",res.data)
+      
       const new_review = {
         userId: userId,
         reviewImage: res.data.reviewImage,
@@ -77,10 +75,10 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
       console.log("review 편집에 실패하였습니다.", err);
     }
   };
-  //삭제 기능
+ 
   async function handleDelete() {
     try {
-      await Api.delete(`reviews/${review.reviewId}`); //왜 reviewId 말고 _id가 인식?
+      await Api.delete(`reviews/${review.reviewId}`); 
       setReviews((arr) => {
         const newArr = arr.filter((obj) => {
           if (obj.reviewId === review.reviewId) return false;
@@ -113,7 +111,6 @@ function ReviewEditForm({ review, setReviews, handleClose }) {
           <Form.Control
             type="file"
             name="reviewFile"
-            // value={image}
             onChange={(e) => setPreviewImage(e.target)}
           />
         </Form.Group>

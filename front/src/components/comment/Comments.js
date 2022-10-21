@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import Comment from "./Comment";
 import CommentAddForm from "./CommentAddForm";
 function Comments({ reviewId, userId,nickName, isUser }) {
   const [comments, setComments] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  ///reviews/:reviewId/comment
+  
   useEffect(() => {
     Api.get(`reviews/${reviewId}/comments`).then((res) => {
       if (!Array.isArray(res.data)) {
@@ -16,7 +16,7 @@ function Comments({ reviewId, userId,nickName, isUser }) {
       setComments(res.data);
     });
   }, [reviewId]);
-  //console.log(reviewId)
+ 
   return (
     <>
       {comments.map((comment) => (

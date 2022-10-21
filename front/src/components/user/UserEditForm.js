@@ -62,20 +62,26 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     >
       <Card.Body style={{marginTop: "40px"}}>
         <Form onSubmit={handleSubmit}>
+          <Form.Group 
+            style={{
+              marginLeft: "60px",
+              marginBottom: "35px"
+            }}>
           {prevImage ? (
             <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
+            style={{ width: "10rem"}}
             className="mb-3"
             src={`${prevImage}`}
             alt="사용자 업로드 프로필 이미지"
             />
           ) : (
             <Card.Img
-              style={{ width: "10rem", height: "8rem" }}
+              style={{ width: "10rem"}}
               className="mb-3"
               src={`${domain + image}`}
               />
           )}
+          </Form.Group>
           <Form.Group 
           controlId="EditUserImage"
           className="mb-3"
@@ -83,6 +89,7 @@ function UserEditForm({ user, setIsEditing, setUser }) {
             <Form.Control
               type="file"
               onChange={(e) => setPreviewImage(e.target)}
+              
             />
           </Form.Group>
 

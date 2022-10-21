@@ -10,7 +10,7 @@ function CommentEditForm({ Currentcomment, setComments, editComments }) {
     nickName: Currentcomment.nickName,
     createdAt: Currentcomment.createdAt,
   });
-  console.log(Currentcomment);
+  
   function handleOnchange(e) {
     const { name, value } = e.target;
     setCommentForm((prev) => ({
@@ -21,7 +21,6 @@ function CommentEditForm({ Currentcomment, setComments, editComments }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      ///reviews/comment/:commentId
       const cId = Currentcomment.commentId
       const rId =Currentcomment.reviewId
       await Api.put(`reviews/${rId}/comments/${cId}`, {
@@ -47,8 +46,6 @@ function CommentEditForm({ Currentcomment, setComments, editComments }) {
       console.log("comment편집에 실패하였습니다.", error);
     }
   };
-  //console.log("Currentcomment",Currentcomment)
-  //console.log("Currentcomment.commentId",Currentcomment._id)
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="CommentEditContents">

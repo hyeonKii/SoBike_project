@@ -16,11 +16,9 @@ function AwardAddForm({ reviewId,userId,nickName, setComments, setIsAdding }) {
       [name]: value,
     }));
   }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      ///reviews/:reviewId/comment/:userId
       const res = await Api.post(`reviews/${reviewId}/comments`, {
         ...commentForm,
       });

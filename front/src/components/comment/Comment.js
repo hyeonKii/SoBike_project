@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CommentCard from "./CommentCard";
 import CommentEditForm from "./CommentEditForm";
-//isEditable={userId===comments.userId}
+
 function Comment({ comment,isEditable, setComments }) {
   const [isEditing, setIsEditing] = useState("");
   const toggleEdit = () => {

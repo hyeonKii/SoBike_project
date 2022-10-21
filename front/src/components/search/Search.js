@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState,useContext } from "react";
 import * as Api from "../../api";
-import bikeDatas from "./newBikeDatas.json";
+import bikeDatas from "../../json/newBikeDatas.json";
 import StorePlaces from "./StorePlaces";
 import { Container, Row, Button, Card, Col } from "react-bootstrap";
 import { UserStateContext } from "../../App";

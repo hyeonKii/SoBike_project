@@ -64,24 +64,16 @@ export default function Introduce() {
     <>
     <RegisterDiv></RegisterDiv>
     <Container fluid className="container">
-      {/* <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'fixed', height: 224 }}> */}
-      <Box sx={{ width: '100%',marginTop: "50px" }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} centered>
-          {/* <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: 'divider' }}
-      > */}
-              <Tab label="탄소농도로 인한 가뭄피해 증가" {...a11yProps(0)} />
+      
+      <Box sx={{ width: '100%',marginTop: "50px"}}>
+        <Box sx={{ borderBottom: 1, borderColor: '#999' }}>
+          <Tabs value={value} onChange={handleChange} centered >
+          
+              <Tab label="탄소농도로 인한 가뭄피해 증가" {...a11yProps(0)} style={{color: "black"}}/>
             
 
            
-              <Tab label="교통부문에서의 탄소배출" {...a11yProps(1)} />
+              <Tab label="교통부문에서의 탄소배출" {...a11yProps(1)} style={{color: "black"}}/>
             
 
             
