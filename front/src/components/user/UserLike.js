@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Col, Row, Card, Button } from "react-bootstrap";
 import * as Api from "../../api";
 
-function UserLike({userId, roadAddress, locationName, setUserLikes}) {
+function UserLike({locationId, roadAddress, locationName, setUserLikes}) {
 
     
 
     async function handleDelete() {
         try {
-            Api.delete("datas/bicycle/location/likes", userId);
+            Api.delete("datas/bicycle/location/likes", locationId);
             setUserLikes((arr) => {
                 const newArr = arr.filter((obj) => {
-                    if (obj.locationName === locationName) return false;
+                    if (obj.locationId === locationId) return false;
                     else return true;
             });
             return newArr;

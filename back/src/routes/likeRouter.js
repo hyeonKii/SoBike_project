@@ -41,7 +41,7 @@ likeRouter.get("/", loginRequired, async (req, res, next)=> {
 likeRouter.delete("/:locationId/", loginRequired,  async(req, res, next) => {
     try{
         const userId = req.currentUserId;
-        const locationId = req.params.locationId;
+        const locationId = Number.parseInt(req.params.locationId, 10);
         console.log("userId:",userId)
         console.log("locationId:",locationId)
         const deletedLike = await likeService.delLike({userId, locationId});

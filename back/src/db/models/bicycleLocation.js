@@ -87,7 +87,8 @@ const bicycleLocation =  {
         const RentalLocation = await bicycleLocationModel.findOne({rentalLocationId: locationId});
         const location = {
             roadAddress: RentalLocation._doc.roadAddress,
-            locationName: RentalLocation._doc.locationName
+            locationName: RentalLocation._doc.locationName,
+            locationId: RentalLocation._doc.rentalLocationId
         }
         
         return location;

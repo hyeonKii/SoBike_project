@@ -79,7 +79,7 @@ const Like =  {
     },
 
     delete: async ({ userId, locationId })=> {
-        const filter = { userId: userId, locaitonId: locationId };
+        const filter = { userId, locationId };
         // console.log(Id)
         const deleteLike = await LikeModel.deleteOne(filter);
         return deleteLike;

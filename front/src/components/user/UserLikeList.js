@@ -37,8 +37,8 @@ function UserLikeList({portfolioOwnerId}) {
                 {userLikes.map((userLikes) => (
                  <Col>   
                 <UserLike 
-                    roadAddress={userLikes.roadAddress} locationName={userLikes.locationName} 
-                    userId={portfolioOwnerId}
+                    roadAddress={userLikes.roadAddress} locationName={userLikes.locationName}
+                    locationId={userLikes.locationId}
                     setUserLikes={setUserLikes}
                     />
                     </Col>
