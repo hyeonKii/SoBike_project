@@ -4,21 +4,51 @@
   width: 1000px;
 }
 
+.Container1 {
+  display: flex;
+  margin-left: 100px;
+  margin-top: 100px;
+}
+
+.textContainer1 {
+  padding-top: 30px;
+  width: 505px;
+}
+
 .text1 {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 25px;
   line-height: 1.4;
 }
 .text2 {
   width: 600px;
   font-size: 18px;
-  margin-top: 24px;
   line-height: 1.7;
+}
+
+.textContainer2 {
+  margin-left: "100px";
 }
 
 .chartDeliver {
   display: flex;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 80px;
   margin-left: 120px;
 }
+
+
+.chartDeliver1 {
+  display: flex;
+  align-items: center;
+  margin-top: 85px;
+  margin-left: 120px;
+}
+
+
+.main {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 25px;
+}
+

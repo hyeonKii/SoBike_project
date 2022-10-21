@@ -112,13 +112,13 @@ export default function CarbonChart3() {
   }
 
   return (
-    <PieChart width={800} height={500}>
+    <PieChart width={800} height={400}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
         data={data}
-        cx={330}
-        cy={210}
+        cx={332}
+        cy={180}
         innerRadius={90}
         outerRadius={130}
         fill="#89a5ea"
