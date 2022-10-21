@@ -23,7 +23,7 @@ export const uploadFile = async (userId, files, fileLocation) => {
 
     const oldPath = files.userFile.filepath;
 
-    const newPath = __dirname + `/../public/${fileLocation}/` + fileName;
+    const newPath = __dirname + `/../uploads/${fileLocation}/` + fileName;
     
     if(fileLocation === "userImage") {
         const currentUserImageInfo = await UserImage.findById(userId);
@@ -34,9 +34,9 @@ export const uploadFile = async (userId, files, fileLocation) => {
             const newValue = fileName;
             const updatedUserImage = await UserImage.update(userId, fieldToUpdate, newValue);
             
-            imageFilename = `public/${fileLocation}/` + updatedUserImage.image;
+            imageFilename = `uploads/${fileLocation}/` + updatedUserImage.image;
 
-            fs.unlink(`src/public/${fileLocation}/${currentUserImageInfo.image}`, (err) => {
+            fs.unlink(`src/uploads/${fileLocation}/${currentUserImageInfo.image}`, (err) => {
                 if(err) throw new Error("이미지 삭제 실패");
             })
 
@@ -53,7 +53,7 @@ export const uploadFile = async (userId, files, fileLocation) => {
                 if(err) throw new Error("이미지 업로드 실패");
             });
 
-            imageFilename = `public/${fileLocation}/` + createUserImage.image;
+            imageFilename = `uploads/${fileLocation}/` + createUserImage.image;
         }
     }
 
@@ -65,8 +65,7 @@ export const uploadFile = async (userId, files, fileLocation) => {
 }
 
 export const deleteFile = async (fileLocation, imageFile) => {
-    fs.unlink(`src/public/${fileLocation}/${imageFile}`, (err) => {
+    fs.unlink(`src/uploads/${fileLocation}/${imageFile}`, (err) => {
         if(err) throw new Error("이미지 삭제 실패");
     });
 } 
-
