@@ -89,9 +89,9 @@ function MyPage() {
                     height:"40px",
                     textAlign: "center",
                     justifyContent:"center",
-                    backgroundColor: "#CC99FF",
+                    backgroundColor: "#79c994",
                     borderRadius: "10px",
-                    boxShadow: "7px 7px 39px rgba(227, 193, 235, 1)"
+                    boxShadow: "7px 7px 39px rgba(200, 214, 199, 1)"
                     }}
               >
               <div style={{
