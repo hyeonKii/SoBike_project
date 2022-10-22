@@ -17,7 +17,7 @@ reviewRouter.post("/", loginRequired, async (req, res, next) => {
 
         form.parse(req, async(err, fields, files) =>{
             newReview = await reviewService.addReview(userId, fields, files);
-
+            
             if(newReview.errorMessage) throw new Error("리뷰 정보 등록 실패");
 
             res.status(201).json(newReview);
@@ -60,7 +60,7 @@ reviewRouter.put("/:reviewId", loginRequired, async (req, res, next)=> {
 
         form.parse(req, async(err, fields, files)=>{
             const updatedReview =  await reviewService.setReview(reviewId, fields, files);
-            
+
             if(updatedReview.errorMessage) throw new Error("리뷰 수정 실패");
 
             res.status(201).json(updatedReview);
@@ -76,7 +76,7 @@ reviewRouter.delete("/:reviewId", loginRequired, async(req, res, next) => {
         const deletedReview = await reviewService.delReview(reviewId);
         
         if(deletedReview.errorMessage)  throw new Error("리뷰 삭제 실패");
-        
+
         const deletedComments = await commentService.delComments(reviewId);
 
         if(deletedComments.errorMessage) throw new Error("리뷰 삭제 시 댓글 전체 삭제 실패");

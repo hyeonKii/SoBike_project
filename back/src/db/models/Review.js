@@ -22,7 +22,6 @@ const Review =  {
  
         if(!reviewImage) {
             const reviewData= {
-                reviewId: reviewId,
                 userId: review.userId,
                 email: review.email,
                 title: review.title,
@@ -32,7 +31,7 @@ const Review =  {
             }
 
             return reviewData;
-        }else { 
+        } else { 
             const reviewData =  {
                 reviewId: reviewId,
                 userId: review.userId,

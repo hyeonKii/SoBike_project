@@ -3,13 +3,13 @@ import { Like } from "./Like";
 
 const bicycleLocation =  {
     findByLocation: async ({longitude, latitude}) => {
-        const bicycleLocation = await bicycleLocationModel.find( { longitude:longitude, latitude:latitude });
+        const bicycleLocation = await bicycleLocationModel.find({ longitude:longitude, latitude:latitude });
 
         return bicycleLocation;
     },
 
     findByLocationName: async ({locationName}) => {
-        const bicycleLocation = await bicycleLocationModel.find({ locationName: { $regex: locationName } });
+        const bicycleLocation = await bicycleLocationModel.find({ locationName: {$regex: locationName} });
 
         return bicycleLocation;
     },
@@ -64,7 +64,6 @@ const bicycleLocation =  {
     },
 
     findAll: async ()=> {
-        console.log("afdf")
         const bicycleLocation = await bicycleLocationModel.find();
 
         return bicycleLocation;

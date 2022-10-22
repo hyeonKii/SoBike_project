@@ -52,7 +52,7 @@ bicycleLocationRouter.get("/bicycle/locationsByCurrentLocation?:userId?:latitude
         const { userId } = req.query;
         const longitude = parseFloat(req.query.longitude);
         const latitude = parseFloat(req.query.latitude);
-        const location = await bicycleLocationService.getLocationsByCurrentLocations({userId, longitude, latitude});
+        const location = await bicycleLocationService.getLocationsByCurrentLocations({ userId, longitude, latitude });
 
         res.status(200).send(location);
     }catch(error){

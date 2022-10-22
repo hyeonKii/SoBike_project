@@ -13,11 +13,11 @@ const Like =  {
         const locationIds = [];
         const likedBicycleInfo = [];
 
-        for (let i=0; i<like.length ;i++){
+        for (let i=0; i<like.length ;i++) {
             locationIds[i] = like[i].locationId;
         }
         
-        for (let i = 0; i<like.length; i++){
+        for (let i = 0; i<like.length; i++) {
             likedBicycleInfo[i] = await bicycleLocation.findByLocationId(locationIds[i]);
         }
 

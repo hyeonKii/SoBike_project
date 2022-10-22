@@ -4,7 +4,7 @@ import { bicycleLocation } from "../db";
 const likeService = {
      addLike: async (userId, locationId) => {
         const newLike = {userId, locationId}
-        const createdNewLike = await Like.create({newLike});
+        const createdNewLike = await Like.create({ newLike });
 
         createdNewLike.errorMessage = null;
 
