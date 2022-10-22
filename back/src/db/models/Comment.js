@@ -16,6 +16,7 @@ const Comment = {
 
         return createdComment;
     },
+    
     findAll: async (reviewId) => {
         let comments = await CommentModel.find({ reviewId });
         
@@ -27,6 +28,7 @@ const Comment = {
 
         return comments;
     },
+    
     findById: async (reviewId, commentId) => {
         let comment = await CommentModel.findById({ _id: commentId, reviewId });
 
@@ -36,6 +38,7 @@ const Comment = {
 
         return comment;
     },
+
     update: async (reviewId, commentId, fieldToUpdate, newValue) => {
         const filter = { _id: commentId, reviewId };
         const update = { [fieldToUpdate] : newValue };
@@ -52,6 +55,7 @@ const Comment = {
 
         return updatedComment;
     },
+
     delete: async (reviewId, commentId) => {
         let deletedComment = await CommentModel.findOneAndDelete({ _id: commentId, reviewId });
 
@@ -61,8 +65,9 @@ const Comment = {
         
         return deletedComment;
     },
-    deleteAll: async ({reviewId}) => {
-        const deletedComments = await CommentModel.deleteMany({ reviewId:reviewId });
+
+    deleteAll: async (reviewId) => {
+        const deletedComments = await CommentModel.deleteMany({ reviewId });
 
         return deletedComments;
     }

@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+
 import { Review, ReviewImage } from "../db";
 
 const reviewService = {
@@ -136,16 +137,12 @@ const reviewService = {
 
         if(deletedReview) {
             const deletedReviewImage = await ReviewImage.delete(reviewId);
+
             if(deletedReviewImage) {
-
                 fs.unlink(`src${deletedReviewImage.image}`, (err) => {
-
+                    if(err) throw new Error("이미지 삭제 실패");
                 });
-            } else {
-                return deletedReviewImage;
             }
-        } else {
-            return deletedReview;
         }
         
         deletedReview.errorMessage = null;

@@ -34,6 +34,7 @@ const commentService = {
 
         return setComment;
     },
+
     delComment: async (reviewId, commentId) => {
         const delComment = await Comment.delete(reviewId, commentId);
 
@@ -41,8 +42,9 @@ const commentService = {
 
         return delComment;
     },
-    delComments: async ({reviewId}) => {
-        const delComments = await Comment.deleteAll({reviewId});
+
+    delComments: async (reviewId) => {
+        const delComments = await Comment.deleteAll(reviewId);
         
         if(!delComments) throw new Error("댓글 삭제 실패");
 

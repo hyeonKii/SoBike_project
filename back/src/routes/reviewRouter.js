@@ -74,9 +74,11 @@ reviewRouter.delete("/:reviewId", loginRequired, async(req, res, next) => {
     try{
         const { reviewId } = req.params;
         const deletedReview = await reviewService.delReview(reviewId);
+        
+        if(deletedReview.errorMessage)  throw new Error("리뷰 삭제 실패");
+        
         const deletedComments = await commentService.delComments(reviewId);
 
-        if(deletedReview.errorMessage)  throw new Error("리뷰 삭제 실패");
         if(deletedComments.errorMessage) throw new Error("리뷰 삭제 시 댓글 전체 삭제 실패");
 
         res.status(200).json({deletedReview,deletedComments});
