@@ -25,7 +25,7 @@ export const uploadFile = async (userId, files, fileLocation) => {
 
     const newPath = __dirname + `/../uploads/${fileLocation}/` + fileName;
     
-    if(fileLocation === "userImage") {
+    if(fileLocation === "userImages") {
         const currentUserImageInfo = await UserImage.findById(userId);
     
         if(currentUserImageInfo) {
@@ -55,10 +55,6 @@ export const uploadFile = async (userId, files, fileLocation) => {
 
             imageFilename = `uploads/${fileLocation}/` + createUserImage.image;
         }
-    }
-
-    if(fileLocation === "reviewImage") {
-
     }
     
     return imageFilename;

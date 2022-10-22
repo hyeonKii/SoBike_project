@@ -10,11 +10,9 @@ const responseCommentInfo = (commentInfo) => {
 
 const Comment = {
     create: async (newComment) => {
-        const createdComment = await CommentModel.create(newComment);
+        let createdComment = await CommentModel.create(newComment);
         
-        if(createdComment) {
-            return responseCommentInfo(createdComment._doc);
-        }
+        if(createdComment) createdComment = responseCommentInfo(createdComment._doc);
 
         return createdComment;
     },
@@ -30,10 +28,10 @@ const Comment = {
         return comments;
     },
     findById: async (reviewId, commentId) => {
-        const comment = await CommentModel.findById({ _id: commentId, reviewId });
+        let comment = await CommentModel.findById({ _id: commentId, reviewId });
 
         if(comment) {
-            return responseCommentInfo(comment._doc);
+            comment = responseCommentInfo(comment._doc);
         }
 
         return comment;
@@ -42,23 +40,23 @@ const Comment = {
         const filter = { _id: commentId, reviewId };
         const update = { [fieldToUpdate] : newValue };
         const option = { returnOriginal: false };
-        const updatedComment = await CommentModel.findOneAndUpdate(
+        let updatedComment = await CommentModel.findOneAndUpdate(
             filter,
             update,
             option
         );
 
         if(updatedComment) {
-            return responseCommentInfo(updatedComment._doc);
+            updatedComment = responseCommentInfo(updatedComment._doc);
         }
 
         return updatedComment;
     },
     delete: async (reviewId, commentId) => {
-        const deletedComment = await CommentModel.findOneAndDelete({ _id: commentId, reviewId });
+        let deletedComment = await CommentModel.findOneAndDelete({ _id: commentId, reviewId });
 
         if(deletedComment) {
-            return responseCommentInfo(deletedComment._doc);
+            deletedComment = responseCommentInfo(deletedComment._doc);
         }
         
         return deletedComment;

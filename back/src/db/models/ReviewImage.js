@@ -6,25 +6,32 @@ const ReviewImage = {
         
         return reviewImage;
     },
+
     findById: async (reviewId) => {
         const getReviewImage = await ReviewImageModel.findOne({ reviewId });
-        if(getReviewImage === null){return }
-        return {reviewImageId: getReviewImage._id,
-                reviewId: getReviewImage.reviewId,
-                reviewImage: getReviewImage.image
-                }
-                },
+        
+        if(getReviewImage === null) return;
+        
+        return {
+            reviewImageId: getReviewImage._id,
+            reviewId: getReviewImage.reviewId,
+            reviewImage: getReviewImage.image
+        };
+    },
+
     findAll: async () => {
         const getReviewImage = await ReviewImageModel.find();
-
         const reviewImageList = getReviewImage.map((getReviewImage)=>{
-            return {reviewImageId: getReviewImage._id,
+            return {
+                reviewImageId: getReviewImage._id,
                 reviewId: getReviewImage.reviewId,
                 reviewImage: getReviewImage.image
-                }
+            };
         }) ;
-        return reviewImageList
+
+        return reviewImageList;
     },
+
     update: async (reviewId, fieldToUpdate, newValue) => {
         const filter = { reviewId };
         const update = { [fieldToUpdate]: newValue};
@@ -34,8 +41,10 @@ const ReviewImage = {
             update,
             option
         );
+
         return setReviewImage;
     },
+
     delete: async (reviewId) => {
         const deletedReviewInfo = await ReviewImageModel.findOneAndDelete({ reviewId });
 

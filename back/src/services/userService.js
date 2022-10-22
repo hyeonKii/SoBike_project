@@ -48,11 +48,8 @@ const userAuthService = {
 
         if(getUserInfo) getUserImage = await UserImage.findById(userId);
         
-        getUserInfo.image = "uploads/userImage/" + (getUserImage ? getUserImage.image: "lion.jpg");
-        
-        // if(getUserImage) getUserInfo.image = "uploads/userImage/" + getUserImage.image;
-        // else getUserInfo.image = "uploads/userImage/lion.jpg";
-        
+        getUserInfo.image = "uploads/userImages/" + (getUserImage ? getUserImage.image: "lion.jpg");
+
         getUserInfo.errorMessage = null;
         
         return getUserInfo;
@@ -79,7 +76,7 @@ const userAuthService = {
             }
         }
 
-        const update = async (userId, newInfo, field) => {
+        const update = async (userId, field, newInfo) => {
             const fieldToUpdate = field;
             const newValue = newInfo;
 
@@ -94,17 +91,16 @@ const userAuthService = {
             userCheck(userNickName, nickName, "중복된 닉네임입니다.");
         }
        
-        updatedUser = await update(userId, email, "email");
-        updatedUser = await update(userId, nickName, "nickName");
+        updatedUser = await update(userId, "email", email);
+        updatedUser = await update(userId, "nickName", nickName);
 
         if(updatedUser) {
             if(files.userFile) {
-                updatedUser.image = await uploadFile(userId, files, "userImage");
+                updatedUser.image = await uploadFile(userId, files, "userImages");
             } else {
                 const user = await UserImage.findById(userId);
-                // if(user) {
-                    updatedUser.image = "uploads/userImage/" + (user ? user.image : "lion.jpg");
-                // }
+                
+                updatedUser.image = "uploads/userImages/" + (user ? user.image : "lion.jpg");
             }
         }
         
@@ -117,9 +113,9 @@ const userAuthService = {
         const deletedUser = await User.delete(userId);
 
         if(deletedUser) {
-            const user = await UserImage.delete(userId);
+            const user = await s.delete(userId);
 
-            if(user) deleteFile("userImage", user.image);
+            if(user) deleteFile("userImages", user.image);
         }
         
         deletedUser.errorMessage = null;
