@@ -58,7 +58,7 @@ const User = {
                 userId: user._id,
                 email: user.email,
                 nickName: user.nickName
-            }
+            };
         }
         
         return user;

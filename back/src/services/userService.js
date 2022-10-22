@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import { User, UserImage } from "../db";
+
 import { uploadFile, deleteFile } from "../modules/fileUpload";
 
 const userAuthService = {
@@ -30,7 +31,7 @@ const userAuthService = {
         const currentPasswordHash = userInfo.password;
         const isPasswordcurrent = await bcrypt.compare(password, currentPasswordHash);
         
-        if(!isPasswordcurrent) throw new Error("비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.");
+        if(!isPasswordcurrent) throw new Error("비밀번호가 일치하지 않습니다.");
         
         const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
         const token = jwt.sign({ userId: userInfo.userId }, secretKey);
@@ -72,6 +73,7 @@ const userAuthService = {
                             throw new Error(Contents);
                         }
                     } break;
+                    default: break;
                 }
             }
         }

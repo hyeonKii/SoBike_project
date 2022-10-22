@@ -2,7 +2,7 @@ import { ReviewImageModel } from "../schemas/reviewImage";
 
 const ReviewImage = {
     create: async (reviewId, fileName) => {
-        const reviewImage = await ReviewImageModel.create({reviewId, image: fileName});
+        const reviewImage = await ReviewImageModel.create({ reviewId, image: fileName });
         
         return reviewImage;
     },

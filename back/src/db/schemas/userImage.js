@@ -22,4 +22,4 @@ const UserImageSchema = new Schema(
 
 const UserImageModel = model("UserImage", UserImageSchema);
 
-export { UserImageModel }
+export { UserImageModel };

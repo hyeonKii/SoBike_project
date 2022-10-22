@@ -22,7 +22,7 @@ const Comment = {
         if(comments) {
             comments = comments.map((data) => {
                 return responseCommentInfo(data._doc);
-            })
+            });
         }
 
         return comments;
@@ -62,7 +62,7 @@ const Comment = {
         return deletedComment;
     },
     deleteAll: async ({reviewId}) => {
-        const deletedComments = await CommentModel.deleteMany({reviewId:reviewId} );
+        const deletedComments = await CommentModel.deleteMany({ reviewId:reviewId });
 
         return deletedComments;
     }
