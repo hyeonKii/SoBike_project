@@ -38,6 +38,4 @@
 </div>
 
 ## 테스트 방법
-[back](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/back), [front](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/front), [data]() 폴더 안 README 참고
-
-## 주요기능
+[back](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/back), [front](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/front), [data](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/data) 폴더 안 README 참고
