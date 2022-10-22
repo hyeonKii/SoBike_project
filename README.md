@@ -9,7 +9,7 @@
 - 자세한 내용: [Wiki](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/wikis/%EC%97%98%EB%A6%AC%EC%8A%A4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B82-3%ED%8C%80-%EA%B8%B0%ED%9A%8D%EC%84%9C)
 - [api문서](https://www.notion.so/elice/157ecab66df34fd6908ede22d2ac8435?v=3888a43655f342f28c791d14577a8a80)
 - [테스트 페이지](http://kdt-ai5-team03.elicecoding.com/)
-- 팀원 소걔
+- 팀원 소개
   - BE: 남궁연범, 배성현
   - FE: 김성우, 양지수, 김현기
 
