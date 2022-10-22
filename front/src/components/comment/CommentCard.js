@@ -18,13 +18,16 @@ function CommentCard({ comment, isEditable, setIsEditing, setComments }) {
   }
   const Date =comment.createdAt.split("T")[0]
   const Time = comment.createdAt.split("T")[1].split(".")[0]
+  const ReTime = Number.parseInt(Time[1]) + 9;
+  const result = ReTime + Time.slice(2, );
+  
   return (
     <>
       <Row className="align-items-center">
         <Col sm={8}>
           <span>{comment.contents}</span>
           <br />
-          <span className="text-muted">{comment.nickName} {Date} {Time}</span>
+          <span className="text-muted">{comment.nickName} {Date} {result}</span>
         </Col> 
         {isEditable && (
           <Col sm={4}>
@@ -34,7 +37,7 @@ function CommentCard({ comment, isEditable, setIsEditing, setComments }) {
               onClick={() => setIsEditing((prev) => !prev)}
             >
               편집
-            </Button>.{' '}
+            </Button>{' '}
             <Button
               variant="outline-danger"
               size="sm"
