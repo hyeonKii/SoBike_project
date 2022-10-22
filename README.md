@@ -6,9 +6,9 @@
 - 개발기간: 2022.10.03 ~ 2020.10.21 (약 3주) 
 - 주제: 자전거 대여소 및 보관소 위치 정보 제공 서비스
 - 목표: 자가용 차량을 이용하지 않고 자전거를 이용하게 하여 탄소 배출량을 줄이는 것
-- 자세한 내용: [Wiki](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/wikis/%EC%97%98%EB%A6%AC%EC%8A%A4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B82-3%ED%8C%80-%EC%9E%84%EC%8B%9C-%EA%B8%B0%ED%9A%8D%EC%84%9C)
+- 자세한 내용: [Wiki](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/wikis/%EC%97%98%EB%A6%AC%EC%8A%A4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B82-3%ED%8C%80-%EA%B8%B0%ED%9A%8D%EC%84%9C)
 - [api문서](https://www.notion.so/elice/157ecab66df34fd6908ede22d2ac8435?v=3888a43655f342f28c791d14577a8a80)
-- [테스트 페이지](http://kdt-ai5-team03.elicecoding.com)
+- [테스트 페이지](http://kdt-ai5-team03.elicecoding.com/)
 - 팀원 소걔
   - BE: 남궁연범, 배성현
   - FE: 김성우, 양지수, 김현기
