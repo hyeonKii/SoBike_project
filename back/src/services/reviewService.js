@@ -1,5 +1,5 @@
 import fs from "fs";
-import path from "path"
+import path from "path";
 import { Review, ReviewImage } from "../db";
 
 const reviewService = {

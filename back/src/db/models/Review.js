@@ -100,7 +100,8 @@ const Review =  {
                     reviewImage: reviewImage[0].reviewImage 
                 };
             }
-        })
+        });
+        
         return reviewList;
     },
 
@@ -109,7 +110,7 @@ const Review =  {
         const deleteReview = await ReviewModel.findOneAndDelete(filter);
         const deletingImage = await ReviewImage.findById(reviewId);
 
-        return {deleteReview, deletingImage};
+        return { deleteReview, deletingImage };
       }
 };
 

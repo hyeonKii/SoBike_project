@@ -1,5 +1,5 @@
-import {LikeModel} from "../schemas/like";
-import {bicycleLocation} from "./bicycleLocation"
+import { LikeModel } from "../schemas/like";
+import { bicycleLocation } from "./bicycleLocation";
 
 const Like =  {
     create : async ({newLike}) => {
@@ -9,20 +9,19 @@ const Like =  {
     },
 
     findById: async (userId) => {
-        const like = await LikeModel.find({userId:userId, isLike: true});
+        const like = await LikeModel.find({ userId:userId, isLike: true });
         const locationIds = [];
         const likedBicycleInfo = [];
 
         for (let i=0; i<like.length ;i++){
-            locationIds[i] = like[i].locationId
+            locationIds[i] = like[i].locationId;
         }
         
         for (let i = 0; i<like.length; i++){
-            likedBicycleInfo[i] = await bicycleLocation.findByLocationId(locationIds[i])
-            console.log(likedBicycleInfo[i])
+            likedBicycleInfo[i] = await bicycleLocation.findByLocationId(locationIds[i]);
         }
 
-        return likedBicycleInfo
+        return likedBicycleInfo;
     },
 
     update: async ({userId, locationId, fieldToUpdate, newValue})=> {
@@ -39,7 +38,7 @@ const Like =  {
     },
 
     findByUser: async ({userId, locationId})=> {
-        const likes = await LikeModel.find({userId:userId, locationId: locationId});
+        const likes = await LikeModel.find({ userId:userId, locationId: locationId });
         const isLike = likes.length > 0 ? true : false;
 
         return isLike;
@@ -52,7 +51,7 @@ const Like =  {
     },
 
     findAll: async (userId) => {
-        const likes = await LikeModel.find({userId});
+        const likes = await LikeModel.find({ userId });
 
         return likes;
     },
@@ -65,4 +64,4 @@ const Like =  {
       }
 };
 
-export {Like};
+export { Like };

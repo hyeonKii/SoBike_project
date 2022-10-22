@@ -46,6 +46,8 @@ const commentService = {
         
         if(!delComments) throw new Error("댓글 삭제 실패");
 
+        delComments.errorMessage = null;
+        
         return delComments;
     },
 }

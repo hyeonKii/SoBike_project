@@ -22,4 +22,4 @@ const ReviewImageSchema = new Schema(
 
 const ReviewImageModel = model("ReviewImage", ReviewImageSchema);
 
-export { ReviewImageModel }
+export { ReviewImageModel };

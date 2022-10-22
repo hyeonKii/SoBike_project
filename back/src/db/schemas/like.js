@@ -20,8 +20,11 @@ const LikeSchema = new Schema(
             default: true
        }
     },
-    {timestamps: true}
+    {
+        timestamps: true
+    }
 )
 
-const LikeModel = model("Like", LikeSchema)
-export {LikeModel};
+const LikeModel = model("Like", LikeSchema);
+
+export { LikeModel };
