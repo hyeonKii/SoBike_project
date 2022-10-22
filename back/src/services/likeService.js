@@ -2,8 +2,8 @@ import { Like } from "../db";
 import { bicycleLocation } from "../db";
 
 const likeService = {
-     addLike: async ({locationId, userId}) => {
-        const newLike = {locationId, userId}
+     addLike: async (userId, locationId) => {
+        const newLike = {userId, locationId}
         const createdNewLike = await Like.create({newLike});
 
         return createdNewLike;
@@ -14,6 +14,7 @@ const likeService = {
 
         return like;
     },
+
     getLikeByLocation: async (userId)=> {
         const likes = await Like.findAll(userId);
         let likeLocations = [];
@@ -23,13 +24,13 @@ const likeService = {
                 const likeLocation = await bicycleLocation.findByRentalLocation(likes[i].locationId);
                 likeLocations[i] = likeLocation;
             }
+
             likeLocations.errorMessage = null;
         }
         return likeLocations;
     },
  
-    delLike: async ({ userId, locationId }) => {
- 
+    delLike: async (userId, locationId) => {
         const deletedlike = await Like.delete({ userId, locationId });
 
         return deletedlike;
