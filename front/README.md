@@ -78,14 +78,4 @@ yarn start
 | reviewDetail.js       | 전체 게시글               |
 | commets.js            | 댓글                    |
 
-![main](/uploads/a3544e68d361f2e2ff898db4b5af02f8/main.png)
 
-![login-register](/uploads/34993cc41357058735d0e77e64f4f67d/login-register.png)
-
-![introduce](/uploads/c7af88d1401c492dca19c8553daf0f88/introduce.png)
-
-![search](/uploads/91a7242fed32142de83dd6812c7af658/search.png)
-
-![review](/uploads/dd3ce6e5e5806cf1d39e25d106556449/review.png)
-
-![user](/uploads/6cab9cf7d2e1936f7b3b8bed690a6551/user.png)
