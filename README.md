@@ -38,4 +38,4 @@
 </div>
 
 ## 테스트 방법
-[back](https://github.com/hyeonKii/SoBike_project/tree/dev/back), [front](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/front), [data](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/data) 폴더 안 README 참고
+[back](https://github.com/hyeonKii/SoBike_project/tree/dev/back), [front](https://github.com/hyeonKii/SoBike_project/tree/dev/front), [data](https://kdt-gitlab.elice.io/ai_track/class05/data_project/team03/-/tree/master/data) 폴더 안 README 참고
